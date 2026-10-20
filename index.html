@@ -1685,7 +1685,7 @@ function teamSheet(y){
     <label class="f">Schlüssel<input type="text" id="fs-token" value="${esc(fc.token||'')}" placeholder="aus dem Skript-Protokoll"></label></div>
     <div class="row" style="justify-content:flex-start;margin-top:8px"><button class="btn" data-act="fs-save">Speichern</button><button class="btn primary" data-act="fs-sync" ${fc.url&&fc.token?'':'disabled'}>Jetzt abgleichen</button></div></section>`:'';
   return `${auto}<div class="grid2">
-  <section class="panel"><h2>So kommt die Anmeldung in den Leitstand</h2>
+  <section class="panel"><h2>So kommt die Anmeldung in LOS Backstage</h2>
     <ol class="steps">
       <li><b>Anmeldung bleibt im Google Formular.</b> Am Formular ändert sich nichts – Interessierte melden sich wie gewohnt an.</li>
       <li><b>Antworten landen im Google Sheet.</b> LOS Backstage liest dieses Sheet und legt jede neue Zeile als Anmeldung „Neu“ an. ${LIVE?'Das passiert automatisch über das Google-Skript (siehe oben); notfalls fügst du die Zeilen rechts ein.':'In der echten App passiert das automatisch über das LOS-Konto; im Prototyp fügst du die Zeilen hier ein.'}</li>
@@ -2137,7 +2137,7 @@ function vAccess(){
 
 /* ===================== Über LOS ===================== */
 const linkItems=arr=>(arr||[]).map(x=>Array.isArray(x)?{label:x[0]||'',url:x[1]||''}:{label:x.label||'',url:x.url||''}).map(x=>({...x,url:x.url==='#'?'':x.url}));
-const fixUrl=u=>{u=String(u||'').trim(); if(!u) return ''; return /^(https?:|mailto:)/i.test(u)?u:'https://'+u.replace(/^\/+/,'');};
+const fixUrl=u=>{u=String(u||'').trim().replace(/^#+\s*/,''); if(!u) return ''; return /^(https?:|mailto:)/i.test(u)?u:'https://'+u.replace(/^\/+/,'');};
 function readAbDraft(){ const d=ui.abDraft; if(!d) return; ['who','why','expect'].forEach(k=>{const el=document.getElementById('ab-'+k); if(el) d[k]=el.value;});
   ['links','material'].forEach(k=>d[k].forEach((it,i)=>{const l=document.getElementById(`ab-${k}-l-${i}`), u=document.getElementById(`ab-${k}-u-${i}`); if(l) it.label=l.value; if(u) it.url=u.value;})); }
 function vAbout(){
@@ -2516,5 +2516,7 @@ render();
 if(LIVE) liveInit();
 
 </script>
+<script>/* Android: als App installierbar machen (kein Zwischenspeicher, siehe sw.js) */
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)&&document.querySelector('link[rel="manifest"]')) window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
 </body>
 </html>
