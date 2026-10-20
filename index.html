@@ -3,7 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>LOS Leitstand</title>
+<title>LOS Backstage</title>
+<meta name="application-name" content="LOS Backstage">
+<meta name="apple-mobile-web-app-title" content="LOS">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#F3F4F7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12151E" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
@@ -414,7 +423,7 @@ function wishGroups(ws){const g=[];(ws||[]).forEach(w=>{const s=w.toLowerCase();
 function ageAt(birth,ref){if(!birth) return null; const b=new Date(birth+'T12:00:00'), r=new Date(ref+'T12:00:00'); let a=r.getFullYear()-b.getFullYear(); if(r.getMonth()<b.getMonth()||(r.getMonth()===b.getMonth()&&r.getDate()<b.getDate())) a--; return a;}
 const probeStart=y=>Object.keys(y.days||{}).filter(d=>y.days[d].kind==='probe').sort()[0]||`${y.year}-03-01`;
 function mailHref(r){const y=Y(), v=r.firstName||r.name.split(' ')[0];
-  const T={zugelassen:[`Libanon on Stage ${y.year}: Du bist dabei!`,`Hallo ${v},\n\nschön, dass du dich angemeldet hast – du bist bei Libanon on Stage ${y.year} (${y.play}) dabei! Alle Infos zu Probewoche, Tour, Fahrten und Unterkunft findest du im LOS Leitstand${LIVE?`:\n${location.origin+location.pathname}\n\nMelde dich dort mit genau dieser E-Mail-Adresse an (${r.email}) – entweder mit „Mit Google anmelden“ oder ohne Google-Konto über „Anmelde-Link per Mail schicken“`:''}.\n\nBis bald,\neure LOS-Leitung`],
+  const T={zugelassen:[`Libanon on Stage ${y.year}: Du bist dabei!`,`Hallo ${v},\n\nschön, dass du dich angemeldet hast – du bist bei Libanon on Stage ${y.year} (${y.play}) dabei! Alle Infos zu Probewoche, Tour, Fahrten und Unterkunft findest du in LOS Backstage${LIVE?`:\n${location.origin+location.pathname}\n\nMelde dich dort mit genau dieser E-Mail-Adresse an (${r.email}) – entweder mit „Mit Google anmelden“ oder ohne Google-Konto über „Anmelde-Link per Mail schicken“`:''}.\n\nBis bald,\neure LOS-Leitung`],
     Warteliste:[`Libanon on Stage ${y.year}: Du stehst auf der Warteliste`,`Hallo ${v},\n\ndanke für deine Anmeldung! Im Moment sind alle Plätze vergeben, deshalb stehst du auf unserer Warteliste. Sobald etwas frei wird, melden wir uns direkt bei dir.\n\nViele Grüße,\neure LOS-Leitung`],
     abgesagt:[`Libanon on Stage ${y.year}: Deine Anmeldung`,`Hallo ${v},\n\nvielen Dank für deine Anmeldung und dein Interesse an Libanon on Stage. Leider können wir dir dieses Jahr keinen Platz anbieten. Wir freuen uns, wenn du es nächstes Jahr wieder versuchst – und zu unseren Vorstellungen bist du natürlich herzlich eingeladen.\n\nViele Grüße,\neure LOS-Leitung`]}[r.status];
   return T&&r.email?`mailto:${encodeURIComponent(r.email)}?subject=${encodeURIComponent(T[0])}&body=${encodeURIComponent(T[1])}`:'';}
@@ -949,7 +958,7 @@ function afterReady(){
 
 /* Bildschirme vor dem eigentlichen Leitstand */
 function authScreen(){
-  const box=(inner)=>`<div class="authwrap"><div class="authbox panel"><div class="authbrand"><span class="cross" aria-hidden="true"></span>LOS Leitstand</div>${inner}</div></div>`;
+  const box=(inner)=>`<div class="authwrap"><div class="authbox panel"><div class="authbrand"><span class="cross" aria-hidden="true"></span>LOS Backstage</div>${inner}</div></div>`;
   const out=`<button class="btn ghost" data-act="logout" style="margin-top:12px">Abmelden</button>`;
   switch(auth.state){
     case 'init': case 'checking': case 'loading': return box(`<p class="muted">${auth.state==='loading'?'Lade die Daten …':'Einen Moment …'}</p>`);
@@ -968,10 +977,10 @@ function authScreen(){
       <label class="f">E-Mail-Adresse<input type="email" id="lm-mail" autocomplete="email" inputmode="email"></label>
       <button class="btn primary" data-act="link-finish" style="width:100%;padding:10px;margin-top:8px">Anmelden</button>
       <button class="btn ghost" data-act="link-cancel" style="margin-top:8px">Abbrechen</button>${auth.error?`<p class="small warnline">${esc(auth.error)}</p>`:''}`);
-    case 'noaccess': return box(`<h2>Noch nicht freigeschaltet</h2><p>Du bist angemeldet als <b>${esc(auth.email)}</b>. Diese Adresse ist im Leitstand noch nicht freigeschaltet.</p>
+    case 'noaccess': return box(`<h2>Noch nicht freigeschaltet</h2><p>Du bist angemeldet als <b>${esc(auth.email)}</b>. Diese Adresse ist in LOS Backstage noch nicht freigeschaltet.</p>
       <p class="small muted">Schick der LOS-Leitung genau diese Adresse. Sobald sie dich unter „Zugänge & Rechte“ eingetragen hat, geht es hier automatisch weiter. Oder: abmelden und mit der Adresse aus deiner LOS-Anmeldung wieder anmelden – per Google oder per Anmelde-Link.</p>${out}`);
     case 'noyear': return box(`<h2>Gerade ist kein LOS-Jahr offen</h2><p class="muted">Sobald die Leitung das nächste Jahr angelegt hat, siehst du es hier.</p>${out}`);
-    case 'setup': return box(`<h2>Willkommen im LOS Leitstand</h2><p class="small">Die Datenbank ist noch leer. Wer bist du?</p>
+    case 'setup': return box(`<h2>Willkommen bei LOS Backstage</h2><p class="small">Die Datenbank ist noch leer. Wer bist du?</p>
       <label class="f">Dein Name<input type="text" id="su-name" value="${esc(auth.name)}"></label>
       <label class="f" style="margin-top:8px">Deine Position<select id="su-pos">${Object.entries(ACCESS).filter(([k])=>k.startsWith('leitung')).map(([k,l])=>`<option value="${k}">${esc(l.replace('Leitung – ',''))}</option>`).join('')}</select></label>
       <div class="stack" style="gap:8px;margin-top:14px">
@@ -1125,11 +1134,11 @@ function topbar(){
 function shell(content){
   const y=Y();
   return `<div class="shell">
-  <aside class="side"><div class="brand"><span class="cross" aria-hidden="true"></span>LOS Leitstand<small>Libanon on Stage · ${y.year} · ${esc(y.play)}</small></div>
+  <aside class="side"><div class="brand"><span class="cross" aria-hidden="true"></span>LOS Backstage<small>Libanon on Stage · ${y.year} · ${esc(y.play)}</small></div>
     <nav class="nav" aria-label="Module">${visibleViews().map(v=>`<button data-act="nav" data-v="${v.id}" ${ui.view===v.id?'aria-current="page"':''}><span>${v.label}</span>${badge(v.id)}</button>`).join('')}</nav>
     <div class="side-foot">${LIVE?`${esc(auth.email)}<br>${esc(roleName())}${ui.role!==auth.role?' (Vorschau)':''}<br><button class="btn ghost" data-act="logout">Abmelden</button>`:`Angemeldet als ${roleName()}${ui.role==='ensemble'?' ('+esc(first(ui.me))+')':''}`}</div></aside>
   <main class="main"><div class="wrap">
-    <div class="mtop"><div class="brand"><span class="cross" aria-hidden="true"></span>LOS Leitstand</div></div>
+    <div class="mtop"><div class="brand"><span class="cross" aria-hidden="true"></span>LOS Backstage</div></div>
     ${topbar()}
     ${yearBanner(y)}
     ${content}</div></main>${bottomNav()}</div>`;
@@ -1495,12 +1504,12 @@ function teamReg(y){
       <div class="small muted">${facts.map(esc).join(' · ')||'&nbsp;'}${f==='Warteliste'&&r.waitDate?` · auf der Warteliste seit ${fDate(r.waitDate,{day:'numeric',month:'numeric'})}`:''}</div>
       ${regDetails(r,ref)}</div></div>
     <div class="row" style="gap:6px">${actions(r)}</div></div></li>`}).join('')}</ul>`:empty({neu:'Keine neuen Anmeldungen.',Warteliste:'Niemand auf der Warteliste.',zugelassen:'Noch niemand zugelassen.',abgesagt:'Keine Absagen.'}[f])}
-  <p class="small muted">Fotos und Führerscheine bleiben in Google Drive – der Leitstand verlinkt sie nur. Beim Zusagen wird die Person automatisch mit ihren Gewerk-Wünschen ins Team übernommen.</p>`;
+  <p class="small muted">Fotos und Führerscheine bleiben in Google Drive – LOS Backstage verlinkt sie nur. Beim Zusagen wird die Person automatisch mit ihren Gewerk-Wünschen ins Team übernommen.</p>`;
 }
 function teamSheet(y){
   const ed=canEdit(); const fi=y.formImport; const found=new Set(fi?.found||[]); const fc=LIVE?formCfg():{};
   const auto=LIVE&&ed?`<section class="panel section"><div class="row"><h2 style="margin:0">Automatischer Abgleich</h2>${fc.url&&fc.token?'<span class="tag green">eingerichtet</span>':'<span class="tag gold">noch nicht eingerichtet</span>'}</div>
-    <p class="small muted">Das Google-Skript am Antwort-Sheet liefert die Antworten direkt hierher. Der Leitstand gleicht beim Öffnen und danach alle 15 Minuten ab, solange jemand aus der Leitung die App offen hat. Einrichtung: ANLEITUNG.md, Schritt 6.</p>
+    <p class="small muted">Das Google-Skript am Antwort-Sheet liefert die Antworten direkt hierher. LOS Backstage gleicht beim Öffnen und danach alle 15 Minuten ab, solange jemand aus der Leitung die App offen hat. Einrichtung: ANLEITUNG.md, Schritt 6.</p>
     <div class="grid"><label class="f" style="grid-column:span 2">Skript-Adresse (Web-App-URL)<input type="text" id="fs-url" value="${esc(fc.url||'')}" placeholder="https://script.google.com/macros/s/…/exec"></label>
     <label class="f">Schlüssel<input type="text" id="fs-token" value="${esc(fc.token||'')}" placeholder="aus dem Skript-Protokoll"></label></div>
     <div class="row" style="justify-content:flex-start;margin-top:8px"><button class="btn" data-act="fs-save">Speichern</button><button class="btn primary" data-act="fs-sync" ${fc.url&&fc.token?'':'disabled'}>Jetzt abgleichen</button></div></section>`:'';
@@ -1508,11 +1517,11 @@ function teamSheet(y){
   <section class="panel"><h2>So kommt die Anmeldung in den Leitstand</h2>
     <ol class="steps">
       <li><b>Anmeldung bleibt im Google Formular.</b> Am Formular ändert sich nichts – Interessierte melden sich wie gewohnt an.</li>
-      <li><b>Antworten landen im Google Sheet.</b> Der Leitstand liest dieses Sheet und legt jede neue Zeile als Anmeldung „Neu“ an. ${LIVE?'Das passiert automatisch über das Google-Skript (siehe oben); notfalls fügst du die Zeilen rechts ein.':'In der echten App passiert das automatisch über das LOS-Konto; im Prototyp fügst du die Zeilen hier ein.'}</li>
-      <li><b>Entscheiden im Leitstand.</b> Zulassen, Warteliste und Absagen macht ihr unter „Anmeldungen“. Der Status gehört dem Leitstand – das Sheet bleibt eure unveränderte Rohliste (optional schreibt die echte App eine Spalte „Status LOS“ zurück).</li>
-      <li><b>Mail an die Person.</b> Nach jeder Entscheidung öffnet der Leitstand eine fertige Zu-, Warte- oder Absage-Mail, die du nur noch abschickst.</li>
+      <li><b>Antworten landen im Google Sheet.</b> LOS Backstage liest dieses Sheet und legt jede neue Zeile als Anmeldung „Neu“ an. ${LIVE?'Das passiert automatisch über das Google-Skript (siehe oben); notfalls fügst du die Zeilen rechts ein.':'In der echten App passiert das automatisch über das LOS-Konto; im Prototyp fügst du die Zeilen hier ein.'}</li>
+      <li><b>Entscheiden in LOS Backstage.</b> Zulassen, Warteliste und Absagen macht ihr unter „Anmeldungen“. Der Status gehört LOS Backstage – das Sheet bleibt eure unveränderte Rohliste (optional schreibt die echte App eine Spalte „Status LOS“ zurück).</li>
+      <li><b>Mail an die Person.</b> Nach jeder Entscheidung öffnet LOS Backstage eine fertige Zu-, Warte- oder Absage-Mail, die du nur noch abschickst.</li>
     </ol>
-    <p class="small muted" style="margin:6px 0 0">Doppelte Anmeldungen erkennt der Leitstand an der E-Mail-Adresse: Wer das Formular zweimal ausfüllt, wird aktualisiert statt doppelt angelegt – der Status bleibt.</p>
+    <p class="small muted" style="margin:6px 0 0">Doppelte Anmeldungen erkennt LOS Backstage an der E-Mail-Adresse: Wer das Formular zweimal ausfüllt, wird aktualisiert statt doppelt angelegt – der Status bleibt.</p>
   </section>
   <section class="panel"><h2>Antworten abgleichen</h2>
     ${ed?`<p class="small" style="margin-top:-6px">Im Google Sheet alles markieren (Strg/Cmd+A), kopieren und hier einfügen – mit Kopfzeile. Oder: Datei › Herunterladen › CSV und hier hochladen.</p>
@@ -1524,7 +1533,7 @@ function teamSheet(y){
     <p class="small muted" style="margin:8px 0 0">${LIVE?'Notlösung, falls das Google-Skript einmal nicht erreichbar ist.':'Im Prototyp bleiben eingefügte Daten nur in deinem Browser.'}</p>`:'<p class="muted">Nur die Leitung kann Antworten abgleichen.</p>'}
     ${fi?`<p class="small" style="margin:10px 0 0"><span class="okline">Letzter Abgleich ${new Date(fi.at).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}:</span> ${fi.added} neu, ${fi.updated} aktualisiert${fi.skipped?`, ${fi.skipped} leer übersprungen`:''}.</p>`:''}
   </section></div>
-  <section class="panel scroll-x" style="margin-top:18px;padding:0"><table class="t"><thead><tr><th>Spalte im Google Formular</th><th>Wird im Leitstand zu</th><th>${fi?'Beim letzten Abgleich':''}</th></tr></thead><tbody>
+  <section class="panel scroll-x" style="margin-top:18px;padding:0"><table class="t"><thead><tr><th>Spalte im Google Formular</th><th>Wird in LOS Backstage zu</th><th>${fi?'Beim letzten Abgleich':''}</th></tr></thead><tbody>
   ${FORM_COLS.map(([k,col,lbl])=>`<tr><td>${esc(col)}</td><td>${esc(lbl)}</td><td>${fi?(found.has(k)?'<span class="okline">✓ gefunden</span>':'<span class="warnline">nicht gefunden</span>'):''}</td></tr>`).join('')}
   </tbody></table></section>
   <p class="small muted">Die Spalten werden am Text der Frage erkannt, nicht an der Reihenfolge. Wenn ihr eine Frage im Formular umformuliert, bitte kurz Bescheid geben, damit die Zuordnung angepasst wird.</p>`;
@@ -1829,7 +1838,7 @@ document.addEventListener('click',e=>{
       FB.fs.setDoc(FB.fs.doc(db,'config/private'),enc({url,token})).then(()=>{toast('Gespeichert.'); dirtyIds.delete('fs-url'); dirtyIds.delete('fs-token');}).catch(e=>toast('Nicht gespeichert: '+e.message)); return;}
     case 'fs-sync': syncForm(false); return;
     case 'backup': {const blob=new Blob([JSON.stringify({exportiert:new Date().toISOString(),...S},null,1)],{type:'application/json'});
-      const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`LOS-Leitstand-Sicherung-${todayIso()}.json`; document.body.appendChild(a); a.click(); a.remove(); toast('Sicherung wird heruntergeladen.'); return;}
+      const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`LOS-Backstage-Sicherung-${todayIso()}.json`; document.body.appendChild(a); a.click(); a.remove(); toast('Sicherung wird heruntergeladen.'); return;}
     case 'yr-del': {const k=+el.dataset.y; ask(`LOS ${k} – ${S.years[k].play} mit allen Terminen, Personen, Finanzen und Anmeldungen endgültig löschen? Das kann niemand rückgängig machen.`,'Endgültig löschen',()=>{
       delete S.years[k]; if(ui.year===k) ui.year=LATEST(); commit(`LOS ${k} ist gelöscht.`);}); return;}
     case 'save-now': if(LIVE){ persist().then(ok=>ok&&FB.fs.waitForPendingWrites(db)).then(()=>{ if(!saveFailed){lastSaved=new Date(); updSave(); toast(`Alles gespeichert (${hhmm(lastSaved)}).`);} }); return; }
