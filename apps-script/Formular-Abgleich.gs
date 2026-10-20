@@ -1,9 +1,9 @@
 /**
- * LOS Leitstand – Formular-Abgleich
+ * LOS Backstage – Formular-Abgleich
  *
  * Dieses Skript hängt am Google Sheet mit den Antworten des Anmeldeformulars.
- * Es gibt die Antworten an den LOS Leitstand weiter (nur mit dem richtigen Schlüssel)
- * und trägt auf Wunsch den Status aus dem Leitstand in die Spalte "Status LOS" ein.
+ * Es gibt die Antworten an LOS Backstage weiter (nur mit dem richtigen Schlüssel)
+ * und trägt auf Wunsch den Status aus LOS Backstage in die Spalte "Status LOS" ein.
  *
  * Einrichtung (einmalig, am besten mit dem LOS-Konto info@):
  *  1. Antwort-Sheet öffnen › Erweiterungen › Apps Script.
@@ -26,7 +26,7 @@
  *  Der private Schlüssel bleibt im Skript und geht nie an den Browser.
  *
  * Schlüssel verloren oder weitergegeben? Funktion "neuerSchluessel" ausführen und
- * den neuen Schlüssel im Leitstand eintragen. Der alte gilt dann nicht mehr.
+ * den neuen Schlüssel in LOS Backstage eintragen. Der alte gilt dann nicht mehr.
  */
 
 const BLATT = '';               // leer = erstes Tabellenblatt (dort landen die Formularantworten)
@@ -40,7 +40,7 @@ function einrichten() {
     props.setProperty('LOS_TOKEN', t);
   }
   const sh = blatt_();
-  Logger.log('Schlüssel für den Leitstand: ' + t);
+  Logger.log('Schlüssel für LOS Backstage: ' + t);
   Logger.log('Tabellenblatt: "' + sh.getName() + '" mit ' + Math.max(0, sh.getLastRow() - 1) + ' Antworten');
 }
 
@@ -49,7 +49,7 @@ function neuerSchluessel() {
   einrichten();
 }
 
-/** Leitstand holt die Antworten */
+/** LOS Backstage holt die Antworten */
 function doGet(e) {
   if (!erlaubt_(e && e.parameter && e.parameter.token)) return json_({ ok: false, error: 'Falscher Schlüssel' });
   if (e.parameter.action === 'regiondo') return regiondo_(e.parameter.from, e.parameter.to);
@@ -62,7 +62,7 @@ function doGet(e) {
   return json_({ ok: true, blatt: sh.getName(), header: ohneStatus(kopf), rows: zeilen.map(ohneStatus) });
 }
 
-/** Leitstand meldet Entscheidungen zurück (zugelassen / Warteliste / abgesagt) */
+/** LOS Backstage meldet Entscheidungen zurück (zugelassen / Warteliste / abgesagt) */
 function doPost(e) {
   let body;
   try { body = JSON.parse(e.postData.contents); } catch (x) { return json_({ ok: false, error: 'Ungültige Anfrage' }); }

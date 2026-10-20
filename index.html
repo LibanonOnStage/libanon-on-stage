@@ -1026,10 +1026,11 @@ function freshState(name,acc){
     milestones:[{id:'ms1',date:'2026-11-01',label:'Anmeldung öffnet',team:false},{id:'ms2',date:'2027-03-12',label:'Probewoche',team:false},{id:'ms3',date:'2027-04-01',label:'Tour-Wochenende 1',team:false},{id:'ms4',date:'2027-04-08',label:'Tour-Wochenende 2',team:false},{id:'ms5',date:'2027-05-01',label:'Tour-Wochenende 3',team:false}],
     days,people:[{id:POS_ID[acc]||uid('p'),name,groups:['leitung'],pos:(ACCESS[acc]||'').replace('Leitung – ',''),tel:'',lic:'',email:auth.email,access:acc}],
     events:[],roles:[],shows:[],trips:[],vehicles:[],stays:[],meetings:[],registrations:[],form:src.form,
-    crews:src.crews.map(c=>({...c,lead:''})),tasks:src.tasks.map(t=>({...t})),
+    crews:src.crews.map(c=>({...c,lead:''})),tasks:src.tasks.map(({link,...t})=>({...t,done:false})),
     costs:src.costs.map(c=>({...c,plan:0,actual:0,closed:false,cat:catOf(c)})),other:[{id:'o1',name:'Merch-Verkauf',amount:0}],
     donCash:0,donOnline:0,donLink:'',goal:50000,feedback:{open:false,questions:src.feedback.questions,results:null,responses:[],learnings:[]}};
-  return {years:{2027:y},about:s.about,history:{2026:{},2025:{},2024:{},2023:{},2022:{}}};
+  const about={...s.about,links:[['Website Libanon on Stage','https://libanon-on-stage.de/']],material:[]}; /* keine Platzhalter-Links */
+  return {years:{2027:y},about,history:{2026:{},2025:{},2024:{},2023:{},2022:{}}};
 }
 async function runSetup(mode){
   try{ const snap=await FB.fs.getDocsFromServer(FB.fs.collection(db,'years')); if(!snap.empty){ toast('Es gibt schon Daten. Die Seite lädt neu.'); setTimeout(()=>location.reload(),1200); return; } }
@@ -1121,8 +1122,8 @@ function authScreen(){
       <label class="f" style="margin-top:8px">Deine Position<select id="su-pos">${Object.entries(ACCESS).filter(([k])=>k.startsWith('leitung')).map(([k,l])=>`<option value="${k}">${esc(l.replace('Leitung – ',''))}</option>`).join('')}</select></label>
       <div class="stack" style="gap:8px;margin-top:14px">
         <button class="btn primary" data-act="setup-go" data-mode="real">Echt starten: LOS 2027 – Les Misérables</button>
-        <button class="btn" data-act="setup-go" data-mode="demo">Erst ausprobieren: mit Beispieldaten</button></div>
-      <p class="small muted" style="margin:12px 0 0">„Echt starten“ legt 2027 mit den echten Terminen (Probewoche 12.–21.03., Tour 01.–04.04., 08.–11.04., 01.–03.05.), den Gewerken, Vorlage-Aufgaben und Kostenposten an. Die Beispieldaten könnt ihr später unter „Projektjahre“ wieder löschen.</p>${out}`);
+        ${window.LOS_SHOW_DEMO||/[?&]beispieldaten/.test(location.search)?'<button class="btn" data-act="setup-go" data-mode="demo">Erst ausprobieren: mit Beispieldaten</button>':''}</div>
+      <p class="small muted" style="margin:12px 0 0">„Echt starten“ legt 2027 mit den echten Terminen (Probewoche 12.–21.03., Tour 01.–04.04., 08.–11.04., 01.–03.05.), den Gewerken, Vorlage-Aufgaben und Kostenposten an – ohne Beispielpersonen. Alles Weitere tragt ihr danach selbst ein.</p>${out}`);
   }
   return '';
 }

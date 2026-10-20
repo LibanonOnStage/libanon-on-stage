@@ -165,3 +165,11 @@ Damit das Projekt nicht an einem einzigen Konto hängt:
 - `firestore.rules` – die Sicherheitsregeln (Schritt 3)
 - `apps-script/Formular-Abgleich.gs` – das Skript fürs Antwort-Sheet (Schritt 9)
 - `firebase.json` – nur nötig, falls ihr später lieber mit dem Firebase-Werkzeug statt GitHub arbeitet
+
+## Als App auf dem Handy
+
+- **iPhone (Safari):** Teilen-Symbol → „Zum Home-Bildschirm“. Öffnet sich danach ohne Adressleiste.
+- **Android (Chrome):** Seite in Chrome selbst öffnen (nicht im WhatsApp- oder Instagram-Browser) → Menü ⋮ → **„App installieren“** bzw. „Zum Startbildschirm hinzufügen“ → **Installieren** (nicht „Verknüpfung“).
+- **Android (Samsung Internet):** Menü → „Seite hinzufügen zu“ → „Startbildschirm“.
+- Wurde das Symbol angelegt, bevor die App-Dateien (manifest.webmanifest, sw.js, Icons) auf GitHub lagen, öffnet es sich wie eine normale Webseite: Symbol löschen und neu hinzufügen.
+- `sw.js` sorgt nur dafür, dass Android die Seite als App erkennt. Sie speichert nichts zwischen – neue Versionen auf GitHub sind sofort da.
