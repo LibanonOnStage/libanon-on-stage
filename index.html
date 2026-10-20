@@ -914,6 +914,7 @@ function fixUi(){
   if(!person(ui.me)) ui.me=(y.people.find(p=>ROLE_OF(p.access)==='ensemble')||y.people[0]||{}).id||'';
 }
 
+const APP_VERSION='2026-10-20c';
 /* Verbindung, Login, Abos */
 async function liveInit(){
   try{
@@ -952,7 +953,7 @@ function onUser(u){
   },e=>{ console.error(e); auth.state='noaccess'; auth.error=e.code||String(e); render(); }));
 }
 function startData(){
-  auth.state='loading'; render();
+  auth.state='loading'; auth.loadAt=Date.now(); render(); setTimeout(()=>{ if(auth.state==='loading') render(); },9000);
   if(auth.role==='leitung'){ subColl('years'); subColl('users'); subDoc('app/history'); subDoc('config/private'); }
   else subColl('years',FB.fs.query(FB.fs.collection(db,'years'),FB.fs.where('archived','==',false)));
   subDoc('app/about');
@@ -1098,10 +1099,14 @@ function afterReady(){
 
 /* Bildschirme vor dem eigentlichen Leitstand */
 function authScreen(){
-  const box=(inner)=>`<div class="authwrap"><div class="authbox panel"><div class="authbrand"><span class="cross" aria-hidden="true"></span>LOS Backstage</div>${inner}</div></div>`;
+  const box=(inner)=>`<div class="authwrap"><div class="authbox panel"><div class="authbrand"><span class="cross" aria-hidden="true"></span>LOS Backstage</div>${inner}<p class="small muted" style="margin:14px 0 0;opacity:.6;font-size:11.5px">Version ${APP_VERSION}</p></div></div>`;
   const out=`<button class="btn ghost" data-act="logout" style="margin-top:12px">Abmelden</button>`;
   switch(auth.state){
-    case 'init': case 'checking': case 'loading': return box(`<p class="muted">${auth.state==='loading'?'Lade die Daten …':'Einen Moment …'}</p>`);
+    case 'init': case 'checking': case 'loading': {const slow=auth.state==='loading'&&Date.now()-(auth.loadAt||0)>8500;
+      return box(`<p class="muted">${auth.state==='loading'?'Lade die Daten …':'Einen Moment …'}</p>${slow?`<p class="small warnline">Das dauert ungewöhnlich lange.</p>
+        <p class="small muted">Angemeldet als ${esc(auth.email)} · wartet auf: ${esc([...waiting].join(', ')||'–')} · Version ${APP_VERSION}</p>
+        <p class="small muted">Hilft meist: Schloss-Symbol neben der Adresse → Website-Einstellungen → Daten löschen, dann neu laden.</p>
+        <div class="row" style="justify-content:flex-start;gap:8px"><button class="btn" onclick="location.reload()">Neu laden</button><button class="btn ghost" data-act="logout">Abmelden</button></div>`:''}`);}
     case 'error': return box(`<p class="warnline">${esc(auth.error)}</p><button class="btn" onclick="location.reload()">Neu laden</button>`);
     case 'login': return box(`<p>Libanon on Stage · Planung, Proben und Tour an einem Ort.</p>
       <p class="small muted" style="margin:0 0 12px">Melde dich mit der Adresse an, die die Leitung für dich freigeschaltet hat – meistens die aus deiner Anmeldung.</p>
