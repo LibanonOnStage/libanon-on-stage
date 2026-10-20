@@ -258,8 +258,39 @@ table.t td.r,table.t th.r{text-align:right}
 .cm-cell input{width:100%;margin-top:4px}
 .cm-line{font-size:13.5px;line-height:1.35;padding:1px 0}
 .cm-line b{font-weight:600}
-.cost-t input[type=text]{min-width:170px;width:100%}
-.cost-t .numin{width:100px;text-align:right}
+.cost-t input[type=text]{min-width:0;width:100%}
+.cost-t select{max-width:150px}
+.cost-t .numin{width:92px;text-align:right}
+.cost-t th,.cost-t td{padding:7px 6px}
+.cost-t td.c-name{min-width:170px;width:40%}
+.cost-t td.c-del{width:34px;text-align:center}
+.cost-t td.c-del .btn{padding:4px 6px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding:14px 18px}
+.kpis>div+div{border-left:1px solid var(--line);padding-left:14px}
+.kpis .k{font-size:13px;color:var(--muted)}
+.kpis .v{font-family:var(--head);font-weight:600;font-size:28px;line-height:1.1}
+.kpis .s{font-size:12px;color:var(--muted)}
+.cost-t input,.cost-t select,.inc-list input{padding:4px 7px;font-size:14px}
+table.t.cost-t th{padding:4px 6px}
+table.t.cost-t td{padding:3px 6px}
+.inc-list>li{padding:7px 0}
+.money-grid .panel{padding:14px 16px}
+@media (max-width:880px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpis>div:nth-child(3){border-left:0;padding-left:0}}
+.money-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:1180px){.money-grid{grid-template-columns:1fr}}
+@media (max-width:700px){
+  .cost-t thead{display:none}
+  .cost-t,.cost-t tbody{display:block}
+  .cost-t tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 10px;padding:10px 0;border-bottom:1px solid var(--line)}
+  table.t.cost-t td{border:0;padding:0;text-align:left!important}
+  .cost-t tr{position:relative}
+  table.t.cost-t td.c-name{grid-column:1/-1;width:auto;min-width:0;padding-right:40px}
+  table.t.cost-t tr.c-new td.c-name,table.t.cost-t tr.c-sum td.c-name{padding-right:0}
+  table.t.cost-t td.c-del{position:absolute;right:0;top:14px;width:auto}
+  .cost-t td[data-label]::before{content:attr(data-label);display:block;font-size:12px;color:var(--muted)}
+  .cost-t .numin,.cost-t select{width:100%;max-width:none}
+  .cost-t td:empty{display:none}
+}
 .ph{all:unset;cursor:pointer;flex:none;border-radius:50%;overflow:hidden;display:inline-grid;place-items:center;font:700 12px/1 var(--head);letter-spacing:.02em;background:hsl(var(--h) 45% 88%);color:hsl(var(--h) 45% 26%);border:1px solid var(--line)}
 .ph img{width:100%;height:100%;object-fit:cover;display:block}
 .ph:hover{border-color:var(--ink)}
@@ -317,6 +348,61 @@ table.t td.r,table.t th.r{text-align:right}
 .authbrand .cross{flex:none}
 .ordiv{display:flex;align-items:center;gap:10px;margin:16px 0 12px;color:var(--muted);font-size:13px}
 .ordiv::before,.ordiv::after{content:'';flex:1;border-top:1px solid var(--line)}
+.taskrow{display:grid;grid-template-columns:minmax(0,1fr) 190px 150px 36px;gap:8px;align-items:center;margin-bottom:6px}
+@media (max-width:700px){.taskrow{grid-template-columns:1fr 1fr 36px}.taskrow input[type=text]{grid-column:1/-1}}
+.castsum{display:flex;gap:18px;flex-wrap:wrap;margin:-4px 0 6px;font-size:14px}
+.castgrid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;align-items:start}
+@media (max-width:1100px){.castgrid{grid-template-columns:1fr}}
+.rtable{padding:12px 16px}
+.rrow{display:grid;grid-template-columns:minmax(120px,1fr) minmax(0,1.5fr) minmax(0,1.5fr) 150px 92px;gap:8px;align-items:center;padding:7px 0;border-top:1px solid var(--line)}
+.rrow.rhead{font-size:12.5px;color:var(--muted);font-weight:600;border-top:0;padding-top:10px}
+.rcell{display:flex;gap:6px;align-items:center;min-width:0}
+.rcell select{min-width:0;flex:1;padding:4px 6px;font-size:14px}
+.rstatus{display:flex;gap:4px;align-items:center}
+.ractions{display:flex;gap:2px;justify-content:flex-end;white-space:nowrap}
+.rcomments{grid-column:1/-1;background:var(--bg);border-radius:var(--radius-s);padding:8px 10px}
+.iconbtn{all:unset;cursor:pointer;padding:3px 7px;border-radius:6px;font-size:14px;color:var(--muted);border:1px solid transparent}
+.iconbtn:hover{border-color:var(--line);color:var(--ink)}
+.iconbtn.ok{color:var(--green);font-weight:700}
+.iconbtn:focus-visible{outline:2px solid var(--red)}
+.whoplays{padding:14px 16px;position:sticky;top:12px}
+.whoplays .list>li{padding:8px 0}
+.trow{display:grid;grid-template-columns:minmax(0,1.4fr) 190px minmax(0,1.2fr) 170px 36px;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.trow.playrow{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) minmax(0,1fr)}.trow.playrow.mine{background:var(--gold-soft);margin:0 -16px;padding-left:16px;padding-right:16px}
+.trow.overrow{grid-template-columns:minmax(0,1.4fr) 190px 150px minmax(0,1fr)}.trow.actrow{grid-template-columns:minmax(0,1.3fr) 120px 150px minmax(0,1.6fr)}
+select.onsel{border-color:var(--green,#2e7d32)}
+.crewlead{background:var(--gold-soft);border-radius:8px;padding:6px 10px;margin:10px 0 4px;display:flex;gap:6px;align-items:baseline;flex-wrap:wrap}
+.crewlist{list-style:none;margin:6px 0 0;padding:0}.crewlist li{padding:5px 0;border-top:1px solid var(--line);font-size:14.5px}.crewlist li:first-child{border-top:0}
+.crewedit{display:flex;flex-direction:column;gap:8px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.trow.thead{font-size:12.5px;color:var(--muted);font-weight:600;border-top:0}
+.trow select{width:100%;padding:4px 6px;font-size:14px}
+.tname{display:flex;gap:10px;align-items:center;min-width:0}
+select.warnsel{border-color:var(--red)}
+.fnlist{display:flex;flex-direction:column;gap:6px;margin-top:8px}.fnrow{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:14px}.fnrow select{max-width:60%}
+.crewcard{padding:14px 16px}
+@media (max-width:760px){
+  .rrow,.trow{grid-template-columns:1fr 1fr;gap:6px 10px}
+  .rrow.rhead,.trow.thead{display:none}
+  .rname,.tname{grid-column:1/-1}
+  .trow.playrow,.trow.overrow,.trow.actrow{grid-template-columns:1fr 1fr}.playrow .pname{grid-column:1/-1}.playrow .tname{grid-column:auto}
+  .rcell[data-label]::before,.trow>[data-label]::before{content:attr(data-label);display:block;font-size:12px;color:var(--muted);width:100%}
+  .rcell{flex-wrap:wrap}
+  .rcell .ph{display:none}
+}
+.qtext{margin:8px 0;font-size:16px}
+.qanswer{background:var(--green-soft);border-left:3px solid var(--green);padding:8px 12px;border-radius:0 var(--radius-s) var(--radius-s) 0;font-size:15px}
+.qcard textarea{width:100%}
+.crewchip{all:unset;cursor:pointer;font-size:13px;padding:3px 9px;border-radius:20px;border:1px solid var(--line);background:var(--surface);color:var(--muted)}
+.crewchip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.crewchip:focus-visible{outline:2px solid var(--red)}
+.chipx{all:unset;cursor:pointer;margin-left:4px;color:var(--muted);font-size:12px}
+.hint{font-size:12.5px;margin-top:4px;line-height:1.3}
+.hint.warn{color:var(--red);font-weight:600}
+.hint.info{color:var(--muted)}
+.over-t td{vertical-align:top}
+.linkrow,.msrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.linkrow input{flex:1;min-width:160px}
+input[type=url]{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-s);padding:7px 9px;max-width:100%}
 .authbox input[type=email]{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-s);padding:9px 10px}
 .side-foot .btn{margin-top:6px;padding:3px 10px;font-size:13px}
 .muted.small-inline{font-size:13px}
@@ -341,6 +427,10 @@ const uid = p => p + '-' + Math.random().toString(36).slice(2,8);
 const val = id => (document.getElementById(id)?.value ?? '').trim();
 
 const GROUPS={ensemble:'Schauspiel',band:'Band',technik:'Ton & Licht',bautrupp:'Bautrupp',kostuem:'Kostüm',requisite:'Requisite','fruehes-team':'Frühes Team',leitung:'Leitung',regie:'Regie & Regieassistenz'};
+const SYS_GROUPS={'fruehes-team':'Frühes Team'};
+const gLabel=(id,y)=>{y=y||Y(); const c=y&&(y.crews||[]).find(x=>x.g===id); return c?c.label:(SYS_GROUPS[id]||GROUPS[id]||id);};
+const crewsOf=(p,y)=>{y=y||Y(); return (y.crews||[]).filter(c=>(p.groups||[]).includes(c.g));};
+const normName=n=>String(n||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim();
 const ACCESS={'leitung-ext':'Leitung – Externe Leitung','leitung-int':'Leitung – Interne Leitung','leitung-log':'Leitung – Logistik & Finanzen','leitung-mfd':'Leitung – Marketing & Fundraising',regie:'Regie',ra:'Regieassistenz',team:'Team (Ensemble & Gewerke)'};
 
 /* ===================== Google-Formular ===================== */
@@ -366,7 +456,7 @@ const FORM_COLS=[
   ['photoLink','Bild von dir (Drive)','Foto in der Besetzung',/bild von dir/i],
   ['diet','Essgewohnheiten, Allergien …','Verpflegung',/essgewohnheit|allergi/i],
   ['probeNote','Sonstige Mitteilungen Probewoche','Hinweis Probewoche',/mitteilungen/i],
-  ['driver','Als Fahrer zur Verfügung?','Fahrer:in',/als fahrer/i],
+  ['driver','Als Fahrer zur Verfügung?','Fahrer',/als fahrer/i],
   ['licLinks','Bild des Führerscheins (Drive)','Führerschein (nur Leitung)',/führerschein/i],
   ['car','Auto mit x Plätzen','Fahrzeug-Angebot',/auto mit/i],
   ['referral','Diese Person braucht das Formular …','Empfehlung',/braucht das formular/i],
@@ -400,12 +490,12 @@ function importRows(y,rows){
     const g=k=>idx[k]!=null?String(r[idx[k]]||'').trim():'';
     const firstName=g('firstName'), lastName=g('lastName'), email=g('email').toLowerCase(), name=`${firstName} ${lastName}`.trim();
     if(!name&&!email){skipped++;return}
-    const key=email||name.toLowerCase();
+    const key=(email||'')+'|'+normName(name);
     const data={source:'form',key,name:name||email,firstName:firstName||name.split(' ')[0],lastName,email,phone:g('phone'),addr:g('addr'),ts:g('ts'),date:deDate(g('ts'))||todayIso(),
       avail:g('avail'),tight:g('tight'),been:g('been'),wishes:splitW(g('wish')),wish:splitW(g('wish')).join(', '),roleWish:g('roleWish'),height:g('height'),exp:g('exp'),
       photoLink:g('photoLink').split(/,\s*/)[0]||'',diet:g('diet'),probeNote:g('probeNote'),driver:/^ja/i.test(g('driver')),licLinks:g('licLinks').split(/,\s*/).filter(Boolean),
       car:g('car'),referral:g('referral'),notes:g('notes'),bed:/^ja/i.test(g('bed')),birth:deDate(g('birth'))};
-    const ex=y.registrations.find(x=>x.key===key||(email&&x.email===email));
+    const ex=y.registrations.find(x=>x.key===key||(normName(x.name)===normName(name)&&(email?x.email===email:!x.email)));
     if(ex){Object.assign(ex,data);updated++;} else {y.registrations.push({id:'r-'+fnv(key),status:'neu',...data});added++;}
   });
   y.formImport={at:new Date().toISOString(),added,updated,skipped,found:Object.keys(idx)};
@@ -425,7 +515,14 @@ const probeStart=y=>Object.keys(y.days||{}).filter(d=>y.days[d].kind==='probe').
 function mailHref(r){const y=Y(), v=r.firstName||r.name.split(' ')[0];
   const T={zugelassen:[`Libanon on Stage ${y.year}: Du bist dabei!`,`Hallo ${v},\n\nschön, dass du dich angemeldet hast – du bist bei Libanon on Stage ${y.year} (${y.play}) dabei! Alle Infos zu Probewoche, Tour, Fahrten und Unterkunft findest du in LOS Backstage${LIVE?`:\n${location.origin+location.pathname}\n\nMelde dich dort mit genau dieser E-Mail-Adresse an (${r.email}) – entweder mit „Mit Google anmelden“ oder ohne Google-Konto über „Anmelde-Link per Mail schicken“`:''}.\n\nBis bald,\neure LOS-Leitung`],
     Warteliste:[`Libanon on Stage ${y.year}: Du stehst auf der Warteliste`,`Hallo ${v},\n\ndanke für deine Anmeldung! Im Moment sind alle Plätze vergeben, deshalb stehst du auf unserer Warteliste. Sobald etwas frei wird, melden wir uns direkt bei dir.\n\nViele Grüße,\neure LOS-Leitung`],
-    abgesagt:[`Libanon on Stage ${y.year}: Deine Anmeldung`,`Hallo ${v},\n\nvielen Dank für deine Anmeldung und dein Interesse an Libanon on Stage. Leider können wir dir dieses Jahr keinen Platz anbieten. Wir freuen uns, wenn du es nächstes Jahr wieder versuchst – und zu unseren Vorstellungen bist du natürlich herzlich eingeladen.\n\nViele Grüße,\neure LOS-Leitung`]}[r.status];
+    zurWarteliste:[`Libanon on Stage ${y.year}: Du stehst auf der Warteliste`,`Hallo ${v},
+
+wir müssen deine Zusage für Libanon on Stage ${y.year} leider zurücknehmen und haben dich auf unsere Warteliste gesetzt. Dein Zugang zu LOS Backstage ist bis dahin pausiert. Sobald ein Platz frei wird, melden wir uns direkt bei dir.
+
+Viele Grüße,
+eure LOS-Leitung`],
+    entfernt:[`Libanon on Stage ${y.year}: Deine Abmeldung`,`Hallo ${v},\n\nschade, dass du dieses Jahr doch nicht dabei sein kannst. Wir haben dich bei Libanon on Stage ${y.year} ausgetragen – dein Zugang zu LOS Backstage ist damit beendet.\n\nWenn sich doch noch etwas ändert, melde dich einfach bei uns. Zu den Vorstellungen bist du natürlich herzlich eingeladen.\n\nViele Grüße,\neure LOS-Leitung`],
+    abgesagt:[`Libanon on Stage ${y.year}: Deine Anmeldung`,`Hallo ${v},\n\nvielen Dank für deine Anmeldung und dein Interesse an Libanon on Stage. Leider können wir dir dieses Jahr keinen Platz anbieten. Wir freuen uns, wenn du es nächstes Jahr wieder versuchst – und zu unseren Vorstellungen bist du natürlich herzlich eingeladen.\n\nViele Grüße,\neure LOS-Leitung`]}[r.status==='abgesagt'&&r.removedAt?'entfernt':r.status==='Warteliste'&&r.backToWait?'zurWarteliste':r.status];
   return T&&r.email?`mailto:${encodeURIComponent(r.email)}?subject=${encodeURIComponent(T[0])}&body=${encodeURIComponent(T[1])}`:'';}
 function openMail(r){const h=mailHref(r); if(!h) return; const a=document.createElement('a'); a.href=h; a.target='_blank'; a.rel='noopener'; document.body.appendChild(a); a.click(); a.remove();}
 function offerMail(r,label){ if(!r.email) return; ask(`${label} an ${r.name} jetzt als Mail öffnen? (Vorlage, du kannst sie vor dem Senden anpassen)`,'Mail öffnen',()=>openMail(r)); }
@@ -437,8 +534,8 @@ function seed(){
     {id:'p-int',name:'Lina Haas',groups:['leitung'],pos:'Interne Leitung',tel:'0170 2222222',lic:'B',email:'int.leitung@beispiel.de',access:'leitung-int'},
     {id:'p-log',name:'Tom Bauer',groups:['leitung','fruehes-team'],pos:'Logistik & Finanzen',tel:'0170 3333333',lic:'C1',email:'logistik@beispiel.de',access:'leitung-log'},
     {id:'p-mfd',name:'Eva Kraus',groups:['leitung'],pos:'Marketing & Fundraising',tel:'0170 4444444',lic:'B',email:'mfd@beispiel.de',access:'leitung-mfd'},
-    {id:'p-regie',name:'Konrad Albers',groups:['regie'],pos:'Regie',lic:'B',email:'konrad.albers@beispiel.de',access:'regie'},
-    {id:'p-ra',name:'Pia Sommer',groups:['regie'],pos:'Regieassistenz',lic:'B',email:'pia.sommer@beispiel.de',access:'ra'},
+    {id:'p-regie',name:'Konrad Albers',groups:['regie'],pos:'Regie',fn:'Regisseur',lic:'B',email:'konrad.albers@beispiel.de',access:'regie'},
+    {id:'p-ra',name:'Pia Sommer',groups:['regie'],pos:'Regieassistenz',fn:'Regie-Assistenz',lic:'B',email:'pia.sommer@beispiel.de',access:'ra'},
     {id:'p1',name:'Felix Hartmann',groups:['ensemble'],lic:'B'},{id:'p2',name:'Lea Brandt',groups:['ensemble'],lic:'B'},
     {id:'p3',name:'Clara Neumann',groups:['ensemble'],lic:''},{id:'p4',name:'Anton Fischer',groups:['ensemble'],lic:'B'},
     {id:'p5',name:'Paul Schneider',groups:['ensemble'],lic:'B'},{id:'p6',name:'Jonas Weber',groups:['ensemble'],lic:'B'},
@@ -449,6 +546,8 @@ function seed(){
     {id:'p15',name:'Jakob Huber',groups:['bautrupp','fruehes-team'],lic:'B'},{id:'p16',name:'Nora Zimmer',groups:['kostuem'],lic:'B'},
     {id:'p17',name:'Emma Seidel',groups:['kostuem'],lic:''},{id:'p18',name:'Mia Roth',groups:['requisite'],lic:'B'},
   ];
+  const AW={p1:'Hauptrolle',p2:'Hauptrolle, Nebenrolle',p3:'Hauptrolle, Nebenrolle',p4:'Hauptrolle',p5:'Hauptrolle, Nebenrolle',p6:'Hauptrolle',p7:'Nebenrolle',p8:'Hauptrolle, Nebenrolle',p9:'Hauptrolle'};
+  people.forEach(p=>{ if(AW[p.id]) p.actWish=AW[p.id]; if(p.id==='p18') p.acts=true; });
   people.forEach(p=>{ if(!p.email){p.email=p.name.toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(' ','.')+'@beispiel.de';p.access='team';} });
 
   const E=(date,from,to,title,place,who,note='')=>({id:uid('e'),date,from,to,title,place,who,note});
@@ -528,21 +627,21 @@ function seed(){
       RG('r7','Sara','Lindner','Kostüm','2026-09-29',{birth:'2001-09-09',probeNote:'Kann nur die Probewoche.',status:'Warteliste',waitDate:'2026-10-01'}),
     ],
     roles:[
-      {id:'ro1',name:'Jean Valjean',person:'p1',alt:'reg:r6',status:'bestätigt',comments:[{by:'Regie',text:'Trägt das Stück, braucht Textsicherheit ab Tag 3.'}]},
+      {id:'ro1',name:'Jean Valjean',person:'p1',alt:'p7',status:'bestätigt',comments:[{by:'Regie',text:'Trägt das Stück, braucht Textsicherheit ab Tag 3.'}]},
       {id:'ro2',name:'Madame Thénardier',person:'p3',alt:'p8',status:'vorgeschlagen',comments:[]},
       {id:'ro3',name:'Éponine',person:'',status:'frei',comments:[{by:'Regie',text:'Gern jemand, der singt – Éponine hat ein großes Solo.'}]},
-      {id:'ro4',name:'Cosette',person:'p2',alt:'reg:r1',status:'bestätigt',comments:[]},
+      {id:'ro4',name:'Cosette',person:'p2',alt:'p9',status:'bestätigt',comments:[]},
       {id:'ro5',name:'Javert',person:'p4',status:'bestätigt',comments:[]},
       {id:'ro6',name:'Marius',person:'p5',status:'abgelehnt',comments:[{by:'Regie',text:'Zu ähnlich zu Enjolras. Lieber jemand mit mehr Körperlichkeit.'},{by:'Leitung',text:'Ok, schauen wir bei den neuen Anmeldungen.'}]},
       {id:'ro7',name:'Enjolras',person:'p6',status:'bestätigt',comments:[]},
       {id:'ro8',name:'Gavroche',person:'',status:'frei',comments:[{by:'Regie',text:'Musikalisch, Gitarre wäre ideal.'}]},
       {id:'ro9',name:'Thénardier',person:'p7',status:'vorgeschlagen',comments:[]},
       {id:'ro10',name:'Fantine',person:'p9',status:'vorgeschlagen',comments:[]},
-      {id:'ro11',name:'Soldat 1',person:'p5',status:'bestätigt',comments:[{by:'Leitung',text:'LOS-Ergänzung: die Soldaten-Szene.'}]},
-      {id:'ro12',name:'Soldat 2',person:'p8',status:'bestätigt',comments:[]},
-      {id:'ro13',name:'Soldat 3',person:'',status:'frei',comments:[]},
+      {id:'ro11',name:'Soldat 1',kind:'neben',person:'p5',status:'bestätigt',comments:[{by:'Leitung',text:'LOS-Ergänzung: die Soldaten-Szene.'}]},
+      {id:'ro12',name:'Soldat 2',kind:'neben',person:'p8',status:'bestätigt',comments:[]},
+      {id:'ro13',name:'Soldat 3',kind:'neben',person:'',status:'frei',comments:[]},
     ],
-    crews:[{g:'ensemble',label:'Schauspiel',target:12},{g:'bautrupp',label:'Bautrupp',target:4,lead:'p14'},{g:'kostuem',label:'Kostüm',target:4,lead:'p16'},{g:'requisite',label:'Requisite',target:2},{g:'technik',label:'Ton & Licht',target:3},{g:'band',label:'Band',target:4}],
+    crews:[{g:'leitung',label:'Leitung',target:4,lead:''},{g:'regie',label:'Regie',target:4,lead:''},{g:'ensemble',label:'Schauspiel',target:14,lead:''},{g:'band',label:'Band',target:4,lead:''},{g:'technik',label:'Technik',target:3,lead:''},{g:'bautrupp',label:'Bautrupp',target:4,lead:'p14'},{g:'lkw',label:'LKW-Fahrer',target:2,lead:''},{g:'requisite',label:'Requisite',target:2,lead:''},{g:'kostuem',label:'Kostüm',target:4,lead:'p16'},{g:'mami',label:'Mami',target:2,lead:''},{g:'chor',label:'Chor',target:8,lead:''}],
     shows:[
       {id:'s1',date:'2027-03-19',time:'19:30',city:'Hamburg',venue:'Gemeindesaal Hamburg-Nord (Beispiel)',addr:'Kirchenweg 3, 22301 Hamburg',cap:420,sold:186,boxCount:0,boxCash:0,price:17,contact:'Hr. Petersen, 040 123456',getIn:'09:30',tech:'Hauseigenes Licht, Ton bringen wir mit. Bühne 9 × 7 m.',parking:'',ovler:'Ingrid Holm',check:{vertrag:true,technik:false,parken:false,unterkunft:true,verpflegung:false,getin:true}},
       {id:'s2',date:'2027-03-20',time:'19:00',city:'Berlin',venue:'Kulturkirche Berlin (Beispiel)',addr:'Kirchstraße 10, 10405 Berlin',cap:600,sold:412,boxCount:0,boxCash:0,price:17,contact:'Fr. Okafor, 030 987654',getIn:'10:00',tech:'Kein Schnürboden, Licht auf Stativen.',parking:'2 Plätze für Bullis im Hof, LKW auf der Straße mit Genehmigung.',ovler:'Martin Graf',check:{vertrag:true,technik:true,parken:true,unterkunft:true,verpflegung:true,getin:true}},
@@ -561,7 +660,7 @@ function seed(){
       {id:'a6',city:'Berlin',host:'Gemeindehaus Prenzlauer Berg',addr:'Gemeindeweg 2, 10405 Berlin',hostTel:'030 5550606 (Gemeindebüro)',beds:'Feldbetten – Schlafsack mitbringen',persons:['p5','p6','p7','p10','p11','p12','p13','p14','p15','p16','p17','p18','p-ext','p-log','p-int','p-mfd','p-regie','p-ra']},
     ],
     tasks:[
-      {id:'t1',title:'Dank an Großspender:innen verschicken',area:'MFD',phase:'Abwicklung Vorjahr',owner:'p-mfd',due:'2026-10-15',done:false,rec:true,link:'https://docs.google.com/spreadsheets/ (Spenden-Excel des Werke e.V.)'},
+      {id:'t1',title:'Dank an Großspender verschicken',area:'MFD',phase:'Abwicklung Vorjahr',owner:'p-mfd',due:'2026-10-15',done:false,rec:true,link:'https://docs.google.com/spreadsheets/ (Spenden-Excel des Werke e.V.)'},
       {id:'t2',title:'Finanzabschluss 2026 mit dem Werke e.V. abstimmen',area:'Logistik & Finanzen',phase:'Abwicklung Vorjahr',owner:'p-log',due:'2026-10-31',done:false,rec:true},
       {id:'t3',title:'Feedback 2026 auswerten und Learnings festhalten',area:'Interne Leitung',phase:'Abwicklung Vorjahr',owner:'p-int',due:'2026-09-15',done:true,rec:true},
       {id:'t4',title:'Stück 2027 mit der Regie festlegen',area:'Interne Leitung',phase:'Planung',owner:'p-int',due:'2026-09-30',done:true,rec:true},
@@ -590,6 +689,9 @@ function seed(){
       {id:'m2',date:'2026-10-02',title:'Abstimmung Regie und Leitung',doc:'Skript Strichfassung v2 (Drive)',decisions:['Probewoche: 10 Tage auf dem Hofgut','Szenenplan steht bis 1. Februar','Soldaten-Szene als LOS-Ergänzung'],tasks:['t5']},
     ],
     feedback:{open:false,questions:[],results:null,responses:[],learnings:[]},
+    questions:[
+      {id:'q1',text:'Muss ich zur Probewoche einen Schlafsack mitbringen?',by:'p2',byName:'Lea Brandt',byEmail:'demo',at:'2026-10-14T18:20:00Z',answer:'Ja, bitte Schlafsack und Kissen mitbringen – Betten gibt es, Bettwäsche nicht.',answeredBy:'Lina Haas',answeredAt:'2026-10-15T08:10:00Z',public:true},
+      {id:'q2',text:'Kann ich am zweiten Tour-Wochenende erst Samstagmittag dazukommen?',by:'p6',byName:'Jonas Weber',byEmail:'demo',at:'2026-10-18T20:05:00Z',answer:'',public:false}],
   };
   const y2026={
     year:2026,archived:true,play:'Sein oder Nichtsein II',milestones:[],people:[],events:[],days:{},trips:[],form:[],registrations:[],roles:[],crews:[],vehicles:[],stays:[],tasks:[],meetings:[],
@@ -650,7 +752,7 @@ let base=new Map();             // Stand, aus dem S zuletzt gebaut wurde (Pfad �
 let remoteDirty=false, saving=0, pointerDown=false;
 const unsubs=new Map(), waiting=new Set();
 const COLL_TEAM=['people','events','roles','shows','trips','vehicles','stays'];
-const COLL_LEAD=['meetings','tasks','costs','other','registrations'];
+const COLL_LEAD=['meetings','tasks','costs','other','registrations','gone'];
 const YEAR_KEYS=['year','play','archived','frozenAt','days','milestones','crews','goal'];
 const ROLE_OF=a=>!a?'':String(a).startsWith('leitung')?'leitung':a==='regie'?'regie':a==='ra'?'ra':'ensemble';
 const RANK={leitung:4,regie:3,ra:2,ensemble:1,'':0};
@@ -676,13 +778,14 @@ function toDocs(st){
     const t={}; YEAR_KEYS.forEach(k=>{ if(y[k]!==undefined) t[k]=y[k]; });
     t.year=+y.year; t.archived=!!y.archived; t.fbOpen=!!fb.open; t.fbQuestions=fb.questions||[];
     out[b]=t;
-    const skip=new Set([...YEAR_KEYS,...COLL_TEAM,...COLL_LEAD,'feedback','pubMoney']);
+    const skip=new Set([...YEAR_KEYS,...COLL_TEAM,...COLL_LEAD,'questions','feedback','pubMoney']);
     const l={}; Object.keys(y).forEach(k=>{ if(!skip.has(k)) l[k]=y[k]; });
     l.fbResults=fb.results||null; l.learnings=fb.learnings||[];
     out[b+'/lead/data']=l;
     const put=(c,arr)=>(arr||[]).forEach((it,i)=>{ if(it&&it.id) out[`${b}/${c}/${safeId(it.id)}`]={...it,_o:i}; });
     [...COLL_TEAM,...COLL_LEAD].forEach(c=>put(c,y[c]));
     put('responses',fb.responses);
+    put('questions',y.questions);
     if(leit){
       put('cands',(y.registrations||[]).filter(r=>r.status==='neu'||r.status==='Warteliste').map(candOf));
       out[b+'/pub/money']=money(y);
@@ -691,7 +794,9 @@ function toDocs(st){
   if(leit){ /* Zugänge entstehen aus den Personen aller offenen Jahre */
     const U={};
     Object.values(st.years).filter(y=>!y.archived).forEach(y=>(y.people||[]).forEach(p=>{
-      mails(p.email).forEach(m=>{const u=U[m]||(U[m]={name:p.name,access:p.access||'team',pids:{}}); u.pids[y.year]=p.id;
+      mails(p.email).forEach(m=>{const u=U[m]||(U[m]={name:p.name,access:p.access||'team',pids:{},all:{}});
+        (u.all[y.year]=u.all[y.year]||[]).push(p.id);
+        if(!u.pids[y.year]||RANK[ROLE_OF(p.access||'team')]>RANK[ROLE_OF(u.access)]) u.pids[y.year]=p.id;
         if(RANK[ROLE_OF(p.access||'team')]>RANK[ROLE_OF(u.access)]){u.access=p.access;u.name=p.name;}});}));
     Object.entries(U).forEach(([m,u])=>out['users/'+m]=u);
   }
@@ -700,7 +805,7 @@ function toDocs(st){
 /* Dokumente → S */
 function yearFrom(d){
   const {fbOpen,fbQuestions,...rest}=d;
-  return {play:'',milestones:[],days:{},crews:[],goal:50000,people:[],events:[],roles:[],shows:[],trips:[],vehicles:[],stays:[],meetings:[],tasks:[],costs:[],other:[],registrations:[],form:[],donCash:0,donOnline:0,donLink:'',
+  return {play:'',milestones:[],days:{},crews:[],goal:50000,people:[],events:[],roles:[],shows:[],trips:[],vehicles:[],stays:[],meetings:[],tasks:[],costs:[],other:[],registrations:[],gone:[],questions:[],form:[],donCash:0,donOnline:0,donLink:'',
     ...rest, year:+d.year, archived:!!d.archived, feedback:{open:!!fbOpen,questions:fbQuestions||[],results:null,responses:[],learnings:[]}};
 }
 function assemble(){
@@ -721,7 +826,7 @@ function assemble(){
 function canWrite(p){
   const m=p.match(/^years\/(\d+)\//); if(m&&S.years[m[1]]?.archived) return false;
   if(auth.role==='leitung') return true;
-  if(/^years\/\d+\/responses\//.test(p)) return true;
+  if(/^years\/\d+\/(responses|questions)\//.test(p)) return true;
   if(auth.role==='regie'||auth.role==='ra') return /^years\/\d+\/(events|roles)\//.test(p);
   return false;
 }
@@ -787,13 +892,19 @@ function applyRemote(force){
   if(!hasYears){ if(auth.state!=='setup'||auth.role!=='leitung'){ auth.state=auth.role==='leitung'?'setup':'noyear'; render(); } return; }
   auth.state='ready';
   S=assemble(); base=new Map(Object.entries(toDocs(S)).filter(([p])=>!isDerived(p)).map(([p,d])=>[p,stable(d)]));
+  if(auth.role==='leitung'&&Object.values(S.years).map(y=>ensureCrews(y)).some(Boolean)) remoteDirty=false; /* Gewerke angleichen – wird gleich gespeichert */
   fixUi(); renderKeep();
+  if(auth.role==='leitung'){ clearTimeout(derivedT); derivedT=setTimeout(()=>{ if(auth.state==='ready'&&!remoteDirty&&!saving) persist(); },900); } /* Zugänge & Summen nachziehen */
 }
+let derivedT=null;
+const myPids=()=>{const a=auth.acc&&auth.acc.all&&auth.acc.all[auth.year]; return Array.isArray(a)?a:[];};
 function fixUi(){
-  if(!auth.inited){ auth.inited=true; ui.role=auth.role; ui.view='cockpit'; ui.teamTab=auth.role==='leitung'?'reg':auth.role==='ensemble'?'crew':'cast';
-    try{ ui.fbDone=localStorage.getItem('los-fb-'+auth.email)==='1'; }catch(_){ } }
+  if(!auth.inited){ auth.inited=true; ui.role=auth.role; ui.view='cockpit'; ui.teamTab=auth.role==='leitung'?'over':auth.role==='ensemble'?'play':'actors';
+  }
   const ks=yearKeys(), pids=(auth.acc&&auth.acc.pids)||{};
-  if(auth.role!=='leitung'){ auth.year=ks.find(k=>pids[k])||ks[0]; ui.year=auth.year; if(pids[auth.year]&&ui.role===auth.role) ui.me=pids[auth.year]; }
+  if(auth.role!=='leitung'){ auth.year=ks.find(k=>pids[k])||ks[0]; ui.year=auth.year;
+    const all=myPids(), pick=lsGet('los-me-'+auth.email+'-'+auth.year);
+    if(ui.role===auth.role) ui.me=all.includes(pick)?pick:(pids[auth.year]||ui.me); }
   else { if(!S.years[ui.year]) ui.year=ks.find(k=>!S.years[k].archived)||ks[0];
     if(!auth.meSet&&pids[ui.year]){ ui.me=pids[ui.year]; auth.meSet=true; } }
   const y=Y(); if(!y) return;
@@ -854,21 +965,29 @@ function arrived(key){
 function subErr(key,e){ console.error('Lesen fehlgeschlagen:',key,e); arrived(key); }
 function subDoc(path){ if(unsubs.has(path)) return; waiting.add(path);
   unsubs.set(path,FB.fs.onSnapshot(FB.fs.doc(db,path),s=>{ if(s.exists()) srv.set(path,dec(s.data())); else srv.delete(path); arrived(path); },e=>subErr(path,e))); }
-function subColl(path,q){ if(unsubs.has(path)) return; waiting.add(path);
-  unsubs.set(path,FB.fs.onSnapshot(q||FB.fs.collection(db,path),s=>{ const pre=path+'/';
+const owned=new Map();
+function subColl(path,q,key){ key=key||path; if(unsubs.has(key)) return; waiting.add(key);
+  unsubs.set(key,FB.fs.onSnapshot(q||FB.fs.collection(db,path),s=>{ const pre=path+'/';
     if(path==='years'&&auth.state==='loading'&&s.metadata&&s.metadata.fromCache&&!s.size) return; /* neues Gerät: auf den Server warten */
-    for(const k of [...srv.keys()]) if(k.startsWith(pre)&&!k.slice(pre.length).includes('/')) srv.delete(k);
-    s.forEach(d=>srv.set(pre+d.id,dec(d.data())));
+    const now=new Set(); s.forEach(d=>{ now.add(pre+d.id); srv.set(pre+d.id,dec(d.data())); });
+    const others=new Set([...owned].filter(([k])=>k!==key&&k.startsWith(path)).flatMap(([,v])=>[...v]));
+    if(key===path) for(const k of [...srv.keys()]){ if(k.startsWith(pre)&&!k.slice(pre.length).includes('/')&&!now.has(k)&&!others.has(k)) srv.delete(k); }
+    else for(const k of owned.get(key)||[]){ if(!now.has(k)&&!others.has(k)) srv.delete(k); }
+    owned.set(key,now);
     if(path==='years') syncYearSubs();
-    arrived(path); },e=>subErr(path,e))); }
+    arrived(key); },e=>subErr(key,e))); }
 function syncYearSubs(){
   const ys=[...srv.keys()].filter(k=>/^years\/\d+$/.test(k)).map(k=>k.slice(6));
-  for(const key of [...unsubs.keys()]){ const m=key.match(/^years\/(\d+)\//); if(m&&!ys.includes(m[1])){ try{unsubs.get(key)()}catch(_){ } unsubs.delete(key); waiting.delete(key);
+  for(const key of [...unsubs.keys()]){ const m=key.match(/^years\/(\d+)\//); if(m&&!ys.includes(m[1])){ try{unsubs.get(key)()}catch(_){ } unsubs.delete(key); waiting.delete(key); owned.delete(key);
     for(const k of [...srv.keys()]) if(k.startsWith('years/'+m[1]+'/')) srv.delete(k); } }
   ys.forEach(y=>{ const b='years/'+y;
     COLL_TEAM.forEach(c=>subColl(b+'/'+c)); subDoc(b+'/pub/money');
     if(auth.role!=='ensemble'){ subColl(b+'/meetings'); subColl(b+'/cands'); }
-    if(auth.role==='leitung'){ ['tasks','costs','other','registrations','responses'].forEach(c=>subColl(b+'/'+c)); subDoc(b+'/lead/data'); } });
+    if(auth.role==='leitung') subColl(b+'/questions');
+    else { const qc=FB.fs.collection(db,b+'/questions');
+      subColl(b+'/questions',FB.fs.query(qc,FB.fs.where('byEmail','==',auth.email)),b+'/questions#mine');
+      subColl(b+'/questions',FB.fs.query(qc,FB.fs.where('public','==',true)),b+'/questions#public'); }
+    if(auth.role==='leitung'){ ['tasks','costs','other','registrations','responses','gone'].forEach(c=>subColl(b+'/'+c)); subDoc(b+'/lead/data'); } });
 }
 function login(){
   const p=new FB.au.GoogleAuthProvider(); p.setCustomParameters({prompt:'select_account'}); auth.error='';
@@ -904,7 +1023,7 @@ function freshState(name,acc){
   for(let i=0;i<10;i++) days[add('2027-03-12',i)]={title:i?'Probentag '+i:'Anreise Probewoche',kind:'probe',city:''};
   [['2027-04-01',4,1],['2027-04-08',4,2],['2027-05-01',3,3]].forEach(([d,n,w])=>{for(let i=0;i<n;i++) days[add(d,i)]={title:'Tour-Wochenende '+w,kind:'tour',city:''};});
   const y={year:2027,archived:false,play:'Les Misérables',
-    milestones:[{date:'2026-11-01',label:'Anmeldung öffnet'},{date:'2027-03-12',label:'Probewoche'},{date:'2027-04-01',label:'Tour-Wochenende 1'},{date:'2027-04-08',label:'Tour-Wochenende 2'},{date:'2027-05-01',label:'Tour-Wochenende 3'}],
+    milestones:[{id:'ms1',date:'2026-11-01',label:'Anmeldung öffnet',team:false},{id:'ms2',date:'2027-03-12',label:'Probewoche',team:false},{id:'ms3',date:'2027-04-01',label:'Tour-Wochenende 1',team:false},{id:'ms4',date:'2027-04-08',label:'Tour-Wochenende 2',team:false},{id:'ms5',date:'2027-05-01',label:'Tour-Wochenende 3',team:false}],
     days,people:[{id:POS_ID[acc]||uid('p'),name,groups:['leitung'],pos:(ACCESS[acc]||'').replace('Leitung – ',''),tel:'',lic:'',email:auth.email,access:acc}],
     events:[],roles:[],shows:[],trips:[],vehicles:[],stays:[],meetings:[],registrations:[],form:src.form,
     crews:src.crews.map(c=>({...c,lead:''})),tasks:src.tasks.map(t=>({...t})),
@@ -944,6 +1063,23 @@ async function syncForm(silent){
   }catch(e){ console.error(e); if(!silent) toast('Abgleich fehlgeschlagen: '+(e.message||e)+' – Skript-Adresse und Schlüssel prüfen.'); }
   finally{ syncing=false; }
 }
+async function syncRegiondo(silent){
+  const c=formCfg(), y=CUR();
+  if(!c.url||!c.token){ if(!silent) toast('Regiondo läuft über das Google-Skript – bitte zuerst unter Anmeldungen › Google-Formular Skript-Adresse und Schlüssel eintragen.'); return; }
+  if(y.archived||!y.shows.length) return;
+  const ds=y.shows.map(s=>s.date).filter(Boolean).sort();
+  if(!silent) toast('Frage Regiondo ab …');
+  try{
+    const r=await fetch(c.url+(c.url.includes('?')?'&':'?')+'action=regiondo&from='+ds[0]+'&to='+ds[ds.length-1]+'&token='+encodeURIComponent(c.token),{redirect:'follow'});
+    const j=await r.json(); if(!j.ok) throw new Error(j.error||'Unbekannter Fehler');
+    let matched=0;
+    y.shows.forEach(s=>{const same=y.shows.filter(o=>o.date===s.date).length>1;
+      const ev=(j.events||[]).filter(e=>String(e.when||'').slice(0,10)===s.date&&(!s.regiondoId||String(e.product)===String(s.regiondoId))&&(!same||String(e.when).slice(11,16)===s.time));
+      if(ev.length){ s.sold=ev.reduce((a,e)=>a+(+e.qty||0),0); matched++; }});
+    y.regiondo={at:new Date().toISOString(),matched};
+    commit(silent?null:`Regiondo abgeglichen: ${matched} von ${y.shows.length} Vorstellungen gefunden.`);
+  }catch(e){ console.error(e); if(!silent) toast('Regiondo-Abgleich fehlgeschlagen: '+(e.message||e)); }
+}
 function pushStatus(r){
   const c=formCfg(); if(!LIVE||!c.url||!c.token||!r.email) return;
   try{ fetch(c.url,{method:'POST',mode:'no-cors',body:JSON.stringify({token:c.token,action:'status',items:[{email:r.email,status:r.status}]})}); }catch(_){ }
@@ -952,8 +1088,8 @@ function afterReady(){
   if(auth.role!=='leitung') return;
   setTimeout(()=>{ if(auth.state==='ready') persist(); },1500); /* abgeleitete Daten (Zugänge, Summen fürs Team) auffrischen */
   const due=()=>{const y=CUR(); const at=y&&y.formImport&&Date.parse(y.formImport.at)||0; return Date.now()-at>10*60e3;};
-  setTimeout(()=>{ if(due()) syncForm(true); },2000);
-  setInterval(()=>{ if(due()&&!busy()) syncForm(true); },15*60e3);
+  setTimeout(()=>{ if(due()){ syncForm(true); syncRegiondo(true); } },2000);
+  setInterval(()=>{ if(due()&&!busy()){ syncForm(true); syncRegiondo(true); } },15*60e3);
 }
 
 /* Bildschirme vor dem eigentlichen Leitstand */
@@ -993,7 +1129,7 @@ function authScreen(){
 
 if(!LIVE){ try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){S=null} if(!S||!S.years) S=seed(); }
 else S={years:{},about:{},history:{}};
-const ui={view:'cockpit',role:'leitung',year:2027,me:'p2',myDate:null,planDate:'2027-03-13',onlyMine:false,trip:'tr1',tourTab:'shows',teamTab:'reg',editShow:null,openShow:'s1',editStay:null,taskArea:'alle',taskOpen:true,sheet:false,evForm:null,aboutEdit:false,fbDone:false,stayCity:{},groupStay:true,regFilter:'neu'};
+const ui={view:'cockpit',role:'leitung',year:2027,me:'p2',myDate:null,planDate:'2027-03-13',onlyMine:false,trip:'tr1',tourTab:'shows',teamTab:'over',editShow:null,openShow:'s1',editStay:null,taskArea:'alle',taskOpen:true,sheet:false,evForm:null,aboutEdit:false,fbDone:false,stayCity:{},groupStay:true,regFilter:'neu'};
 
 const Y=()=>S.years[ui.year];
 const yearKeys=()=>Object.keys(S.years).map(Number).sort((a,b)=>b-a);
@@ -1010,6 +1146,7 @@ const meId=()=>{ if(!LIVE) return ui.role==='regie'?'p-regie':ui.role==='ra'?'p-
   if(ui.role!==auth.role&&isRegie()){const p=Y().people.find(x=>x.access===ui.role); if(p) return p.id;}
   return ui.me; };
 
+const costOf=c=>c.closed?(+c.actual||0):(+c.plan||0); /* offen: Plan · abgerechnet: Ist */
 function money(y){
   if(y.pubMoney) return y.pubMoney;
   const tickets=y.shows.reduce((s,x)=>s+x.sold*x.price,0);
@@ -1018,7 +1155,7 @@ function money(y){
   const don=(+y.donCash||0)+(+y.donOnline||0);
   const income=tickets+box+don+oth;
   const plan=y.costs.reduce((s,x)=>s+x.plan,0), actual=y.costs.reduce((s,x)=>s+(+x.actual||0),0);
-  const expected=y.costs.reduce((s,x)=>s+(x.closed?(+x.actual||0):Math.max(x.plan,+x.actual||0)),0);
+  const expected=y.costs.reduce((s,x)=>s+costOf(x),0);
   const surplus=Math.max(0,income-expected);
   const audience=y.shows.reduce((s,x)=>s+x.sold+(+x.boxCount||0),0);
   return {tickets,box,don,oth,income,plan,actual,expected,surplus,audience,saldo:income-actual,forecast:income-expected};
@@ -1028,7 +1165,7 @@ function money(y){
 function tokLabel(t){
   if(t==='alle') return 'Alle';
   const [k,id]=t.split(':');
-  if(k==='g') return GROUPS[id]||id;
+  if(k==='g') return gLabel(id);
   if(k==='r'){const r=Y().roles.find(x=>x.id===id); if(!r) return '';
     return r.name+(r.person&&r.status!=='abgelehnt'?' ('+castLabel(r.person,true)+')':'');}
   if(k==='p') return pname(id);
@@ -1080,7 +1217,7 @@ function evForm(){
       <label class="f">Wo?<input type="text" id="ev-place" value="${esc(f.place)}" placeholder="Scheune"></label>
       <label class="f" style="grid-column:1/-1">Zusatzinfos (optional)<input type="text" id="ev-note" value="${esc(f.note||'')}" placeholder="z. B. Probe MIT Kostüm · Schwerter mitbringen · Textbuch nicht vergessen"></label>
     </div>
-    <fieldset><legend>Gruppen</legend><div class="checks">${chk('alle','Alle')}${Object.entries(GROUPS).map(([k,l])=>chk('g:'+k,l)).join('')}</div></fieldset>
+    <fieldset><legend>Gruppen</legend><div class="checks">${chk('alle','Alle')}${y.crews.map(c=>chk('g:'+c.g,c.label)).join('')}${Object.entries(SYS_GROUPS).map(([k,l])=>chk('g:'+k,l)).join('')}</div></fieldset>
     <fieldset><legend>Rollen</legend><div class="checks">${y.roles.map(r=>chk('r:'+r.id,r.name)).join('')}</div></fieldset>
     <details><summary class="small" style="cursor:pointer;margin-bottom:8px">Einzelne Personen</summary><fieldset><div class="checks">${y.people.map(p=>chk('p:'+p.id,p.name)).join('')}</div></fieldset></details>
     <div class="row" style="justify-content:flex-start"><button class="btn primary" data-act="ev-save">${f.id?'Änderungen speichern':'Termin anlegen'}</button><button class="btn" data-act="ev-cancel">Abbrechen</button></div></div>`;
@@ -1093,17 +1230,18 @@ const VIEWS=[
   {id:'today',label:'Heute',roles:['regie','ra']},
   {id:'plan',label:'Ablaufplan',roles:['leitung','regie','ra','ensemble']},
   {id:'tour',label:'Tour',roles:['leitung','regie','ra','ensemble']},
+  {id:'anm',label:'Anmeldungen',roles:['leitung']},
   {id:'team',label:'Team & Besetzung',roles:['leitung','regie','ra','ensemble']},
   {id:'tasks',label:'Aufgaben',roles:['leitung']},
   {id:'money',label:'Finanzen',roles:['leitung']},
   {id:'meetings',label:'Meetings',roles:['leitung','regie','ra']},
-  {id:'feedback',label:'Feedback',roles:['leitung','ensemble']},
+  {id:'fragen',label:'Fragen',roles:['leitung','regie','ra','ensemble']},
   {id:'compare',label:'Jahresvergleich',roles:['leitung']},
   {id:'access',label:'Zugänge & Rechte',roles:['leitung']},
   {id:'years',label:'Projektjahre',roles:['leitung']},
   {id:'about',label:'Über LOS',roles:['leitung','regie','ra','ensemble']},
 ];
-const visibleViews=()=>VIEWS.filter(v=>v.roles.includes(ui.role)&&!(v.id==='feedback'&&ui.role==='ensemble'&&!CUR().feedback.open));
+const visibleViews=()=>VIEWS.filter(v=>v.roles.includes(ui.role));
 const ICON={
   cockpit:'<path d="M3 13h8V3H3zM13 21h8V11h-8zM3 21h8v-6H3zM13 3v6h8V3z" fill="none" stroke="currentColor" stroke-width="1.8"/>',
   myday:'<rect x="3" y="4" width="18" height="17" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M8 2v4M16 2v4" stroke="currentColor" stroke-width="1.8"/>',
@@ -1121,13 +1259,15 @@ function bottomNav(){
 }
 function badge(id){
   const y=Y();
-  if(id==='team'&&isLeit()){const n=y.registrations.filter(r=>r.status==='neu').length;return n?`<span class="count">${n}</span>`:''}
+  if(id==='anm'&&isLeit()){const n=y.registrations.filter(r=>r.status==='neu').length;return n?`<span class="count">${n}</span>`:''}
+  if(id==='fragen'&&isLeit()){const n=(y.questions||[]).filter(q=>!q.answer).length;return n?`<span class="count" style="background:var(--red)">${n}</span>`:''}
   if(id==='tasks'){const n=y.tasks.filter(t=>!t.done&&daysUntil(t.due)<0).length;return n?`<span class="count" style="background:var(--red)">${n}</span>`:''}
   return '';
 }
 function topbar(){
   return `<div class="topbar"><div class="left">
     ${isLeit()?`<select class="yearsel" data-act="year" aria-label="Projektjahr">${yearKeys().map(k=>`<option value="${k}" ${ui.year==k?'selected':''}>LOS ${k} – ${esc(S.years[k].play)}</option>`).join('')}<option value="__new">＋ Neues Jahr anlegen …</option></select>`:`<span class="yearsel" style="border:0;background:none;padding-left:0">LOS ${CUR().year} – ${esc(CUR().play)}</span>`}
+    ${LIVE&&auth.role!=='leitung'&&myPids().length>1?`<label class="small" style="display:flex;gap:6px;align-items:center">Ich bin<select data-act="whoami">${myPids().map(id=>`<option value="${id}" ${id===ui.me?'selected':''}>${esc(pname(id))}</option>`).join('')}</select></label>`:''}
     ${!LIVE||auth.role==='leitung'?`<div class="seg" role="group" aria-label="${LIVE?'Vorschau als':'Ansicht als'}">${LIVE?'<span class="small muted" style="padding:0 6px;align-self:center">Vorschau:</span>':''}${[['leitung','Leitung'],['regie','Regie'],['ra','Regieassistenz'],['ensemble','Ensemble']].map(([k,l])=>`<button data-act="role" data-r="${k}" aria-pressed="${ui.role===k}">${l}</button>`).join('')}</div>`:''}</div>
     <div class="demo-note row" style="gap:8px;justify-content:flex-end">${(LIVE?auth.role!=='ensemble':ui.role!=='ensemble')?`<span id="savestate" class="${saveLabel()[0]}" style="font-weight:600">${saveLabel()[1]}</span><button class="btn" data-act="save-now" style="padding:3px 10px">Jetzt speichern</button>${LIVE?'':'<span>·</span>'}`:''}${LIVE?'':`<span>Prototyp mit Beispieldaten ·</span><button class="btn ghost" data-act="reset" style="padding:3px 8px">Zurücksetzen</button>`}</div></div>`;
 }
@@ -1175,7 +1315,7 @@ function vCockpit(){
     </div>
   </section>
   <div class="grid2">
-    <section class="panel"><div class="row"><h2>Vorstellungen</h2><span class="small muted">${y.archived||LIVE?'':'Regiondo: abgeglichen heute (Demo)'}</span></div>
+    <section class="panel"><div class="row"><h2>Vorstellungen</h2><span class="small muted">${y.archived?'':LIVE?(y.regiondo?`Regiondo: abgeglichen ${new Date(y.regiondo.at).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}`:''):'Regiondo: abgeglichen heute (Demo)'}</span></div>
       <ul class="list">${y.shows.map(s=>{const tot=s.sold+(+s.boxCount||0);return `<li><div class="show">
         <div class="date">${fDate(s.date,{day:'numeric',month:'numeric'})}<span>${fDate(s.date,{weekday:'long'})}</span></div>
         <div><b>${esc(s.city)}</b><div class="small muted">${esc(s.venue)}</div>
@@ -1197,7 +1337,7 @@ function leitTargets(y){
   return y.milestones.map(m=>{const t=m.time||firstTime(y,m.date); return {at:m.date+'T'+(t||'00:00'),label:m.label,sub:fLong(m.date)+(t?`, ${t} Uhr`:'')};});
 }
 function teamTargets(y){
-  const out=[]; const probe=Object.keys(y.days).filter(d=>y.days[d].kind==='probe').sort()[0];
+  const out=y.milestones.filter(m=>m.team).map(m=>{const t=m.time||''; return {at:m.date+'T'+(t||'00:00'),label:m.label,sub:fLong(m.date)+(t?`, ${t} Uhr`:'')};}); const probe=Object.keys(y.days).filter(d=>y.days[d].kind==='probe').sort()[0];
   if(probe){const t=firstTime(y,probe); out.push({at:probe+'T'+(t||'00:00'),label:'Probewoche',sub:`Anreise ${fLong(probe)}${t?`, ${t} Uhr`:''}${y.days[probe].city?' · '+y.days[probe].city:''}`});}
   y.shows.forEach(s=>out.push({at:s.date+'T'+(s.time||'00:00'),label:'Vorstellung '+s.city,sub:`${fLong(s.date)}, ${s.time} Uhr${s.venue&&s.venue!=='Beispielwert'?' · '+s.venue:''}`}));
   return out;
@@ -1207,10 +1347,21 @@ function cdParts(at){
   let ms=Math.max(0,new Date(at)-new Date()); const d=Math.floor(ms/864e5); ms-=d*864e5; const h=Math.floor(ms/36e5); ms-=h*36e5; const m=Math.floor(ms/6e4); const sec=Math.floor((ms-m*6e4)/1e3);
   return [[d,d===1?'Tag':'Tage'],[h,'Std'],[m,'Min'],[sec,'Sek']].map(([v,l],i)=>`<div><b>${i?String(v).padStart(2,'0'):v}</b><span>${l}</span></div>`).join('');
 }
+function msEditor(y){
+  const ms=[...y.milestones].map((m,i)=>({m,i})).sort((a,b)=>(a.m.date||'').localeCompare(b.m.date||''));
+  return `<div class="ms-edit">${ms.map(({m,i})=>`<div class="msrow"><input type="date" value="${esc(m.date)}" data-act="ms-date" data-i="${i}" aria-label="Datum"><input type="text" value="${esc(m.time||'')}" data-act="ms-time" data-i="${i}" placeholder="Uhrzeit" aria-label="Uhrzeit" style="width:80px"><input type="text" value="${esc(m.label)}" data-act="ms-label" data-i="${i}" aria-label="Bezeichnung" style="flex:1;min-width:120px">
+    <label class="small" style="display:flex;gap:4px;align-items:center;white-space:nowrap"><input type="checkbox" data-act="ms-team" data-i="${i}" ${m.team?'checked':''}> auch fürs Team</label><button class="btn ghost" data-act="ms-del" data-i="${i}" aria-label="Meilenstein löschen">✕</button></div>`).join('')||'<p class="small muted">Noch keine Meilensteine.</p>'}
+    <div class="msrow" style="border-top:1px solid var(--line);padding-top:10px;margin-top:6px"><input type="date" id="ms-new-date"><input type="text" id="ms-new-time" placeholder="Uhrzeit" style="width:80px"><input type="text" id="ms-new-label" placeholder="z. B. Anmeldeschluss" style="flex:1;min-width:120px">
+    <label class="small" style="display:flex;gap:4px;align-items:center;white-space:nowrap"><input type="checkbox" id="ms-new-team"> auch fürs Team</label><button class="btn primary" data-act="ms-add">Hinzufügen</button></div>
+    <p class="small muted" style="margin:8px 0 0">Das Team sieht automatisch die Probewoche und jede Vorstellung – plus alle Meilensteine mit Haken.</p>
+    <button class="btn" data-act="ms-close" style="margin-top:8px">Fertig</button></div>`;
+}
 function countdownPanel(y){
+  const edBtn=isLeit()&&!y.archived?`<button class="btn ghost" data-act="ms-open" style="padding:3px 8px;font-size:13px">Meilensteine bearbeiten</button>`:'';
+  if(ui.msEdit&&isLeit()&&!y.archived) return `<section class="panel"><h2>Meilensteine</h2>${msEditor(y)}</section>`;
   const list=upcoming(isLeit()?leitTargets(y):teamTargets(y)); const nx=list[0];
-  if(!nx) return `<section class="panel"><h2>Als Nächstes</h2><p class="cd-done">Der Countdown-Stress ist erstmal vorüber. 🎉</p><p class="small muted" style="margin:0">Alle Termine von LOS ${y.year} sind geschafft – danke an alle!</p></section>`;
-  return `<section class="panel"><h2>Als Nächstes</h2><div><b>${esc(nx.label)}</b><div class="muted small">${esc(nx.sub)}</div></div>
+  if(!nx) return `<section class="panel"><div class="row"><h2>Als Nächstes</h2>${edBtn}</div><p class="cd-done">Der Countdown-Stress ist erstmal vorüber. 🎉</p><p class="small muted" style="margin:0">${isLeit()&&!y.milestones.length?'Noch keine Meilensteine angelegt.':`Alle Termine von LOS ${y.year} sind geschafft – danke an alle!`}</p></section>`;
+  return `<section class="panel"><div class="row"><h2>Als Nächstes</h2>${edBtn}</div><div><b>${esc(nx.label)}</b><div class="muted small">${esc(nx.sub)}</div></div>
     <div class="cd" data-cd="${nx.at}" role="timer" aria-label="Countdown bis ${esc(nx.label)}">${cdParts(nx.at)}</div>
     ${list.length>1?`<p class="small muted" style="margin:6px 0 0">Danach: ${list.slice(1,3).map(x=>esc(x.label)).join(' · ')}</p>`:''}</section>`;
 }
@@ -1240,8 +1391,8 @@ function vMyDay(){
     const lastDay=/Heimreise/.test(info.title||'');
     personal=`<div class="youbox"><div class="row" style="align-items:flex-start"><div><div class="small muted">${fLong(date)} · ${esc(info.title||'')}</div><div class="big">${esc(pname(pid))}</div></div></div>
       ${trips.map(t=>{const v=t.assign[pid];const veh=vehName(v);const det=t.veh[v]||{};
-        return `<div class="fact"><div class="k">Fahrt: ${esc(t.label)}</div>${v?`<div class="v">${esc(veh)}${det.time?`, ab ${det.time} Uhr`:''}</div><div class="small">${esc(det.place||'')}${det.driver?(det.driver===pid?' · <b>Du fährst</b>':' · Fahrer:in '+esc(first(det.driver))):''}</div>`:`<div class="warnline">Noch kein Platz zugeteilt – bitte bei der Leitung melden.</div>`}</div>`}).join('')}
-      ${info.kind==='tour'&&!lastDay?`<div class="fact"><div class="k">Schlafplatz</div>${stay?`<div class="v">${esc(stay.host)}</div><div class="small">${esc(stay.addr)}</div>${stay.hostTel?`<div class="small">Gastgeber:in anrufen: ${telLink(stay.hostTel)}</div>`:''}`:`<div class="warnline">Noch kein Schlafplatz zugeteilt – bitte bei der Leitung melden.</div>`}</div>`:''}
+        return `<div class="fact"><div class="k">Fahrt: ${esc(t.label)}</div>${v?`<div class="v">${esc(veh)}${det.time?`, ab ${det.time} Uhr`:''}</div><div class="small">${esc(det.place||'')}${det.driver?(det.driver===pid?' · <b>Du fährst</b>':' · Fahrer '+esc(first(det.driver))):''}</div>`:`<div class="warnline">Noch kein Platz zugeteilt – bitte bei der Leitung melden.</div>`}</div>`}).join('')}
+      ${info.kind==='tour'&&!lastDay?`<div class="fact"><div class="k">Schlafplatz</div>${stay?`<div class="v">${esc(stay.host)}</div><div class="small">${esc(stay.addr)}</div>${stay.hostTel?`<div class="small">Gastgeber anrufen: ${telLink(stay.hostTel)}</div>`:''}`:`<div class="warnline">Noch kein Schlafplatz zugeteilt – bitte bei der Leitung melden.</div>`}</div>`:''}
     </div>`;
   }
   return head+personal+`<div class="row" style="margin-bottom:10px"><h2 style="margin:0">Tagesablauf</h2>${!regie?`<label class="small" style="display:flex;gap:6px;align-items:center"><input type="checkbox" data-act="onlymine" ${ui.onlyMine?'checked':''}> nur meine Termine</label>`:''}</div>
@@ -1282,7 +1433,8 @@ function tourShows(y){
   const ed=canEdit();
   if(!isLeit()) return `<ul class="list panel" style="padding:4px 18px">${y.shows.map(s=>`<li class="row"><div><b>${fDate(s.date)} · ${esc(s.city)}</b><div class="small muted">${esc(s.venue)}${s.addr?' · '+esc(s.addr):''}</div></div><span class="num" style="font-size:20px">${s.time} Uhr</span></li>`).join('')}</ul>`;
   const venues=[...new Map(Object.values(S.years).flatMap(yy=>yy.shows).filter(s=>s.venue&&s.venue!=='Beispielwert').map(s=>[s.venue,s])).values()];
-  return `${ed?`<div class="row" style="justify-content:flex-start;margin-bottom:14px"><button class="btn primary" data-act="show-new">Spielort hinzufügen</button>
+  return `${ed&&LIVE?`<div class="srcbar"><span>Tickets online: <b>Regiondo</b> · ${y.regiondo?`zuletzt abgeglichen ${new Date(y.regiondo.at).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})} (${y.regiondo.matched} Vorstellungen gefunden)`:'noch nicht abgeglichen'}</span><button class="btn" data-act="rg-sync">Jetzt abgleichen</button></div>`:''}
+  ${ed?`<div class="row" style="justify-content:flex-start;margin-bottom:14px"><button class="btn primary" data-act="show-new">Spielort hinzufügen</button>
     <label class="f">… oder aus der Kartei übernehmen<select data-act="show-from"><option value="">Spielort wählen</option>${venues.map(v=>`<option value="${esc(v.venue)}">${esc(v.city)} – ${esc(v.venue)}</option>`).join('')}</select></label></div>`:''}
   <ul class="list panel" style="padding:4px 18px">${y.shows.map(s=>{const done=CHECK.filter(([k])=>s.check[k]).length;const open=ui.openShow===s.id;const editing=ui.editShow===s.id;
     return `<li><div class="row"><button class="btn ghost" data-act="openshow" data-s="${s.id}" aria-expanded="${open}" style="border:0;padding:0;text-align:left;font-weight:500">
@@ -1299,7 +1451,7 @@ function tourShows(y){
       </div></div>`):''}</li>`}).join('')||'<li class="muted">Noch keine Spielorte.</li>'}</ul>`;
 }
 function showForm(s){
-  const F=[['date','Datum','date'],['time','Beginn','text'],['city','Stadt','text'],['venue','Spielort','text'],['addr','Adresse','text'],['cap','Plätze','number'],['price','Ø Ticketpreis (€)','number'],['contact','Kontakt','text'],['getIn','Get-in','text'],['tech','Technik','text'],['parking','Parken','text'],['ovler','OVler','text']];
+  const F=[['date','Datum','date'],['time','Beginn','text'],['city','Stadt','text'],['venue','Spielort','text'],['addr','Adresse','text'],['cap','Plätze','number'],['price','Ø Ticketpreis (€)','number'],['contact','Kontakt','text'],['getIn','Get-in','text'],['tech','Technik','text'],['parking','Parken','text'],['ovler','OVler','text'],['regiondoId','Regiondo-Produkt-ID (optional)','text']];
   return `<div class="form" style="margin-top:12px"><div class="grid">${F.map(([k,l,t])=>`<label class="f">${l}<input type="${t}" id="sf-${k}" value="${esc(s[k]??'')}"></label>`).join('')}</div>
   <div class="row" style="justify-content:flex-start"><button class="btn primary" data-act="show-save" data-s="${s.id}">Speichern</button><button class="btn" data-act="show-cancel">Abbrechen</button></div></div>`;
 }
@@ -1308,8 +1460,8 @@ function tripWarnings(y,t){
   const unassigned=y.people.filter(p=>!A[p.id]);
   y.vehicles.forEach(v=>{const pax=y.people.filter(p=>A[p.id]===v.id);const d=t.veh[v.id]||{};
     if(pax.length>v.seats) out.push(`${v.name}: ${pax.length-v.seats} Person(en) zu viel`);
-    if(pax.length&&!d.driver) out.push(`${v.name}: noch keine Fahrer:in`);
-    if(d.driver&&v.needs==='C1'&&person(d.driver)?.lic!=='C1') out.push(`${v.name}: Fahrer:in braucht C1`);
+    if(pax.length&&!d.driver) out.push(`${v.name}: noch keine Fahrer`);
+    if(d.driver&&v.needs==='C1'&&person(d.driver)?.lic!=='C1') out.push(`${v.name}: Fahrer braucht C1`);
     if(pax.length&&!d.time) out.push(`${v.name}: keine Abfahrtszeit`);});
   return {out,unassigned};
 }
@@ -1329,7 +1481,7 @@ function tripsPlan(y){
     return `<div class="car ${pax.length>v.seats?'warn':''}"><div class="row"><b>${esc(v.name)}</b><span class="small muted">${pax.length}/${ed?`<input type="number" min="1" value="${v.seats}" data-act="vseats" data-v="${v.id}" style="width:52px;padding:2px 4px" aria-label="Sitze ${esc(v.name)}">`:v.seats} Plätze${v.needs==='C1'?' · C1':''}</span></div>
       <div class="seats" aria-hidden="true">${Array.from({length:Math.max(v.seats,pax.length)},(_,i)=>`<span class="seat ${i>=v.seats?'x':i<pax.length?(pax[i].id===d.driver?'d':'f'):''}"></span>`).join('')}</div>
       <div class="grid2" style="gap:6px"><label class="f">Ab<input type="text" value="${esc(d.time||'')}" placeholder="13:00" data-act="vtime" data-v="${v.id}" ${ed?'':'disabled'}></label>
-      <label class="f">Fahrer:in<select data-act="driver" data-v="${v.id}" ${ed?'':'disabled'}><option value="">—</option>${pax.filter(p=>p.lic).map(p=>`<option value="${p.id}" ${p.id===d.driver?'selected':''}>${esc(first(p.id))} (${p.lic})</option>`).join('')}</select></label></div>
+      <label class="f">Fahrer<select data-act="driver" data-v="${v.id}" ${ed?'':'disabled'}><option value="">—</option>${pax.filter(p=>p.lic).map(p=>`<option value="${p.id}" ${p.id===d.driver?'selected':''}>${esc(first(p.id))} (${p.lic})</option>`).join('')}</select></label></div>
       <label class="f" style="margin-top:6px">Treffpunkt<input type="text" value="${esc(d.place||'')}" data-act="vplace" data-v="${v.id}" ${ed?'':'disabled'}></label>
       <div class="chips" style="margin-top:8px">${pax.map(p=>{const st=stayOf(y,stayCityFor(y,t),p.id);return `<span class="chip">${esc(first(p.id))}${st?` <span class="muted">· ${esc(shortHost(st.host))}</span>`:''}</span>`}).join('')}</div>
       ${ed?`<button class="btn ghost" data-act="veh-del" data-v="${v.id}" style="margin-top:10px;padding:4px 9px;font-size:13px">Fahrzeug entfernen</button>`:''}</div>`}).join('');
@@ -1381,10 +1533,10 @@ function tripsView(y){
   const mine=t.assign[pid]; const d=t.veh[mine]||{};
   const groups=[...y.vehicles.map(v=>v.id),'bahn','selbst'].map(v=>({v,pax:y.people.filter(p=>t.assign[p.id]===v)})).filter(g=>g.pax.length);
   return `<div class="row" style="justify-content:flex-start;margin-bottom:14px">${tripSelect(y)}</div>
-  <div class="youbox">${mine?`<div class="small muted">Du fährst diese Strecke mit</div><div class="big">${esc(vehName(mine))}${d.time?`, ab ${d.time} Uhr`:''}</div><div>${esc(d.place||'')}${d.driver?(d.driver===pid?' · <b>Du fährst</b>':' · Fahrer:in '+esc(pname(d.driver))):''}</div>`:`<div class="warnline">Dir ist für diese Fahrt noch kein Platz zugeteilt – bitte bei der Leitung melden.</div>`}</div>
+  <div class="youbox">${mine?`<div class="small muted">Du fährst diese Strecke mit</div><div class="big">${esc(vehName(mine))}${d.time?`, ab ${d.time} Uhr`:''}</div><div>${esc(d.place||'')}${d.driver?(d.driver===pid?' · <b>Du fährst</b>':' · Fahrer '+esc(pname(d.driver))):''}</div>`:`<div class="warnline">Dir ist für diese Fahrt noch kein Platz zugeteilt – bitte bei der Leitung melden.</div>`}</div>
   <div class="cars">${groups.map(g=>{const dd=t.veh[g.v]||{};return `<div class="car" ${g.v===mine?'style="border-color:var(--red);border-width:2px"':''}><b>${esc(vehName(g.v))}</b>
     <div class="small" style="margin:4px 0 8px">${dd.time?`ab <b>${dd.time} Uhr</b>`:'Zeit folgt'}${dd.place?' · '+esc(dd.place):''}</div>
-    ${dd.driver?`<div class="small muted">Fahrer:in: ${esc(pname(dd.driver))}</div>`:''}
+    ${dd.driver?`<div class="small muted">Fahrer: ${esc(pname(dd.driver))}</div>`:''}
     <div class="chips" style="margin-top:8px">${g.pax.map(p=>`<span class="chip" ${p.id===pid?'style="background:var(--red);color:#fff;border-color:var(--red)"':''}>${esc(first(p.id))}</span>`).join('')}</div></div>`}).join('')}</div>`;
 }
 function tourStays(y){
@@ -1398,7 +1550,7 @@ function tourStays(y){
     ${!leit&&!list.length&&all.length?`<p class="warnline">Dir ist hier noch kein Schlafplatz zugeteilt – bitte bei der Leitung melden.</p>`:''}
     ${!leit&&!all.length?'<p class="muted">Unterkünfte folgen.</p>':''}
     <div class="grid3">${list.map(a=>ui.editStay===a.id?stayForm(a,c):`<div class="panel"><h3>${esc(a.host)}</h3>
-      <div class="small">${esc(a.addr)}</div>${a.hostTel?`<div class="small">Tel. Gastgeber:in: ${telLink(a.hostTel)}</div>`:(isLeit()?'<div class="small warnline">Telefonnummer fehlt</div>':'')}<div class="small muted">${esc(a.beds)}</div>
+      <div class="small">${esc(a.addr)}</div>${a.hostTel?`<div class="small">Tel. Gastgeber: ${telLink(a.hostTel)}</div>`:(isLeit()?'<div class="small warnline">Telefonnummer fehlt</div>':'')}<div class="small muted">${esc(a.beds)}</div>
       ${leit?`<div class="chips" style="margin-top:8px">${a.persons.map(id=>`<span class="chip">${esc(first(id))}</span>`).join('')}</div>`:''}
       ${ed?`<div class="row" style="justify-content:flex-start;margin-top:10px"><button class="btn" data-act="stay-edit" data-id="${a.id}">Bearbeiten</button></div>`:''}</div>`).join('')}
       ${ed&&ui.editStay==='new-'+c?stayForm({id:'',host:'',addr:'',beds:'',hostTel:'',persons:[]},c):''}</div>
@@ -1408,8 +1560,8 @@ function tourStays(y){
 function stayForm(a,c){
   const y=Y();
   return `<div class="panel" style="grid-column:1/-1"><h3>${a.id?'Unterkunft bearbeiten':'Neue Unterkunft in '+esc(c)}</h3><div class="form" style="border:0;padding:0;margin:0">
-  <div class="grid"><label class="f">Gastgeber:in<input type="text" id="st-host" value="${esc(a.host)}"></label><label class="f">Adresse<input type="text" id="st-addr" value="${esc(a.addr)}"></label>
-  <label class="f">Betten / Hinweis<input type="text" id="st-beds" value="${esc(a.beds)}"></label><label class="f">Telefon Gastgeber:in<input type="tel" id="st-tel" value="${esc(a.hostTel||'')}" placeholder="z. B. 0151 1234567"></label></div>
+  <div class="grid"><label class="f">Gastgeber<input type="text" id="st-host" value="${esc(a.host)}"></label><label class="f">Adresse<input type="text" id="st-addr" value="${esc(a.addr)}"></label>
+  <label class="f">Betten / Hinweis<input type="text" id="st-beds" value="${esc(a.beds)}"></label><label class="f">Telefon Gastgeber<input type="tel" id="st-tel" value="${esc(a.hostTel||'')}" placeholder="z. B. 0151 1234567"></label></div>
   <fieldset><legend>Wer schläft hier?</legend><div class="checks">${y.people.map(p=>`<label><input type="checkbox" class="st-p" value="${p.id}" ${a.persons.includes(p.id)?'checked':''}> ${esc(p.name)}</label>`).join('')}</div></fieldset>
   <div class="row" style="justify-content:flex-start"><button class="btn primary" data-act="stay-save" data-id="${a.id}" data-c="${esc(c)}">Speichern</button><button class="btn" data-act="stay-cancel">Abbrechen</button>${a.id?`<button class="btn" data-act="stay-del" data-id="${a.id}">Entfernen</button>`:''}</div></div></div>`;
 }
@@ -1424,7 +1576,7 @@ function castLabel(tok,short){
 function tokInfo(tok){
   if(!tok) return null;
   if(tok.startsWith('reg:')){const r=Y().registrations.find(x=>x.id===tok.slice(4)); return r&&{name:r.name,photo:r.photoUrl||driveThumb(r.photoLink),link:r.photoLink||'',sub:`Anmeldung · ${r.wish||'—'}`,note:[r.roleWish&&'Rollenwunsch: '+r.roleWish,r.height&&r.height+' cm',r.exp&&'Bühnenerfahrung: '+r.exp].filter(Boolean).join(' · '),reg:r};}
-  const p=person(tok); return p&&{name:p.name,photo:p.photo||'',sub:(p.groups||[]).map(g=>GROUPS[g]||g).join(', '),note:'',person:p};
+  const p=person(tok); return p&&{name:p.name,photo:p.photo||'',sub:(p.groups||[]).map(g=>gLabel(g)).join(', '),note:'',person:p};
 }
 const hue=s=>[...s].reduce((a,c)=>a+c.charCodeAt(0),0)%360;
 const initials=n=>n.split(' ').filter(Boolean).map(x=>x[0]).join('').slice(0,2).toUpperCase();
@@ -1452,12 +1604,22 @@ function readPhoto(file,cb){
 }
 function vTeam(){
   const y=Y();
-  const tabs=isLeit()?[['reg','Anmeldungen'],['form','Google-Formular'],['cast','Besetzung'],['crew','Gewerke']]:ui.role==='ensemble'?[['crew','Gewerke']]:[['cast','Besetzung'],['crew','Gewerke']];
+  const tabs=isLeit()?[['over','Teamübersicht'],['crew','Gewerke'],['actors','Schauspieler']]:ui.role==='ensemble'?[['play','Stückbesetzung'],['crew','Gewerke']]:[['actors','Schauspieler'],['crew','Gewerke']];
   if(!tabs.some(t=>t[0]===ui.teamTab)) ui.teamTab=tabs[0][0];
-  const n=y.registrations.filter(r=>r.status==='neu').length;
-  const body={reg:teamReg,form:teamSheet,cast:teamCast,crew:teamCrew}[ui.teamTab](y);
-  return `<h1>Team & Besetzung</h1><p class="lede">Von der Anmeldung über die Zusage bis zur Rolle – alles an einem Ort.</p>
-  <div class="tabs" role="tablist">${tabs.map(([k,l])=>`<button role="tab" data-act="teamtab" data-t="${k}" aria-selected="${ui.teamTab===k}">${l}${k==='reg'&&n?` (${n})`:''}</button>`).join('')}</div>${body}`;
+  const body={over:teamOver,crew:teamCrew,actors:teamActors,play:teamPlay}[ui.teamTab](y);
+  return `<h1>Team & Besetzung</h1><p class="lede">Wer im Team ist, in welchem Gewerk – und wer was spielt.</p>
+  <div class="tabs" role="tablist">${tabs.map(([k,l])=>`<button role="tab" data-act="teamtab" data-t="${k}" aria-selected="${ui.teamTab===k}">${l}</button>`).join('')}</div>${body}`;
+}
+/* Leute im Team ohne Formular-Anmeldung (über „Zugänge“ freigeschaltet oder aus dem Vorjahr übernommen) */
+const directPeople=y=>y.people.filter(p=>!(p.fromReg&&y.registrations.some(r=>r.id===p.fromReg))).sort((a,b)=>a.name.localeCompare(b.name));
+const goneDirect=y=>(y.gone||[]).filter(p=>!(p.fromReg&&y.registrations.some(r=>r.id===p.fromReg)));
+const regCount=(y,k)=>y.registrations.filter(r=>r.status===k).length+(k==='zugelassen'?directPeople(y).length:k==='abgesagt'?goneDirect(y).length:0);
+function vAnm(){
+  const y=Y(); const tabs=[...REGF,['form','Google-Formular']];
+  if(!tabs.some(t=>t[0]===ui.regFilter)) ui.regFilter='neu';
+  return `<h1>Anmeldungen</h1><p class="lede">Alles aus dem Google Formular. Wer zugelassen ist, steht automatisch unter „Team & Besetzung“.</p>
+  <div class="tabs" role="tablist">${tabs.map(([k,l])=>`<button role="tab" data-act="regfilter" data-f="${k}" aria-selected="${ui.regFilter===k}">${l}${k==='form'?'':` (${regCount(y,k)})`}</button>`).join('')}</div>
+  ${ui.regFilter==='form'?teamSheet(y):teamReg(y)}`;
 }
 const REGF=[['neu','Neu'],['Warteliste','Warteliste'],['zugelassen','Zugelassen'],['abgesagt','Abgesagt']];
 function regDetails(r,ref){
@@ -1469,7 +1631,7 @@ function regDetails(r,ref){
     ${F('Termine bestätigt',esc(r.avail))}${F('Zeitlich eng',esc(r.tight))}
     ${F('Ich war',esc(r.been))}${F('Rollenwunsch',esc(r.roleWish))}${F('Größe',r.height?esc(r.height)+' cm':'')}${F('Bühnenerfahrung',esc(r.exp))}
     ${F('Essgewohnheiten',esc(r.diet))}${F('Mitteilung Probewoche',esc(r.probeNote))}${F('Bett Probewoche',r.bed?'Ja':'')}
-    ${F('Fahrer:in',r.driver?'Ja'+(r.licLinks?.length?' · '+links(r.licLinks,'Führerschein'):' · <span class="warnline">Führerschein fehlt</span>'):'')}
+    ${F('Fahrer',r.driver?'Ja'+(r.licLinks?.length?' · '+links(r.licLinks,'Führerschein'):' · <span class="warnline">Führerschein fehlt</span>'):'')}
     ${F('Auto',esc(r.car))}${F('Empfiehlt',esc(r.referral))}${F('Anmerkungen',esc(r.notes))}
     ${F('Foto',r.photoLink?links([r.photoLink],'In Drive öffnen'):'')}${F('Angemeldet',esc(r.ts||fDate(r.date,{day:'2-digit',month:'2-digit',year:'numeric'})))}
   </div></details>`;
@@ -1477,22 +1639,29 @@ function regDetails(r,ref){
 function teamReg(y){
   const ed=canEdit(); const f=ui.regFilter; const ref=probeStart(y);
   const fi=y.formImport;
-  const src=`<div class="srcbar"><span>Quelle: <b>Google Formular</b> · ${fi?`zuletzt abgeglichen ${new Date(fi.at).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}`:LIVE?'noch nicht abgeglichen':'noch nicht abgeglichen (Beispieldaten)'}</span>${ed?`<button class="btn" data-act="teamtab" data-t="form">Antworten abgleichen</button>`:''}</div>`;
-  if(!y.registrations.length) return src+empty('Noch keine Anmeldungen. Unter „Google-Formular“ die Antworten aus dem Sheet abgleichen.');
-  const cnt=k=>y.registrations.filter(r=>r.status===k).length;
+  const src=`<div class="srcbar"><span>Quelle: <b>Google Formular</b> · ${fi?`zuletzt abgeglichen ${new Date(fi.at).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}`:LIVE?'noch nicht abgeglichen':'noch nicht abgeglichen (Beispieldaten)'}</span>${ed?`<button class="btn" data-act="regfilter" data-f="form">Antworten abgleichen</button>`:''}</div>`;
+  const direct=directPeople(y), gDirect=goneDirect(y);
+  if(!y.registrations.length&&!direct.length&&!gDirect.length) return src+empty('Noch keine Anmeldungen. Unter „Google-Formular“ die Antworten aus dem Sheet abgleichen.');
   let list=y.registrations.filter(r=>r.status===f);
   if(f==='Warteliste') list=[...list].sort((p,q)=>(p.waitDate||'').localeCompare(q.waitDate||''));
   else list=[...list].sort((p,q)=>(q.date||'').localeCompare(p.date||''));
-  const hint={neu:'Neue Anmeldungen aus dem Google Formular: zulassen, auf die Warteliste setzen oder absagen.',Warteliste:'Die Warteliste in der Reihenfolge, in der Leute draufgesetzt wurden. Hier sagt ihr final zu oder ab.',zugelassen:'Diese Personen sind im Team.',abgesagt:'Abgesagte Anmeldungen. Bei Bedarf zurück auf die Warteliste.'}[f];
+  const hint={neu:'Neue Anmeldungen aus dem Google Formular: zulassen, auf die Warteliste setzen oder absagen.',Warteliste:'Die Warteliste in der Reihenfolge, in der Leute draufgesetzt wurden. Hier sagt ihr final zu oder ab.',zugelassen:'Alle, die im Team sind – aus dem Formular und direkt eingetragene. Sie stehen automatisch unter „Team & Besetzung“. Sagt jemand kurzfristig ab: „Aus dem Projekt entfernen“ – der Zugang endet sofort, die Person rutscht zu „Abgesagt“ und bekommt eine Mail. Oder „Auf die Warteliste“, wenn ihr die Zusage zurücknehmen müsst. Von dort lässt sich beides wieder rückgängig machen.',abgesagt:'Abgesagte Anmeldungen. Bei Bedarf zurück auf die Warteliste.'}[f];
   const btn=(act,id,label,cls='')=>`<button class="btn ${cls}" data-act="${act}" data-id="${id}">${label}</button>`;
   const mailBtn=r=>{const h=mailHref(r); return h?`<a class="btn" href="${h}" target="_blank" rel="noopener" title="Mail-Vorlage öffnen">✉ Mail</a>`:''};
   const actions=r=>!ed?`<span class="tag ${r.status==='zugelassen'?'green':r.status==='abgesagt'?'red':'gold'}">${esc(r.status)}</span>`
     :r.status==='neu'?btn('reg-ok',r.id,'Zulassen','ok')+btn('reg-wait',r.id,'Warteliste')+btn('reg-no',r.id,'Absagen')
     :r.status==='Warteliste'?btn('reg-ok',r.id,'Doch zusagen','ok')+btn('reg-no',r.id,'Final absagen')+mailBtn(r)
-    :r.status==='abgesagt'?btn('reg-wait',r.id,'Zurück auf Warteliste')+mailBtn(r)
-    :'<span class="tag green">im Team</span>'+mailBtn(r);
-  return `${src}<div class="seg" role="group" aria-label="Anmeldungen filtern" style="margin-bottom:10px">${REGF.map(([k,l])=>`<button data-act="regfilter" data-f="${k}" aria-pressed="${f===k}">${l} (${cnt(k)})</button>`).join('')}</div>
-  <p class="small muted" style="margin:0 0 10px">${hint}</p>
+    :r.status==='abgesagt'?(r.removedAt?'<span class="tag red">nach Zusage entfernt</span>'+btn('reg-ok',r.id,'Wieder aufnehmen','ok')+btn('reg-wait',r.id,'Auf die Warteliste'):btn('reg-wait',r.id,'Zurück auf Warteliste'))+mailBtn(r)
+    :(()=>{const inT=y.people.find(p=>p.fromReg===r.id);
+      return '<span class="tag green">im Team</span>'+mailBtn(r)+(inT&&!mails(inT.email).includes(auth.email)?`<button class="btn" data-act="p-leave" data-p="${inT.id}" title="Zugang endet sofort; Rollen, Fahrten und Unterkunft werden frei">Aus dem Projekt entfernen</button><button class="btn" data-act="p-wait" data-p="${inT.id}" title="Zusage zurücknehmen; Zugang pausiert, Rollen, Fahrten und Unterkunft werden frei">Auf die Warteliste</button>`:'');})();
+  const directRow=(p,gone)=>{const c=crewOf(p,y);
+    return `<li><div class="row" style="align-items:flex-start"><div class="row" style="gap:12px;justify-content:flex-start;flex-wrap:nowrap;align-items:flex-start;flex:1 1 380px;min-width:0">
+    ${gone?'':ava(p.id,42)}<div style="min-width:0"><b>${esc(p.name)}</b> ${c?`<span class="tag">${esc(c.label)}</span>`:(gone&&p.wasIn?.length?`<span class="tag">${esc(p.wasIn[0])}</span>`:'')}<span class="tag" title="Diese Person ist nicht über das Google Formular gekommen">ohne Formular</span>
+      <div class="small muted">${gone?`entfernt am ${fDate(p.leftAt,{day:'numeric',month:'numeric'})}`:'direkt eingetragen (Zugänge oder aus dem Vorjahr übernommen)'}</div></div></div>
+    <div class="row" style="gap:6px">${!ed?'':gone?`<span class="tag red">nach Zusage entfernt</span><button class="btn ok" data-act="p-back" data-p="${p.id}">Wieder aufnehmen</button>`
+      :`<span class="tag green">im Team</span>${!mails(p.email).includes(auth.email)?`<button class="btn" data-act="p-leave" data-p="${p.id}" title="Zugang endet sofort; Rollen, Fahrten und Unterkunft werden frei">Aus dem Projekt entfernen</button>`:''}`}</div></div></li>`;};
+  const extra=f==='zugelassen'?direct.map(p=>directRow(p,false)):f==='abgesagt'?gDirect.map(p=>directRow(p,true)):[];
+  return `${src}<p class="small muted" style="margin:0 0 10px">${hint}</p>
   ${list.length?`<ul class="list panel" style="padding:4px 18px">${list.map((r,i)=>{const age=ageAt(r.birth,ref); const okAvail=!r.avail||/^ja/i.test(r.avail);
     const facts=[r.roleWish&&'Rolle: '+r.roleWish,r.height&&r.height+' cm',r.driver&&'fährt mit',r.bed&&'braucht Bett',r.tight&&!/^gar nicht/i.test(r.tight)&&'Eng: '+r.tight].filter(Boolean);
     return `<li><div class="row" style="align-items:flex-start"><div class="row" style="gap:12px;justify-content:flex-start;flex-wrap:nowrap;align-items:flex-start;flex:1 1 380px;min-width:0">
@@ -1500,11 +1669,13 @@ function teamReg(y){
     ${ava('reg:'+r.id,42)}
     <div style="min-width:0"><b>${esc(r.name)}</b> ${(r.wishes||[]).map(w=>`<span class="tag">${esc(w)}</span>`).join(' ')}
       ${/los/i.test(r.been||'')?'<span class="tag">war schon bei LOS</span>':'<span class="tag gold">neu bei LOS</span>'}
-      ${age!=null&&age<18?'<span class="tag red">unter 18</span>':''}${okAvail?'':'<span class="tag red">Termine nicht bestätigt</span>'}
+      ${age!=null&&age<18?'<span class="tag red">unter 18</span>':''}${r.email?y.registrations.filter(x=>x!==r&&x.email===r.email).map(x=>`<span class="tag gold" title="Mehrere Anmeldungen mit derselben E-Mail – beide bleiben getrennt">gleiche E-Mail wie ${esc(x.name)}</span>`).join(''):''}${okAvail?'':'<span class="tag red">Termine nicht bestätigt</span>'}
       <div class="small muted">${facts.map(esc).join(' · ')||'&nbsp;'}${f==='Warteliste'&&r.waitDate?` · auf der Warteliste seit ${fDate(r.waitDate,{day:'numeric',month:'numeric'})}`:''}</div>
       ${regDetails(r,ref)}</div></div>
-    <div class="row" style="gap:6px">${actions(r)}</div></div></li>`}).join('')}</ul>`:empty({neu:'Keine neuen Anmeldungen.',Warteliste:'Niemand auf der Warteliste.',zugelassen:'Noch niemand zugelassen.',abgesagt:'Keine Absagen.'}[f])}
-  <p class="small muted">Fotos und Führerscheine bleiben in Google Drive – LOS Backstage verlinkt sie nur. Beim Zusagen wird die Person automatisch mit ihren Gewerk-Wünschen ins Team übernommen.</p>`;
+    <div class="row" style="gap:6px">${actions(r)}</div></div></li>`}).join('')}</ul>`:''}
+  ${extra.length?`${list.length?'<h3 style="margin:16px 0 6px;font-size:15px">Ohne Formular im Team</h3>':''}<ul class="list panel" style="padding:4px 18px">${extra.join('')}</ul>`:''}
+  ${list.length||extra.length?'':empty({neu:'Keine neuen Anmeldungen.',Warteliste:'Niemand auf der Warteliste.',zugelassen:'Noch niemand zugelassen.',abgesagt:'Keine Absagen.'}[f])}
+  <p class="small muted">Fotos und Führerscheine bleiben in Google Drive – LOS Backstage verlinkt sie nur. Beim Zusagen kommt die Person automatisch ins Team – mit dem ersten Gewerk-Wunsch und, wenn sie Haupt- oder Nebenrolle angekreuzt hat, in die Schauspieler-Übersicht.</p>`;
 }
 function teamSheet(y){
   const ed=canEdit(); const fi=y.formImport; const found=new Set(fi?.found||[]); const fc=LIVE?formCfg():{};
@@ -1553,44 +1724,192 @@ function teamForm(y){
       ${q.type==='choice'?`<select class="pv" data-q="${q.id}"><option value=""></option>${(q.options||'').split(',').map(o=>`<option>${esc(o.trim())}</option>`).join('')}</select>`:q.type==='upload'?`<input type="file" accept="image/*" class="pv" data-q="${q.id}">`:`<input type="text" class="pv" data-q="${q.id}">`}</label>`).join('')}
     ${ed?`<button class="btn primary" data-act="pv-send">Anmeldung abschicken (Test)</button>`:''}</section></div>`;
 }
+/* ---------- Gewerke: feste Liste, eine Person = ein Gewerk ---------- */
+const STD_CREWS=[['leitung','Leitung',4],['regie','Regie',4],['ensemble','Schauspiel',14],['band','Band',4],['technik','Technik',3],['bautrupp','Bautrupp',4],['lkw','LKW-Fahrer',2],['requisite','Requisite',2],['kostuem','Kostüm',4],['mami','Mami',2]];
+const STD_KEYS=STD_CREWS.map(c=>c[0]);
+const NO_LEAD=['leitung','regie','ensemble'];
+const REGIE_FN=['Regisseur','Regie-Assistenz','Souffleuse'];
+const fnFix=f=>/^regisseur/i.test(f||'')?'Regisseur':/^regie-?assistenz/i.test(f||'')?'Regie-Assistenz':f;
+const crewKeys=y=>(y.crews||[]).map(c=>c.g);
+const crewOf=(p,y)=>{y=y||Y(); return (y.crews||[]).find(c=>(p.groups||[]).includes(c.g))||null;};
+function setCrew(p,g,y){ y=y||Y(); const keys=crewKeys(y); const old=crewOf(p,y);
+  p.groups=(p.groups||[]).filter(x=>!keys.includes(x)); if(g) p.groups.unshift(g);
+  if(old&&old.g!==g&&old.lead===p.id) old.lead=''; }
+function wishToCrew(w,y){ const s=normName(w);
+  const map=[[/regie|souffl|assist/,'regie'],[/schauspiel/,'ensemble'],[/\bband\b|musik/,'band'],[/technik|\bton\b|licht/,'technik'],[/lkw|fahrer/,'lkw'],[/bau/,'bautrupp'],[/requisit/,'requisite'],[/kostum|kostüm|maske/,'kostuem'],[/mami|kuche|küche|verpflegung/,'mami'],[/chor|gesang/,'chor'],[/leitung/,'leitung']];
+  const exact=(y.crews||[]).find(c=>normName(c.label)===s); if(exact) return exact.g;
+  const hit=map.find(([re,g])=>re.test(s)&&(y.crews||[]).some(c=>c.g===g)); return hit?hit[1]:''; }
+/* Altdaten angleichen: Standard-Gewerke ergänzen, nur ein Gewerk je Person */
+function ensureCrews(y){
+  if(!y||y.archived) return false; let changed=false; y.crews=y.crews||[];
+  STD_CREWS.forEach(([g,label,target])=>{ if(!y.crews.some(c=>c.g===g)){ y.crews.push({g,label,target,lead:''}); changed=true; } });
+  y.crews.forEach(c=>{ if(c.g==='technik'&&c.label==='Ton & Licht'){ c.label='Technik'; changed=true; } });
+  const order=c=>{const i=STD_KEYS.indexOf(c.g); return i<0?99:i;};
+  const sorted=[...y.crews].sort((a,b)=>order(a)-order(b)); if(sorted.some((c,i)=>c!==y.crews[i])){ y.crews=sorted; changed=true; }
+  const keys=crewKeys(y);
+  y.people.forEach(p=>{ if(p.fn&&fnFix(p.fn)!==p.fn){ p.fn=fnFix(p.fn); changed=true; } });
+  y.people.forEach(p=>{ if(p.actWish===undefined&&p.fromReg){ const r=(y.registrations||[]).find(x=>x.id===p.fromReg); if(r){ p.actWish=r.roleWish||''; changed=true; } } });
+  y.people.forEach(p=>{ const mine=(p.groups||[]).filter(g=>keys.includes(g)); if(mine.length>1){ const keep=mine.sort((a,b)=>keys.indexOf(a)-keys.indexOf(b))[0]; setCrew(p,keep,y); changed=true; } });
+  return changed;
+}
+/* Schauspiel: wer auf die Bühne kann. Aus dem Formular (Haupt-/Nebenrolle angekreuzt), Gewerk Schauspiel
+   oder von der Leitung in der Teamübersicht von Hand auf „Ja“ gesetzt. Regisseure spielen nie mit. */
+const isDirector=(p,y)=>!!p&&crewOf(p,y)?.g==='regie'&&p.fn==='Regisseur';
+const wishOf=(p,y)=>{const r=p.fromReg&&(y.registrations||[]).find(x=>x.id===p.fromReg); return (r&&r.roleWish)||p.actWish||'';};
+const wantsStage=w=>/haupt|neben/i.test(w||'');
+function acts(p,y){ y=y||Y(); if(!p||isDirector(p,y)) return false; if(p.acts!==undefined) return !!p.acts;
+  return wantsStage(wishOf(p,y))||crewOf(p,y)?.g==='ensemble'||y.roles.some(r=>r.person===p.id||r.alt===p.id); }
+function wishLabel(p,y){ const w=wishOf(p,y), h=/haupt/i.test(w), n=/neben/i.test(w);
+  return h&&n?'Haupt- & Nebenrolle':h?'Hauptrolle':n?'Nebenrolle':(p.acts===true&&crewOf(p,y)?.g!=='ensemble')?'von Hand dazu':''; }
+const leadLabel=c=>({kostuem:'Kostümchef',bautrupp:'Bauchef',requisite:'Requisitechef',technik:'Technikchef',band:'Bandleitung',chor:'Chorleitung',lkw:'LKW-Chef',mami:'Mami-Chef'})[c.g]||('Chef '+c.label);
+
+/* ---------- Besetzung ---------- */
+const isMain=r=>r.kind!=='neben';
+const castStatus=r=>r.person?(r.status==='frei'?'vorgeschlagen':r.status):'frei';
+function mainRoleOf(tok,y,except){ return y.roles.find(r=>r.id!==except&&isMain(r)&&r.person===tok&&r.status!=='abgelehnt'); }
+function castPool(y){
+  return y.people.filter(p=>acts(p,y)).map(p=>{const c=crewOf(p,y); return {id:p.id,name:p.name,crewLabel:!c?'ohne Gewerk':c.g==='ensemble'?'Schauspiel':c.label};});
+}
+function castSelect(y,r,field,ed){
+  const cur=r[field]||''; const main=isMain(r);
+  if(!ed) return `<span class="castname">${cur?esc(castLabel(cur)):'<span class="muted">—</span>'}</span>`;
+  const pool=castPool(y); if(cur&&!pool.some(x=>x.id===cur)) pool.push({id:cur,name:castLabel(cur),crewLabel:'Bisher eingetragen'});
+  const groups={}; pool.forEach(x=>{(groups[x.crewLabel]=groups[x.crewLabel]||[]).push(x);});
+  const opt=x=>{ let note='', dis=false;
+    if(field==='person'&&main){ const o=mainRoleOf(x.id,y,r.id); if(o){ note=` – spielt schon ${o.name}`; dis=x.id!==cur; } }
+    if(field==='alt'&&x.id===r.person){ note=' – ist Besetzung'; dis=x.id!==cur; }
+    if(field==='person'&&x.id===r.alt) note=' – ist Zweitbesetzung';
+    return `<option value="${x.id}" ${x.id===cur?'selected':''} ${dis?'disabled':''}>${esc(x.name)}${note}</option>`; };
+  const keys=Object.keys(groups).sort((a,b)=>(a==='Schauspiel'?-1:b==='Schauspiel'?1:0)||a.localeCompare(b));
+  return `<select data-act="${field==='person'?'cast':'castalt'}" data-id="${r.id}" aria-label="${field==='person'?'Besetzung':'Zweitbesetzung'} ${esc(r.name)}"><option value="">${field==='person'?'— frei —':'— keine —'}</option>${keys.map(k=>`<optgroup label="${esc(k)}">${groups[k].map(opt).join('')}</optgroup>`).join('')}</select>`;
+}
+function roleRow(y,r,ed){
+  const st=castStatus(r), tag={frei:'',vorgeschlagen:'gold',bestätigt:'green',abgelehnt:'red'}[st];
+  const regie=ui.role==='regie'&&!y.archived; const cmOpen=ui.cmOpen===r.id;
+  const p=r.person&&!r.person.startsWith('reg:')?person(r.person):null; const pc=p&&crewOf(p,y);
+  return `<div class="rrow">
+    <div class="rname"><b>${esc(r.name)}</b>${pc&&pc.g!=='ensemble'?`<span class="tag" style="margin-left:6px">${esc(pc.label)}</span>`:''}</div>
+    <div class="rcell" data-label="Besetzung">${r.person?ava(r.person,28):''}${castSelect(y,r,'person',ed)}</div>
+    <div class="rcell" data-label="Zweitbesetzung">${r.alt?ava(r.alt,28):''}${castSelect(y,r,'alt',ed)}${ed&&r.alt&&r.person?`<button class="iconbtn" data-act="cast-swap" data-id="${r.id}" title="Zweitbesetzung zur Besetzung machen" aria-label="Tauschen">⇄</button>`:''}</div>
+    <div class="rstatus"><span class="tag ${tag}">${esc(st)}</span>${regie&&r.person&&st!=='bestätigt'?`<button class="iconbtn ok" data-act="cast-ok" data-id="${r.id}" title="Bestätigen" aria-label="Bestätigen">✓</button>`:''}${regie&&r.person&&st!=='abgelehnt'?`<button class="iconbtn" data-act="cast-no" data-id="${r.id}" title="Passt nicht" aria-label="Passt nicht">✕</button>`:''}</div>
+    <div class="ractions"><button class="iconbtn" data-act="cm-toggle" data-id="${r.id}" aria-expanded="${cmOpen}" title="Kommentare">💬${r.comments.length?` ${r.comments.length}`:''}</button>${ed?`<button class="iconbtn" data-act="role-menu" data-id="${r.id}" title="Rolle bearbeiten" aria-label="Rolle bearbeiten">⋯</button>`:''}</div>
+    ${cmOpen?`<div class="rcomments">${r.comments.map(c=>`<div class="cm-line"><b>${esc(c.by)}:</b> ${esc(c.text)}</div>`).join('')||'<div class="small muted">Noch keine Kommentare.</div>'}
+      ${ed?`<div class="row" style="flex-wrap:nowrap;margin-top:6px"><input type="text" id="cm-${r.id}" data-enter="${r.id}" placeholder="Kommentar …" style="flex:1" aria-label="Kommentar zu ${esc(r.name)}"><button class="btn" data-act="cm-add" data-id="${r.id}">Senden</button></div>`:''}</div>`:''}
+    ${ed&&ui.roleMenu===r.id?`<div class="rcomments"><div class="row" style="justify-content:flex-start"><label class="f" style="flex-direction:row;align-items:center;gap:6px">Name<input type="text" value="${esc(r.name)}" data-act="role-name" data-id="${r.id}"></label>
+      <label class="f" style="flex-direction:row;align-items:center;gap:6px">Art<select data-act="rolekind" data-id="${r.id}"><option value="haupt" ${isMain(r)?'selected':''}>Hauptrolle</option><option value="neben" ${!isMain(r)?'selected':''}>Nebenrolle</option></select></label>
+      <button class="btn ghost" data-act="role-del" data-id="${r.id}" style="color:var(--muted)">Rolle löschen</button></div></div>`:''}
+  </div>`;
+}
+/* Stückbesetzung fürs Team: nur bestätigte Besetzungen, ohne Kommentare und Vorschläge */
+function rolesOfP(id,y){ const m=y.roles.filter(r=>r.person===id&&isMain(r)&&r.status!=='abgelehnt'), s=y.roles.filter(r=>r.person===id&&!isMain(r)&&r.status!=='abgelehnt'), a=y.roles.filter(r=>r.alt===id);
+  return {m,s,a,none:!m.length&&!s.length&&!a.length}; }
+const roleTags=(i)=>[...i.m.map(r=>`<span class="tag ${r.status==='bestätigt'?'green':'gold'}" title="Hauptrolle · ${esc(r.status)}"><b>${esc(r.name)}</b></span>`),...i.s.map(r=>`<span class="tag" title="Nebenrolle · ${esc(r.status)}">${esc(r.name)}${r.status==='bestätigt'?' ✓':''}</span>`),...i.a.map(r=>`<span class="tag" title="Zweitbesetzung">2. ${esc(r.name)}</span>`)].join(' ');
+/* ---------- Schauspieler: Übersicht + Besetzung ---------- */
+function teamActors(y){
+  const t=ui.actTab||(isRegie()?'cast':'list');
+  return `<div class="seg" role="group" aria-label="Schauspieler" style="margin-bottom:12px">${[['list','Übersicht'],['cast','Besetzung']].map(([k,l])=>`<button data-act="acttab" data-t="${k}" aria-pressed="${t===k}">${l}</button>`).join('')}</div>${t==='cast'?teamCast(y):actorList(y)}`;
+}
+function actorList(y){
+  const L=isLeit(), f=ui.actFilter||'alle';
+  const rows=y.people.filter(p=>acts(p,y)).sort((a,b)=>a.name.localeCompare(b.name)).map(p=>({p,...rolesOfP(p.id,y)}));
+  const list=f==='ohne'?rows.filter(r=>r.none):f==='haupt'?rows.filter(r=>r.m.length):f==='neben'?rows.filter(r=>r.s.length||r.a.length):rows;
+  const main=y.roles.filter(isMain), side=y.roles.filter(r=>!isMain(r)); const taken=l=>l.filter(r=>r.person&&r.status!=='abgelehnt').length;
+  const noRole=rows.filter(r=>r.none).length;
+  const chip=(k,l,n)=>`<button class="crewchip" data-act="actfilter" data-f="${k}" aria-pressed="${f===k}">${l} <span class="muted">${n}</span></button>`;
+  const extra=p=>{ if(!L) return ''; const r=p.fromReg&&y.registrations.find(x=>x.id===p.fromReg); if(!r) return ''; return [r.height&&r.height+' cm',r.exp&&'Bühnenerfahrung: '+r.exp].filter(Boolean).map(esc).join(' · '); };
+  return `<div class="castsum"><span><b>${rows.length}</b> Schauspieler</span><span>Hauptrollen <b>${taken(main)}/${main.length}</b> besetzt</span><span>Nebenrollen <b>${taken(side)}/${side.length}</b> besetzt</span><span class="${noRole?'warnline':'okline'}">${noRole} noch ohne Rolle</span></div>
+  <div class="chips" style="margin:0 0 10px">${chip('alle','Alle',rows.length)}${chip('ohne','Ohne Rolle',noRole)}${chip('haupt','Mit Hauptrolle',rows.filter(r=>r.m.length).length)}${chip('neben','Neben-/Zweitbesetzung',rows.filter(r=>r.s.length||r.a.length).length)}</div>
+  <p class="small muted" style="margin:0 0 10px">Hier stehen alle, die Haupt- oder Nebenrolle angekreuzt haben, das Gewerk Schauspiel haben oder von der Leitung in der Teamübersicht dazugenommen wurden.${isRegie()?'':' Fehlt jemand? Teamübersicht → Spalte „Schauspiel“ auf Ja.'}</p>
+  ${list.length?`<section class="panel" style="padding:4px 16px"><div class="trow thead actrow"><div>Name</div><div>Gewerk</div><div>Wunsch</div><div>Rolle</div></div>
+  ${list.map(({p,...i})=>{const c=crewOf(p,y), x=extra(p), w=wishLabel(p,y);
+    return `<div class="trow actrow"><div class="tname">${ava(p.id,30)}<div><b>${esc(p.name)}</b>${x?`<div class="small muted">${x}</div>`:''}</div></div>
+    <div data-label="Gewerk" class="small">${esc(c?c.label:'—')}</div>
+    <div data-label="Wunsch" class="small">${w?esc(w):'<span class="muted">—</span>'}</div>
+    <div data-label="Rolle">${i.none?'<span class="warnline small">noch keine Rolle</span>':roleTags(i)}</div></div>`;}).join('')}</section>
+  <p class="small muted">Gold = Hauptrolle vorgeschlagen · grün = Hauptrolle bestätigt · grau = Nebenrolle (✓ bestätigt) · „2.“ = Zweitbesetzung</p>`:empty(f==='ohne'?'Alle haben eine Rolle.':'Niemand in dieser Auswahl.')}`;
+}
+function teamPlay(y){
+  const me=meId();
+  const sec=(title,list)=>!list.length?'':`<section class="panel" style="padding:4px 16px;margin-bottom:14px"><h2 style="margin:12px 0 4px">${title}</h2>
+    <div class="trow thead playrow"><div>Rolle</div><div>Gespielt von</div><div>Zweitbesetzung</div></div>
+    ${list.map(r=>{const ok=r.status==='bestätigt'; const p=ok&&tokInfo(r.person), a=ok&&r.alt&&tokInfo(r.alt);
+      const mine=ok&&(r.person===me||r.alt===me);
+      return `<div class="trow playrow${mine?' mine':''}"><div class="pname"><b>${esc(r.name)}</b>${mine?' <span class="tag gold">du</span>':''}</div>
+      <div data-label="Gespielt von">${p?`<span class="tname">${ava(r.person,26)}${esc(p.name)}</span>`:'<span class="muted">wird noch bekannt gegeben</span>'}</div>
+      <div data-label="Zweitbesetzung" class="small">${a?esc(a.name):'<span class="muted">—</span>'}</div></div>`;}).join('')}</section>`;
+  const main=y.roles.filter(isMain), side=y.roles.filter(r=>!isMain(r));
+  if(!y.roles.length) return empty('Die Besetzung wird noch bekannt gegeben.');
+  return `<p class="small muted" style="margin-top:-6px">Wer spielt was in „${esc(y.play)}“. Hier stehen nur Rollen, die die Regie bestätigt hat.</p>
+  ${sec('Hauptrollen',main)}${sec('Nebenrollen',side)}`;
+}
 function teamCast(y){
   const ed=!y.archived&&(isLeit()||isRegie());
-  const pool=[...y.people.filter(p=>!p.groups.includes('leitung')&&!p.groups.includes('regie')).map(p=>({id:p.id,label:p.name})),
-    ...y.registrations.filter(r=>r.status==='neu'||r.status==='Warteliste').map(r=>({id:'reg:'+r.id,label:r.name+' (Anmeldung offen)'}))];
-  const tag={frei:'',vorgeschlagen:'gold',bestätigt:'green',abgelehnt:'red'};
-  const n=k=>y.roles.filter(r=>r.status===k).length;
-  const sel=(act,r,cur,empty)=>`<select data-act="${act}" data-id="${r.id}" aria-label="${act==='cast'?'Besetzung':'Zweitbesetzung'} ${esc(r.name)}"><option value="">${empty}</option>${pool.map(p=>`<option value="${p.id}" ${p.id===cur?'selected':''}>${esc(p.label)}</option>`).join('')}</select>`;
-  const cell=(act,r,cur,empty)=>`<div class="castcell">${cur?ava(cur):''}${ed?sel(act,r,cur,empty):`<span>${esc(castLabel(cur)||'—')}</span>`}</div>`;
-  return `<p class="small muted" style="margin-top:-6px">${ui.role==='regie'?'Was du besetzt, ist direkt bestätigt. Vorschläge von Leitung und Regieassistenz bestätigst du in der Spalte Status. Mit ⇄ machst du die Zweitbesetzung zur Hauptbesetzung.':ui.role==='ra'?'Du kannst Rollen anlegen, Personen und Zweitbesetzungen vorschlagen und kommentieren. Bestätigen kann nur die Regie.':'Schlage pro Rolle eine Besetzung und optional eine Zweitbesetzung vor – die Regie entscheidet. Alle Angemeldeten stehen zur Auswahl, auch noch nicht zugelassene.'} Klick aufs Bild öffnet das Foto.</p>
-  <div class="row" style="margin-bottom:12px">
-    <div class="row" style="gap:8px;justify-content:flex-start"><span class="tag green">${n('bestätigt')} bestätigt</span><span class="tag gold">${n('vorgeschlagen')} vorgeschlagen</span><span class="tag red">${n('abgelehnt')} abgelehnt</span><span class="tag">${n('frei')} frei</span></div>
-    ${ed?`<div class="row" style="gap:6px;flex-wrap:nowrap"><input type="text" id="role-new" placeholder="Neue Rolle, z. B. Soldat 4" aria-label="Neue Rolle"><button class="btn primary" data-act="role-add">Rolle hinzufügen</button></div>`:''}</div>
-  <section class="panel scroll-x" style="padding:0"><table class="t cast-t"><thead><tr><th>Rolle</th><th>Besetzung</th><th>Zweitbesetzung</th><th>Kommentar</th>${ed?'<th></th>':''}<th>Status</th>${ed?'<th></th>':''}</tr></thead><tbody>
-  ${y.roles.map(r=>`<tr>
-    <td><b>${esc(r.name)}</b></td>
-    <td>${cell('cast',r,r.person,'— frei —')}</td>
-    <td>${cell('castalt',r,r.alt,'— keine —')}${ed&&r.alt?`<button class="btn ghost" data-act="cast-swap" data-id="${r.id}" style="margin-top:6px;padding:3px 8px;font-size:13px" title="Zweitbesetzung zur Hauptbesetzung machen">⇄ Tauschen</button>`:''}</td>
-    <td class="cm-cell">${r.comments.map(c=>`<div class="cm-line"><b>${esc(c.by)}:</b> ${esc(c.text)}</div>`).join('')}
-      ${ed?`<input type="text" id="cm-${r.id}" data-enter="${r.id}" placeholder="Kommentar …" aria-label="Kommentar zu ${esc(r.name)}">`:''}</td>
-    ${ed?`<td><button class="btn" data-act="cm-add" data-id="${r.id}">Senden</button></td>`:''}
-    <td><span class="tag ${tag[r.status]}">${esc(r.status)}</span>
-      ${ui.role==='regie'&&r.status==='vorgeschlagen'?`<div class="row" style="gap:4px;justify-content:flex-start;margin-top:6px;flex-wrap:nowrap"><button class="btn ok" data-act="cast-ok" data-id="${r.id}" style="padding:3px 8px;font-size:13px">Bestätigen</button><button class="btn" data-act="cast-no" data-id="${r.id}" style="padding:3px 8px;font-size:13px">Passt nicht</button></div>`:''}</td>
-    ${ed?`<td><button class="btn ghost" data-act="role-del" data-id="${r.id}" title="Rolle entfernen" aria-label="Rolle ${esc(r.name)} entfernen" style="border:0;font-size:16px;color:var(--muted)">✕</button></td>`:''}
-  </tr>`).join('')}</tbody></table></section>`;
+  const main=y.roles.filter(isMain), side=y.roles.filter(r=>!isMain(r));
+  const cnt=(list,k)=>list.filter(r=>castStatus(r)===k).length;
+  const sum=(list,l)=>`<span><b>${l}</b> ${list.length} · <span class="okline">${cnt(list,'bestätigt')} bestätigt</span> · ${cnt(list,'vorgeschlagen')} vorgeschlagen · <span class="${cnt(list,'frei')?'warnline':''}">${cnt(list,'frei')} frei</span></span>`;
+  const head=`<div class="rrow rhead"><div>Rolle</div><div>Besetzung</div><div>Zweitbesetzung</div><div>Status</div><div></div></div>`;
+  const free=y.people.filter(p=>acts(p,y)&&rolesOfP(p.id,y).none).sort((a,b)=>a.name.localeCompare(b.name));
+  const hint=ui.role==='regie'?'Was du besetzt, ist direkt bestätigt. Vorschläge bestätigst du mit ✓.':ui.role==='ra'?'Du schlägst vor – bestätigen kann nur die Regie.':'Ihr schlagt vor – die Regie bestätigt.';
+  return `<div class="castsum">${sum(main,'Hauptrollen')}${sum(side,'Nebenrollen')}</div>
+  <p class="small muted" style="margin:0 0 12px">${hint} Jede Person kann nur <b>eine Hauptrolle</b> spielen; Nebenrollen und Zweitbesetzungen gehen zusätzlich. Zur Wahl stehen alle aus der Schauspieler-Übersicht.</p>
+  <div class="castgrid"><div>
+    <section class="panel section rtable"><div class="row"><h2 style="margin:0">Hauptrollen</h2></div>${head}${main.map(r=>roleRow(y,r,ed)).join('')||'<p class="small muted">Noch keine Hauptrollen.</p>'}</section>
+    <section class="panel section rtable"><div class="row"><h2 style="margin:0">Nebenrollen</h2></div>${head}${side.map(r=>roleRow(y,r,ed)).join('')||'<p class="small muted">Noch keine Nebenrollen.</p>'}</section>
+    ${ed?`<div class="row" style="justify-content:flex-start;gap:8px"><input type="text" id="role-new" placeholder="Neue Rolle, z. B. Soldat 4" aria-label="Neue Rolle"><select id="role-kind" aria-label="Art der Rolle"><option value="haupt">Hauptrolle</option><option value="neben">Nebenrolle</option></select><button class="btn primary" data-act="role-add">Rolle hinzufügen</button></div>`:''}
+  </div>
+  <section class="panel whoplays"><h3>Noch ohne Rolle <span class="muted" style="font-weight:400">${free.length}</span></h3>
+    <ul class="list">${free.map(p=>{const w=wishLabel(p,y), c=crewOf(p,y); return `<li><div class="row" style="flex-wrap:nowrap;justify-content:flex-start;gap:8px">${ava(p.id,26)}<div><b style="font-weight:600">${esc(p.name)}</b><div class="small muted">${[w,c&&c.g!=='ensemble'&&c.label].filter(Boolean).map(esc).join(' · ')||'&nbsp;'}</div></div></div></li>`;}).join('')||'<li class="muted small">Alle haben eine Rolle.</li>'}</ul>
+    <p class="small muted" style="margin:8px 0 0">Wer hier fehlt, steht nicht in der Schauspieler-Übersicht – die Leitung kann ihn in der Teamübersicht dazunehmen.</p></section></div>`;
 }
-const leadLabel=c=>c.g==='kostuem'?'Kostümchef:in':c.g==='bautrupp'?'Bauchef:in':c.g==='requisite'?'Requisitechef:in':c.g==='technik'?'Technikchef:in':c.g==='band'?'Bandleitung':'Gewerkchef:in';
+
+/* ---------- Gewerke-Übersicht ---------- */
 function teamCrew(y){
-  if(!y.crews.length) return empty('Keine Gewerke hinterlegt.');
-  const ed=canEdit();
-  return `<p class="small muted" style="margin-top:-6px">${ed?'Pro Gewerk (außer Schauspiel) legt ihr eine Chefin oder einen Chef fest. Das sieht das ganze Team.':'Wer in welchem Gewerk ist – und wer jeweils dafür verantwortlich ist.'}</p>
-  <div class="grid3">${y.crews.map(c=>{const ps=y.people.filter(p=>p.groups.includes(c.g));const ok=ps.length>=c.target; const canLead=c.g!=='ensemble';
-    const lead=canLead&&c.lead&&ps.some(p=>p.id===c.lead)?c.lead:'';
-    const sorted=lead?[ps.find(p=>p.id===lead),...ps.filter(p=>p.id!==lead)]:ps;
-    return `<section class="panel"><div class="row"><h3>${esc(c.label)}</h3>${isLeit()?`<span class="tag ${ok?'green':'red'}">${ps.length}/${c.target}</span>`:`<span class="small muted">${ps.length}</span>`}</div>
-    ${isLeit()?`<div class="bar ${ok?'green':''}" style="margin:6px 0 10px"><span style="width:${Math.min(100,ps.length/c.target*100)}%"></span></div>`:''}
-    ${canLead?`<div class="leadbox">${lead?`${ava(lead,32)}<div><div class="small muted">${leadLabel(c)}</div><b>${esc(pname(lead))}</b></div>`:`<div class="small muted">${leadLabel(c)}: noch nicht festgelegt</div>`}</div>
-      ${ed?`<label class="f" style="margin-bottom:10px">${leadLabel(c)} festlegen<select data-act="crewlead" data-g="${c.g}"><option value="">— niemand —</option>${ps.map(p=>`<option value="${p.id}" ${p.id===lead?'selected':''}>${esc(p.name)}</option>`).join('')}</select></label>`:''}`:''}
-    <div class="chips">${sorted.map(p=>p.id===lead?`<span class="chip lead">★ ${esc(p.name)}</span>`:`<span class="chip">${esc(p.name)}</span>`).join('')||'<span class="small muted">Noch niemand</span>'}</div></section>`}).join('')}</div>`;
+  const ed=canEdit(), L=isLeit();
+  const sub=(p,c)=>c.g==='regie'?p.fn:c.g==='leitung'?p.pos:'';
+  const card=c=>{const ps=y.people.filter(p=>crewOf(p,y)?.g===c.g).sort((a,b)=>a.name.localeCompare(b.name)); const canLead=!NO_LEAD.includes(c.g);
+    const lead=canLead&&c.lead&&ps.find(p=>p.id===c.lead); const ok=ps.length>=(+c.target||0); const open=ed&&ui.crewEdit===c.g;
+    const rest=ps.filter(p=>p!==lead);
+    return `<section class="panel crewcard"><div class="row" style="flex-wrap:nowrap"><h3 style="margin:0">${esc(c.label)}</h3>
+      <span class="row" style="gap:6px;flex-wrap:nowrap">${L?`<span class="tag ${ok?'green':'red'}" title="besetzt / Plätze">${ps.length}/${+c.target||0}</span>`:`<span class="small muted">${ps.length}</span>`}${ed?`<button class="iconbtn" data-act="crew-edit" data-g="${c.g}" aria-expanded="${open}" title="Bearbeiten" aria-label="${esc(c.label)} bearbeiten">✎</button>`:''}</span></div>
+      ${lead?`<div class="crewlead">★ <span class="small">${esc(leadLabel(c))}</span> <b>${esc(lead.name)}</b></div>`:canLead?`<div class="small muted" style="margin:8px 0 2px">${esc(leadLabel(c))}: noch offen</div>`:''}
+      ${rest.length?`<ul class="crewlist">${rest.map(p=>`<li>${esc(p.name)}${sub(p,c)?` <span class="muted">· ${esc(sub(p,c))}</span>`:''}</li>`).join('')}</ul>`:lead?'':'<p class="small muted" style="margin:8px 0 0">Noch niemand</p>'}
+      ${open?`<div class="crewedit">
+        ${L?`<label class="small" style="display:flex;gap:6px;align-items:center">Plätze<input type="number" min="0" value="${+c.target||0}" data-act="crew-target" data-g="${c.g}" aria-label="Plätze ${esc(c.label)}" style="width:64px;padding:3px 6px"></label>`:''}
+        ${canLead?`<label class="f">${esc(leadLabel(c))}<select data-act="crewlead" data-g="${c.g}"><option value="">— noch niemand —</option>${ps.map(p=>`<option value="${p.id}" ${lead&&p.id===lead.id?'selected':''}>${esc(p.name)}</option>`).join('')}</select></label>`:''}
+        ${c.g==='regie'&&ps.length?`<div class="fnlist">${ps.map(p=>`<label class="fnrow"><span>${esc(p.name)}</span><select data-act="pfn" data-p="${p.id}" aria-label="Funktion von ${esc(p.name)}"><option value="">Funktion …</option>${REGIE_FN.map(x=>`<option ${p.fn===x?'selected':''}>${x}</option>`).join('')}</select></label>`).join('')}</div>`:''}
+        <p class="small muted" style="margin:0">Wer in diesem Gewerk ist, legt ihr in der Teamübersicht fest.</p>
+        ${!STD_KEYS.includes(c.g)?`<button class="btn ghost" data-act="crew-del" data-g="${c.g}" style="padding:2px 8px;font-size:13px;color:var(--muted);align-self:flex-start">Sondergewerk löschen</button>`:''}</div>`:''}</section>`;};
+  return `<p class="small muted" style="margin-top:-6px">Wer in welchem Gewerk ist – und wer jeweils dafür verantwortlich ist.${ed?' Plätze, Chef und Regie-Funktionen über ✎.':''}</p>
+  <div class="grid3">${y.crews.map(card).join('')}</div>
+  ${ed?`<details style="margin-top:14px"><summary class="small" style="cursor:pointer">Sondergewerk für dieses Jahr hinzufügen (z. B. Chor)</summary>
+    <div class="row" style="justify-content:flex-start;margin-top:8px"><input type="text" id="nc-crew" placeholder="z. B. Chor" aria-label="Name"><input type="number" id="nc-target" min="0" value="4" style="width:70px" aria-label="Plätze"><button class="btn" data-act="crew-add">Anlegen</button></div></details>`:''}`;
+}
+
+/* ---------- Teamübersicht ---------- */
+function teamOver(y){
+  const ed=canEdit(); const f=ui.overFilter||'alle';
+  const regOf=p=>p.fromReg&&y.registrations.find(r=>r.id===p.fromReg);
+  const keys=crewKeys(y);
+  let list=[...y.people].sort((a,b)=>{const ca=crewOf(a,y), cb=crewOf(b,y); const ia=ca?keys.indexOf(ca.g):-1, ib=cb?keys.indexOf(cb.g):-1; return ia-ib||a.name.localeCompare(b.name);});
+  const none=list.filter(p=>!crewOf(p,y)); const actN=list.filter(p=>acts(p,y)).length;
+  if(f==='ohne') list=none; else if(f==='acts') list=list.filter(p=>acts(p,y)); else if(f!=='alle') list=list.filter(p=>crewOf(p,y)?.g===f);
+  const chips=y.crews.map(c=>{const n=y.people.filter(p=>crewOf(p,y)?.g===c.g).length; const full=n>=(+c.target||0);
+    return `<button class="crewchip" data-act="overfilter" data-f="${c.g}" aria-pressed="${f===c.g}">${esc(c.label)} <span class="${full?'okline':'warnline'}">${n}/${+c.target||0}</span></button>`;}).join('');
+  const hint=p=>{const c=crewOf(p,y); if(!c) return '';
+    if(c.g==='leitung') return `<span class="tag">${esc(p.pos||'Leitung')}</span>`;
+    if(c.g==='regie') return ed?`<select data-act="pfn" data-p="${p.id}" aria-label="Funktion in der Regie"><option value="">Funktion …</option>${REGIE_FN.map(x=>`<option ${p.fn===x?'selected':''}>${x}</option>`).join('')}</select>`:(p.fn?`<span class="tag">${esc(p.fn)}</span>`:'');
+    return c.lead===p.id?`<span class="tag gold">${esc(leadLabel(c))}</span>`:''; };
+  const actCell=p=>{ if(isDirector(p,y)) return '<span class="small muted">— (Regisseur)</span>'; const on=acts(p,y), w=wishLabel(p,y);
+    const sub=w?`<div class="small muted">${esc(w)}</div>`:'';
+    return ed?`<select data-act="setacts" data-p="${p.id}" aria-label="Schauspiel ${esc(p.name)}" class="${on?'onsel':''}"><option value="ja" ${on?'selected':''}>Ja</option><option value="nein" ${on?'':'selected'}>Nein</option></select>${sub}`:`${on?'Ja':'Nein'}${sub}`; };
+  return `<div class="chips" style="margin:-4px 0 10px"><button class="crewchip" data-act="overfilter" data-f="alle" aria-pressed="${f==='alle'}">Alle ${y.people.length}</button>${none.length||f==='ohne'?`<button class="crewchip" data-act="overfilter" data-f="ohne" aria-pressed="${f==='ohne'}">Ohne Gewerk <span class="warnline">${none.length}</span></button>`:''}<button class="crewchip" data-act="overfilter" data-f="acts" aria-pressed="${f==='acts'}">Schauspiel: Ja <span class="muted">${actN}</span></button>${chips}</div>
+  <p class="small muted" style="margin:0 0 10px">Jede Person ist in genau einem Gewerk – beim Zulassen übernommen aus der Anmeldung, hier jederzeit änderbar. „Schauspiel“ kommt aus dem Formular (Haupt- oder Nebenrolle angekreuzt); wer trotzdem auf die Bühne soll, bekommt hier ein Ja und lässt sich dann besetzen. Entfernen geht unter „Anmeldungen → Zugelassen“.</p>
+  ${list.length?`<section class="panel" style="padding:4px 16px"><div class="trow thead overrow"><div>Name</div><div>Gewerk</div><div>Schauspiel</div><div>Hinweis</div></div>
+  ${list.map(p=>{const r=regOf(p), c=crewOf(p,y); const wish=r?(r.wishes||[]).join(', '):'';
+    return `<div class="trow overrow"><div class="tname">${ava(p.id,30)}<div><b>${esc(p.name)}</b>${wish?`<div class="small muted">Wunsch: ${esc(wish)}</div>`:''}</div></div>
+    <div data-label="Gewerk">${ed?`<select data-act="setcrew" data-p="${p.id}" aria-label="Gewerk ${esc(p.name)}" class="${c?'':'warnsel'}">${c?'':'<option value="" selected disabled>— bitte wählen —</option>'}${y.crews.map(x=>`<option value="${x.g}" ${c&&c.g===x.g?'selected':''}>${esc(x.label)}</option>`).join('')}</select>`:esc(c?c.label:'—')}</div>
+    <div data-label="Schauspiel">${actCell(p)}</div>
+    <div ${hint(p)?'data-label="Hinweis"':''}>${hint(p)}</div></div>`;}).join('')}</section>`:empty(f==='ohne'?'Alle haben ein Gewerk.':'Niemand in dieser Auswahl.')}`;
 }
 
 /* ===================== Aufgaben ===================== */
@@ -1633,58 +1952,75 @@ function readTask(p){
 /* ===================== Finanzen ===================== */
 function vMoney(){
   const y=Y(), m=money(y), ed=canEdit();
-  const inp=(act,v,w=110)=>ed?`<input type="number" min="0" value="${v}" data-act="${act}" style="width:${w}px;text-align:right">`:eur(v);
-  return `<h1>Finanzen</h1><p class="lede">Einnahmen minus Ausgaben – heute und als Prognose bis zum Ende der Tour.</p>
-  <div class="grid3 section">
-    <section class="panel"><div class="small muted">Einnahmen bisher</div><div class="num" style="font-size:34px">${eur(m.income)}</div></section>
-    <section class="panel"><div class="small muted">Ausgaben bisher (Ist)</div><div class="num" style="font-size:34px">${eur(m.actual)}</div></section>
-    <section class="panel" style="border-color:${m.saldo>=0?'var(--green)':'var(--red)'}"><div class="small muted">Stand heute</div><div class="num" style="font-size:34px;color:${m.saldo>=0?'var(--green)':'var(--red)'}">${m.saldo>=0?'+':''}${eur(m.saldo)}</div><div class="small">${m.saldo>=0?'Überschuss':'Verlust'}</div></section>
-  </div>
-  <section class="panel section"><h2>Prognose</h2><p style="margin:0">Erwartete Kosten bis Tourende: <b>${eur(m.expected)}</b>. Mit den bisherigen Einnahmen ergibt das <b style="color:${m.forecast>=0?'var(--green)':'var(--red)'}">${m.forecast>=0?'+':''}${eur(m.forecast)}</b>.</p>
-  <p class="small muted" style="margin:6px 0 0">Erwartete Kosten = bei abgerechneten Posten das Ist, sonst der Plan (oder das Ist, falls es schon höher ist). Genau diese Zahl nutzt das Dashboard.</p></section>
-  <div class="grid2">
-  <section class="panel"><h2>Ausgaben</h2>${ed?'<p class="small muted" style="margin:-6px 0 8px">Kostenart, Plan und Ist direkt in der Tabelle ändern. Eigene Posten unten hinzufügen. Die Kategorie entscheidet, wo der Posten im Jahresvergleich zählt.</p>':''}<div class="scroll-x"><table class="t cost-t"><thead><tr><th>Kostenart</th><th>Kategorie</th><th class="r">Plan</th><th class="r">Ist</th><th>Abgerechnet</th>${ed?'<th></th>':''}</tr></thead><tbody>
-  ${y.costs.map(c=>`<tr><td>${ed?`<input type="text" value="${esc(c.name)}" data-act="costname" data-id="${c.id}" aria-label="Kostenart">`:esc(c.name)}</td>
-    <td>${ed?`<select data-act="costcat" data-id="${c.id}" aria-label="Kategorie ${esc(c.name)}">${CATS.map(([k,l])=>`<option value="${k}" ${catOf(c)===k?'selected':''}>${l}</option>`).join('')}</select>`:esc(Object.fromEntries(CATS)[catOf(c)])}</td>
-    <td class="r">${ed?`<input type="number" min="0" value="${c.plan}" data-act="costplan" data-id="${c.id}" class="numin" aria-label="Plan ${esc(c.name)}">`:eur(c.plan)}</td>
-    <td class="r">${ed?`<input type="number" min="0" value="${c.actual}" data-act="cost" data-id="${c.id}" class="numin" aria-label="Ist ${esc(c.name)}">`:eur(c.actual)}</td>
-    <td><input type="checkbox" data-act="closed" data-id="${c.id}" ${c.closed?'checked':''} ${ed?'':'disabled'} aria-label="${esc(c.name)} abgerechnet"></td>
-    ${ed?`<td><button class="btn ghost" data-act="cost-del" data-id="${c.id}" aria-label="${esc(c.name)} entfernen" style="border:0;color:var(--muted)">✕</button></td>`:''}</tr>`).join('')}
-  ${ed?`<tr><td><input type="text" id="nc-name" placeholder="Neuer Posten, z. B. Programmheft" aria-label="Neue Kostenart"></td><td><select id="nc-cat" aria-label="Kategorie neuer Posten">${CATS.map(([k,l])=>`<option value="${k}" ${k==='sonst'?'selected':''}>${l}</option>`).join('')}</select></td><td class="r"><input type="number" min="0" id="nc-plan" placeholder="Plan €" class="numin" aria-label="Plan neuer Posten"></td><td class="r"><input type="number" min="0" id="nc-actual" placeholder="Ist €" class="numin" aria-label="Ist neuer Posten"></td><td colspan="2"><button class="btn primary" data-act="cost-add">Hinzufügen</button></td></tr>`:''}
-  <tr><td><b>Summe</b></td><td></td><td class="r"><b>${eur(m.plan)}</b></td><td class="r"><b>${eur(m.actual)}</b></td>${(()=>{const cl=y.costs.filter(c=>c.closed);const dv=cl.reduce((a,c)=>a+(+c.actual||0)-c.plan,0);return `<td colspan="${ed?2:1}" class="small ${dv>0?'warnline':'muted'}">${cl.length?`Abgerechnete Posten: ${dv>0?'+':''}${eur(dv)} ggü. Plan`:''}</td>`})()}</tr></tbody></table></div></section>
-  <section class="panel"><h2>Einnahmen</h2><ul class="list">
-    <li class="row"><span>Tickets online (Regiondo, automatisch)</span><b>${eur(m.tickets)}</b></li>
-    <li class="row"><span>Abendkasse (aus den Spielorten)</span><b>${eur(m.box)}</b></li>
+  const inp=(act,v,w=96)=>ed?`<input type="number" min="0" value="${v}" data-act="${act}" style="width:${w}px;text-align:right">`:eur(v);
+  const fc=m.forecast>=0?'var(--green)':'var(--red)', sc=m.saldo>=0?'var(--green)':'var(--red)';
+  return `<h1>Finanzen</h1>
+  <section class="panel kpis section">
+    <div><div class="k">Einnahmen bisher</div><div class="v">${eur(m.income)}</div></div>
+    <div title="Pro Posten: der Plan – sobald ein Posten abgerechnet ist, sein Ist. Diese Zahl nutzt auch das Dashboard."><div class="k">Ausgaben</div><div class="v">${eur(m.expected)}</div><div class="s">Plan, abgerechnete Posten mit Ist</div></div>
+    <div><div class="k">Ergebnis</div><div class="v" style="color:${fc}">${m.forecast>=0?'+':''}${eur(m.forecast)}</div><div class="s">Einnahmen minus Ausgaben</div></div>
+    <div><div class="k">Davon schon bezahlt</div><div class="v">${eur(m.actual)}</div><div class="s">Summe aller Ist-Beträge</div></div>
+  </section>
+  <div class="money-grid">
+  <section class="panel"><div class="row"><h2 style="margin:0">Ausgaben</h2>${ed?'<span class="small muted">Direkt in der Tabelle ändern · Kategorie zählt im Jahresvergleich</span>':''}</div><div><table class="t cost-t"><thead><tr><th>Kostenart</th><th>Kategorie</th><th class="r">Plan</th><th class="r">Ist</th><th title="Abgerechnet">Abger.</th>${ed?'<th></th>':''}</tr></thead><tbody>
+  ${y.costs.map(c=>`<tr><td class="c-name">${ed?`<input type="text" value="${esc(c.name)}" data-act="costname" data-id="${c.id}" aria-label="Kostenart">`:esc(c.name)}</td>
+    <td data-label="Kategorie">${ed?`<select data-act="costcat" data-id="${c.id}" aria-label="Kategorie ${esc(c.name)}">${CATS.map(([k,l])=>`<option value="${k}" ${catOf(c)===k?'selected':''}>${l}</option>`).join('')}</select>`:esc(Object.fromEntries(CATS)[catOf(c)])}</td>
+    <td class="r" data-label="Plan">${ed?`<input type="number" min="0" value="${c.plan}" data-act="costplan" data-id="${c.id}" class="numin" aria-label="Plan ${esc(c.name)}">`:eur(c.plan)}</td>
+    <td class="r" data-label="Ist">${ed?`<input type="number" min="0" value="${c.actual}" data-act="cost" data-id="${c.id}" class="numin" aria-label="Ist ${esc(c.name)}">`:eur(c.actual)}</td>
+    <td data-label="Abgerechnet"><input type="checkbox" data-act="closed" data-id="${c.id}" ${c.closed?'checked':''} ${ed?'':'disabled'} aria-label="${esc(c.name)} abgerechnet"></td>
+    ${ed?`<td class="c-del"><button class="btn ghost" data-act="cost-del" data-id="${c.id}" aria-label="${esc(c.name)} entfernen" style="border:0;color:var(--muted)">✕</button></td>`:''}</tr>`).join('')}
+  ${ed?`<tr class="c-new"><td class="c-name"><input type="text" id="nc-name" placeholder="Neuer Posten, z. B. Programmheft" aria-label="Neue Kostenart"></td><td><select id="nc-cat" aria-label="Kategorie neuer Posten">${CATS.map(([k,l])=>`<option value="${k}" ${k==='sonst'?'selected':''}>${l}</option>`).join('')}</select></td><td class="r"><input type="number" min="0" id="nc-plan" placeholder="Plan €" class="numin" aria-label="Plan neuer Posten"></td><td class="r"><input type="number" min="0" id="nc-actual" placeholder="Ist €" class="numin" aria-label="Ist neuer Posten"></td><td colspan="2"><button class="btn primary" data-act="cost-add">Hinzufügen</button></td></tr>`:''}
+  <tr class="c-sum"><td class="c-name"><b>Summe</b></td><td></td><td class="r"><b>${eur(m.plan)}</b></td><td class="r"><b>${eur(m.actual)}</b></td><td colspan="${ed?2:1}"></td></tr></tbody></table></div>${(()=>{const cl=y.costs.filter(c=>c.closed);const dv=cl.reduce((a,c)=>a+(+c.actual||0)-c.plan,0);return cl.length?`<p class="small ${dv>0?'warnline':'muted'}" style="margin:6px 0 0">Abgerechnete Posten: ${dv>0?'+':''}${eur(dv)} gegenüber Plan</p>`:''})()}</section>
+  <section class="panel"><h2 style="margin:0 0 4px">Einnahmen</h2><ul class="list inc-list">
+    <li class="row"><span>Tickets online <span class="small muted">· Regiondo</span></span><b>${eur(m.tickets)}</b></li>
+    <li class="row"><span>Abendkasse <span class="small muted">· Spielorte</span></span><b>${eur(m.box)}</b></li>
     <li class="row"><span>Spenden bar</span>${inp('doncash',y.donCash)}</li>
-    <li class="row"><span>Spenden online / Überweisung</span>${inp('donon',y.donOnline)}</li>
-    ${y.other.map(o=>`<li class="row"><span>${esc(o.name)}</span>${ed?`<input type="number" min="0" value="${o.amount}" data-act="other" data-id="${o.id}" style="width:110px;text-align:right">`:eur(o.amount)}</li>`).join('')}
+    <li class="row"><span>Spenden online</span>${inp('donon',y.donOnline)}</li>
+    ${y.other.map(o=>`<li class="row"><span>${esc(o.name)}</span>${ed?`<input type="number" min="0" value="${o.amount}" data-act="other" data-id="${o.id}" style="width:96px;text-align:right">`:eur(o.amount)}</li>`).join('')}
     <li class="row"><b>Gesamt</b><b class="num" style="font-size:22px">${eur(m.income)}</b></li></ul>
-    ${y.donLink?`<p class="small muted">Die einzelnen Spenden pflegt der Werke e.V. in der ${lnk(y.donLink)}. Hier stehen nur die Summen; der Dank läuft als Aufgabe.</p>`:''}</section></div>`;
+    </section></div>`;
 }
 
 /* ===================== Meetings ===================== */
+const in14=()=>new Date(Date.now()+14*864e5).toISOString().slice(0,10);
+function nmDraft(){ if(!ui.nm) ui.nm={title:'',date:todayIso(),doc:'',dec:'',tasks:[]}; return ui.nm; }
+function readNm(){ const d=ui.nm; if(!d) return; const g=id=>document.getElementById(id);
+  if(g('nm-title')){ d.title=g('nm-title').value; d.date=g('nm-date').value; d.doc=g('nm-doc').value; d.dec=g('nm-dec').value; }
+  d.tasks.forEach((t,i)=>{ if(g('nmt-title-'+i)){ t.title=g('nmt-title-'+i).value; t.area=g('nmt-area-'+i).value; t.due=g('nmt-due-'+i).value; } }); }
+function meetTaskRows(d){
+  return `${d.tasks.map((t,i)=>`<div class="taskrow"><input type="text" id="nmt-title-${i}" value="${esc(t.title)}" placeholder="Was ist zu tun?" aria-label="Aufgabe"><select id="nmt-area-${i}" aria-label="Bereich">${AREAS.map(a=>`<option ${a===t.area?'selected':''}>${a}</option>`).join('')}</select><input type="date" id="nmt-due-${i}" value="${esc(t.due)}" aria-label="Frist"><button class="btn ghost" data-act="nmt-del" data-i="${i}" aria-label="Aufgabe entfernen">✕</button></div>`).join('')}
+  <button class="btn" data-act="nmt-add" style="margin-top:4px">＋ Aufgabe</button>`;
+}
 function vMeetings(){
-  const y=Y(), ed=canEdit();
-  return `<h1>Meetings</h1><p class="lede">Protokolle mit Link zum Dokument, Beschlüssen und den Aufgaben, die daraus entstehen.</p>
-  ${ed?`<details class="form"><summary style="cursor:pointer;font-weight:600">Neues Protokoll</summary>
-   <div class="grid" style="margin-top:10px"><label class="f" style="grid-column:span 2">Titel<input type="text" id="nm-title"></label><label class="f">Datum<input type="date" id="nm-date" value="${todayIso()}"></label>
-   <label class="f" style="grid-column:span 2">Link zum Protokoll oder Skript (Drive)<input type="text" id="nm-doc"></label></div>
-   <label class="f">Beschlüsse (eine Zeile pro Beschluss)<textarea id="nm-dec"></textarea></label>
-   <label class="f" style="margin-top:8px">Aufgaben (eine Zeile pro Aufgabe; Bereich und Frist danach in der Aufgabenliste anpassen)<textarea id="nm-tasks"></textarea></label>
-   <div style="margin-top:10px"><button class="btn primary" data-act="meet-add">Protokoll speichern</button></div></details>`:''}
-  ${y.meetings.length?[...y.meetings].sort((a,b)=>b.date.localeCompare(a.date)).map(m=>`<section class="panel section"><div class="row"><h2 style="margin:0">${esc(m.title)}</h2><span class="muted">${fDate(m.date,{day:'numeric',month:'long',year:'numeric'})}</span></div>
+  const y=Y(), ed=canEdit(), d=nmDraft();
+  const card=m=>{
+    const tasks=m.tasks.map(id=>y.tasks.find(t=>t.id===id)).filter(Boolean);
+    if(ed&&ui.meetEdit===m.id){ const e=ui.meetDraft;
+      return `<section class="panel section"><h2 style="margin:0 0 10px">Protokoll bearbeiten</h2><div class="grid"><label class="f" style="grid-column:span 2">Titel<input type="text" id="me-title" value="${esc(e.title)}"></label><label class="f">Datum<input type="date" id="me-date" value="${esc(e.date)}"></label>
+        <label class="f" style="grid-column:span 2">Link zum Protokoll (Drive)<input type="text" id="me-doc" value="${esc(e.doc||'')}"></label></div>
+        <label class="f">Beschlüsse (eine Zeile pro Beschluss)<textarea id="me-dec" rows="4">${esc((e.decisions||[]).join('\n'))}</textarea></label>
+        <div class="row" style="justify-content:flex-start;margin-top:10px"><button class="btn primary" data-act="meet-save" data-id="${m.id}">Speichern</button><button class="btn" data-act="meet-cancel">Abbrechen</button><button class="btn ghost" data-act="meet-del" data-id="${m.id}" style="color:var(--muted)">Protokoll löschen</button></div></section>`; }
+    return `<section class="panel section"><div class="row"><h2 style="margin:0">${esc(m.title)}</h2><div class="row" style="gap:8px"><span class="muted">${fDate(m.date,{day:'numeric',month:'long',year:'numeric'})}</span>${ed?`<button class="btn" data-act="meet-edit" data-id="${m.id}" style="padding:3px 10px">Bearbeiten</button>`:''}</div></div>
     ${m.doc?`<p class="small" style="margin:6px 0 0">Dokument: ${lnk(m.doc)}</p>`:''}
-    <h3 style="margin-top:12px">Beschlüsse</h3><ul>${m.decisions.map(d=>`<li>${esc(d)}</li>`).join('')||'<li class="muted">—</li>'}</ul>
-    <h3>Aufgaben aus diesem Meeting</h3><ul class="list">${m.tasks.map(id=>y.tasks.find(t=>t.id===id)).filter(Boolean).map(t=>`<li class="row"><span>${esc(t.title)}<span class="small muted"> · ${esc(t.area)} · bis ${fDate(t.due,{day:'numeric',month:'short'})}</span></span><span class="tag ${t.done?'green':''}">${t.done?'erledigt':'offen'}</span></li>`).join('')||'<li class="muted small">Noch keine</li>'}</ul>
-    ${ed?`<details style="margin-top:8px"><summary class="small" style="cursor:pointer;font-weight:600">Aufgabe aus diesem Meeting anlegen</summary><div class="form" style="margin-top:8px">${taskFields('mt-'+m.id)}<button class="btn primary" data-act="meet-task" data-id="${m.id}">Aufgabe anlegen</button></div></details>`:''}
-  </section>`).join(''):empty('Keine Protokolle.')}`;
+    <h3 style="margin-top:12px">Beschlüsse</h3><ul>${m.decisions.map(x=>`<li>${esc(x)}</li>`).join('')||'<li class="muted">—</li>'}</ul>
+    <h3>Aufgaben aus diesem Meeting</h3><ul class="list">${tasks.map(t=>`<li class="row"><label style="display:flex;gap:8px;align-items:flex-start;flex:1">${ed?`<input type="checkbox" data-act="task" data-id="${t.id}" ${t.done?'checked':''} aria-label="erledigt">`:''}<span ${t.done?'style="text-decoration:line-through;color:var(--muted)"':''}>${esc(t.title)}<span class="small muted"> · ${esc(t.area)} · bis ${fDate(t.due,{day:'numeric',month:'short'})}</span></span></label><span class="tag ${t.done?'green':''}">${t.done?'erledigt':'offen'}</span></li>`).join('')||'<li class="muted small">Noch keine</li>'}</ul>
+    ${ed?`<details style="margin-top:8px" ${ui.mtOpen===m.id?'open':''}><summary class="small" style="cursor:pointer;font-weight:600">＋ Aufgabe aus diesem Meeting anlegen</summary><div class="form" style="margin-top:8px">${taskFields('mt-'+m.id)}<button class="btn primary" data-act="meet-task" data-id="${m.id}">Aufgabe anlegen</button></div></details>`:''}
+  </section>`;};
+  return `<h1>Meetings</h1><p class="lede">Protokolle mit Link zum Dokument, Beschlüssen und den Aufgaben, die daraus entstehen. Alles bleibt nachträglich bearbeitbar.</p>
+  ${ed?`<details class="form" ${ui.nmOpen?'open':''}><summary style="cursor:pointer;font-weight:600" data-act="nm-toggle">Neues Protokoll</summary>
+   <div class="grid" style="margin-top:10px"><label class="f" style="grid-column:span 2">Titel<input type="text" id="nm-title" value="${esc(d.title)}"></label><label class="f">Datum<input type="date" id="nm-date" value="${esc(d.date)}"></label>
+   <label class="f" style="grid-column:span 2">Link zum Protokoll oder Skript (Drive)<input type="text" id="nm-doc" value="${esc(d.doc)}"></label></div>
+   <label class="f">Beschlüsse (eine Zeile pro Beschluss)<textarea id="nm-dec">${esc(d.dec)}</textarea></label>
+   <div class="f" style="margin-top:10px"><span>Aufgaben aus diesem Meeting – gleich mit Bereich und Frist; sie landen sofort unter „Aufgaben“</span>${meetTaskRows(d)}</div>
+   <div style="margin-top:12px"><button class="btn primary" data-act="meet-add">Protokoll speichern</button></div></details>`:''}
+  ${y.meetings.length?[...y.meetings].sort((a,b)=>b.date.localeCompare(a.date)).map(card).join(''):empty('Keine Protokolle.')}`;
 }
 
 /* ===================== Feedback ===================== */
 function vFeedback(){
   const y=ui.role==='ensemble'?CUR():Y(); const fb=y.feedback;
   if(ui.role==='ensemble'){
-    if(ui.fbDone) return `<h1>Feedback</h1><div class="panel"><h2>Danke!</h2><p>Dein Feedback ist anonym angekommen und hilft der Leitung fürs nächste Jahr.</p></div>`;
+    if(ui.fbDone||lsGet('los-fb-'+(auth.email||'demo')+'-'+meId())==='1') return `<h1>Feedback</h1><div class="panel"><h2>Danke!</h2><p>Dein Feedback ist anonym angekommen und hilft der Leitung fürs nächste Jahr.</p></div>`;
     return `<h1>Feedback ${y.year}</h1><p class="lede">Anonym. Bewerte von 1 (gar nicht gut) bis 5 (sehr gut).</p><section class="panel">
     ${fb.questions.map(q=>q.type==='rating'?`<fieldset style="border:0;padding:8px 0;margin:0;border-top:1px solid var(--line)"><legend style="font-weight:600;padding:0">${esc(q.label)}</legend><div class="rating">${[1,2,3,4,5].map(n=>`<label><input type="radio" name="fb-${q.id}" value="${n}">${n}</label>`).join('')}</div></fieldset>`
       :`<label class="f" style="padding:8px 0;border-top:1px solid var(--line)"><span style="font-weight:600;color:var(--ink)">${esc(q.label)}</span><textarea id="fb-${q.id}"></textarea></label>`).join('')}
@@ -1704,12 +2040,41 @@ function vFeedback(){
     ${ed?`<div class="row" style="margin-top:10px;flex-wrap:nowrap"><input type="text" id="fq-new" placeholder="Neue Frage …" style="flex:1" aria-label="Neue Frage"><select id="fq-type"><option value="rating">1–5</option><option value="text">Text</option></select><button class="btn" data-act="fq-add">Hinzufügen</button></div>`:''}</section></div>`;
 }
 
+/* ===================== Fragen an die Leitung ===================== */
+const qWho=()=>LIVE?auth.email:'demo';
+function vFragen(){
+  const y=ui.role==='ensemble'||!isLeit()?CUR():Y(); const qs=[...(y.questions||[])].sort((a,b)=>(b.at||'').localeCompare(a.at||''));
+  const when=iso=>iso?new Date(iso).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'';
+  if(isLeit()){
+    const f=ui.qFilter||'offen', open=qs.filter(q=>!q.answer), done=qs.filter(q=>q.answer), list=f==='offen'?open:done; const ed=!y.archived;
+    return `<h1>Fragen aus dem Team</h1><p class="lede">Hier kommen Rückfragen aus dem Team an. Antworten sieht die fragende Person in LOS Backstage. Mit „Für alle sichtbar“ wird eine Antwort zur Frage für alle – praktisch für Dinge, die viele wissen wollen.</p>
+    <div class="seg" role="group" aria-label="Fragen filtern" style="margin-bottom:12px">${[['offen',`Offen (${open.length})`],['beantwortet',`Beantwortet (${done.length})`]].map(([k,l])=>`<button data-act="qfilter" data-f="${k}" aria-pressed="${f===k}">${l}</button>`).join('')}</div>
+    ${list.length?list.map(q=>`<section class="panel section qcard"><div class="row"><div><b>${esc(q.byName||'Jemand aus dem Team')}</b> <span class="small muted">· ${when(q.at)}</span></div>${q.public?'<span class="tag green">für alle sichtbar</span>':''}</div>
+      <p class="qtext">${esc(q.text)}</p>
+      ${ed?`<label class="f">Antwort<textarea id="ans-${q.id}" rows="3" placeholder="Antwort an ${esc(q.byName||'die Person')} …">${esc(q.answer||'')}</textarea></label>
+      <div class="row" style="justify-content:flex-start;margin-top:8px"><label class="small" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="pub-${q.id}" ${q.public?'checked':''}> Für alle sichtbar (mit Antwort)</label>
+        <button class="btn primary" data-act="q-answer" data-id="${q.id}">${q.answer?'Antwort ändern':'Antworten'}</button>
+        ${q.byEmail&&q.byEmail!=='demo'?`<a class="btn" href="mailto:${encodeURIComponent(q.byEmail)}?subject=${encodeURIComponent('LOS: Antwort auf deine Frage')}&body=${encodeURIComponent('Hallo '+(q.byName||'').split(' ')[0]+',\n\ndu hattest gefragt: „'+q.text+'“\n\n'+(q.answer||'')+'\n\nViele Grüße\neure LOS-Leitung')}" target="_blank" rel="noopener">✉ Auch per Mail</a>`:''}
+        <button class="btn ghost" data-act="q-del" data-id="${q.id}" style="color:var(--muted)">Löschen</button></div>`
+      :(q.answer?`<div class="qanswer"><b>Antwort:</b> ${esc(q.answer)}</div>`:'')}
+      ${q.answer&&q.answeredBy?`<p class="small muted" style="margin:6px 0 0">Beantwortet von ${esc(q.answeredBy)} · ${when(q.answeredAt)}</p>`:''}</section>`).join('')
+      :empty(f==='offen'?'Keine offenen Fragen. 🎉':'Noch nichts beantwortet.')}`;
+  }
+  const me=meId(), mine=qs.filter(q=>q.by===me&&(!LIVE||q.byEmail===auth.email)), pub=qs.filter(q=>q.public&&q.answer&&!mine.includes(q));
+  return `<h1>Fragen an die Leitung</h1><p class="lede">Unklar, wann du wo sein musst, was du mitbringen sollst oder wer dich abholt? Frag hier – die Leitung sieht deinen Namen und antwortet dir hier.</p>
+  ${y.archived?'':`<section class="panel section"><label class="f"><span style="font-weight:600;color:var(--ink)">Deine Frage</span><textarea id="q-new" rows="3" placeholder="z. B. Muss ich zur Probewoche einen Schlafsack mitbringen?"></textarea></label>
+    <button class="btn primary" data-act="q-send" style="margin-top:8px">Frage abschicken</button></section>`}
+  <h2>Meine Fragen</h2>
+  ${mine.length?mine.map(q=>`<section class="panel section qcard"><div class="row"><span class="small muted">${when(q.at)}</span>${!y.archived&&!q.public?`<button class="btn ghost" data-act="q-withdraw" data-id="${q.id}" style="padding:3px 8px;font-size:13px">Zurückziehen</button>`:''}</div><p class="qtext">${esc(q.text)}</p>${q.answer?`<div class="qanswer"><b>Antwort der Leitung:</b> ${esc(q.answer)}</div>`:'<span class="tag gold">noch offen</span>'}</section>`).join(''):empty('Du hast noch nichts gefragt.')}
+  ${pub.length?`<h2 style="margin-top:22px">Für alle beantwortet</h2>${pub.map(q=>`<section class="panel section qcard"><p class="qtext">${esc(q.text)}</p><div class="qanswer">${esc(q.answer)}</div></section>`).join('')}`:''}`;
+}
+
 /* ===================== Jahresvergleich ===================== */
 const CATS=[['buehne','Bühnenbild'],['fahrt','Fahrtkosten'],['sonst','Sonstiges']];
 const catOf=c=>c.cat||(c.id==='c1'?'buehne':(c.id==='c3'||c.id==='c4')?'fahrt':'sonst');
 const COLS=[['total','Gesamt (Überschuss)'],['tickets','Ticketeinnahmen'],['donCash','Spenden bar'],['donOnline','Spenden online'],['stage','Kosten Bühnenbild'],['travel','Fahrtkosten'],['audience','Zuschauer gesamt'],['perHead','Spenden pro Zuschauer']];
 function yearRow(y){
-  const m=money(y); const sumCat=k=>y.costs.filter(c=>catOf(c)===k).reduce((a,c)=>a+(c.closed?(+c.actual||0):Math.max(c.plan,+c.actual||0)),0);
+  const m=money(y); const sumCat=k=>y.costs.filter(c=>catOf(c)===k).reduce((a,c)=>a+costOf(c),0);
   return {total:m.forecast,tickets:m.tickets+m.box,donCash:+y.donCash,donOnline:+y.donOnline,stage:sumCat('buehne'),travel:sumCat('fahrt'),audience:m.audience,perHead:m.audience?((+y.donCash)+(+y.donOnline))/m.audience:0};
 }
 function vCompare(){
@@ -1748,6 +2113,7 @@ function vYears(){
       <label><input type="checkbox" id="ny-tasks" checked> ${recN} Vorlage-Aufgaben (mit Fristen ein Jahr später)</label>
       <label><input type="checkbox" id="ny-team" checked> Leitung, Regie & Regieassistenz mit ihren Zugängen</label>
       <label><input type="checkbox" id="ny-veh" checked> Fahrzeuge</label>
+      <label><input type="checkbox" checked disabled> Meilensteine und Gewerke (ein Jahr später datiert)</label>
       <label><input type="checkbox" id="ny-costs" checked> Kostenposten mit Plan-Beträgen als Startwert (Ist bei 0)</label>
       <label><input type="checkbox" id="ny-forms" checked> Anmeldeformular und Feedback-Fragebogen</label></div></fieldset>
     <p class="small muted" style="margin:0 0 10px">Ensemble, Besetzung, Termine, Fahrten und Unterkünfte starten leer. Spielorte holt ihr wie gewohnt aus der Kartei.</p>
@@ -1757,33 +2123,39 @@ function vYears(){
 /* ===================== Zugänge & Rechte ===================== */
 function vAccess(){
   const y=CUR();
-  return `<h1>Zugänge & Rechte</h1><p class="lede">Wer sich mit welcher Google-Adresse anmeldet und was diese Person darf. Mehrere Adressen pro Person mit Komma trennen (z. B. private Adresse und LOS-Konto). Wer zugelassen wird, bekommt automatisch Zugang mit der Adresse aus dem Formular.</p>
+  return `<h1>Zugänge & Rechte</h1><p class="lede">Wer sich mit welcher Google-Adresse anmeldet und was diese Person darf. Namen und Adressen könnt ihr direkt in der Tabelle ändern. Mehrere Adressen pro Person mit Komma trennen (z. B. private Adresse und LOS-Konto). Teilen sich zwei Personen eine Adresse (z. B. Vater und Tochter), ist das erlaubt: Beim Anmelden wählt man, wer man ist. Wer zugelassen wird, bekommt automatisch Zugang mit der Adresse aus dem Formular.</p>
   ${LIVE?`<p class="small muted" style="margin-top:-10px">Zugang hat, wer in einem offenen LOS-Jahr mit Google-Adresse eingetragen ist. Wird ein Jahr eingefroren, endet der Zugang für alle, die nicht auch im neuen Jahr dabei sind.</p>`:''}
   <details class="form"><summary style="cursor:pointer;font-weight:600">Person freischalten</summary><div class="grid" style="margin-top:10px">
     <label class="f">Name<input type="text" id="ac-name"></label><label class="f" style="grid-column:span 2">Google-E-Mail<input type="text" id="ac-mail"></label>
     <label class="f">Rolle<select id="ac-role">${Object.entries(ACCESS).map(([k,l])=>`<option value="${k}">${l}</option>`).join('')}</select></label></div><button class="btn primary" data-act="ac-add">Freischalten</button></details>
   <section class="panel scroll-x" style="padding:0"><table class="t"><thead><tr><th>Name</th><th>E-Mail</th><th>Rolle & Rechte</th></tr></thead><tbody>
-  ${y.people.map(p=>`<tr><td>${esc(p.name)}</td><td class="small"><input type="text" value="${esc(p.email||'')}" data-act="pmail" data-p="${p.id}" placeholder="name@gmail.com" aria-label="Google-Adresse ${esc(p.name)}" style="min-width:220px;width:100%"></td><td><select data-act="access" data-p="${p.id}" aria-label="Rolle ${esc(p.name)}">${Object.entries(ACCESS).map(([k,l])=>`<option value="${k}" ${p.access===k?'selected':''}>${l}</option>`).join('')}</select></td></tr>`).join('')}
+  ${y.people.map(p=>`<tr><td><input type="text" value="${esc(p.name)}" data-act="pname" data-p="${p.id}" aria-label="Name" style="min-width:160px;width:100%"></td><td class="small"><input type="text" value="${esc(p.email||'')}" data-act="pmail" data-p="${p.id}" placeholder="name@gmail.com" aria-label="Google-Adresse ${esc(p.name)}" style="min-width:220px;width:100%"></td><td><select data-act="access" data-p="${p.id}" aria-label="Rolle ${esc(p.name)}">${Object.entries(ACCESS).map(([k,l])=>`<option value="${k}" ${p.access===k?'selected':''}>${l}</option>`).join('')}</select></td></tr>`).join('')}
   </tbody></table></section>
   <div class="grid2" style="margin-top:18px"><section class="panel"><h3>Regie & Regieassistenz</h3><p class="small" style="margin:0">Probentage im Ablaufplan planen, Rollen anlegen und kommentieren, Meetings lesen. Besetzungen bestätigen kann nur die Regie; die Regieassistenz schlägt vor. Keine Finanzen, keine Vorjahre.</p></section>
   <section class="panel"><h3>Team</h3><p class="small" style="margin:0">Dashboard, Mein Tag, Ablaufplan, eigene Fahrten und Unterkunft, Über LOS, Feedback nach Freischaltung. Keine Vorjahre.</p></section></div>`;
 }
 
 /* ===================== Über LOS ===================== */
+const linkItems=arr=>(arr||[]).map(x=>Array.isArray(x)?{label:x[0]||'',url:x[1]||''}:{label:x.label||'',url:x.url||''}).map(x=>({...x,url:x.url==='#'?'':x.url}));
+const fixUrl=u=>{u=String(u||'').trim(); if(!u) return ''; return /^(https?:|mailto:)/i.test(u)?u:'https://'+u.replace(/^\/+/,'');};
+function readAbDraft(){ const d=ui.abDraft; if(!d) return; ['who','why','expect'].forEach(k=>{const el=document.getElementById('ab-'+k); if(el) d[k]=el.value;});
+  ['links','material'].forEach(k=>d[k].forEach((it,i)=>{const l=document.getElementById(`ab-${k}-l-${i}`), u=document.getElementById(`ab-${k}-u-${i}`); if(l) it.label=l.value; if(u) it.url=u.value;})); }
 function vAbout(){
   const a=S.about, ed=isLeit();
   if(ui.aboutEdit&&ed){
-    const L=arr=>arr.map(([l,u])=>l+' | '+u).join('\n');
+    const d=ui.abDraft;
+    const rows=k=>`${d[k].map((it,i)=>`<div class="linkrow"><input type="text" id="ab-${k}-l-${i}" value="${esc(it.label)}" placeholder="Bezeichnung, z. B. Skript (Drive)" aria-label="Bezeichnung"><input type="url" id="ab-${k}-u-${i}" value="${esc(it.url)}" placeholder="https://drive.google.com/…" aria-label="Link"><button class="btn ghost" data-act="ab-ldel" data-k="${k}" data-i="${i}" aria-label="Link entfernen">✕</button></div>`).join('')||'<p class="small muted">Noch keine Links.</p>'}
+      <button class="btn" data-act="ab-ladd" data-k="${k}" style="margin-top:6px">＋ Link hinzufügen</button>`;
     return `<h1>Über LOS bearbeiten</h1><div class="form">
-    <label class="f">Wer wir sind<textarea id="ab-who" rows="4">${esc(a.who)}</textarea></label>
-    <label class="f" style="margin-top:10px">Wofür wir das machen<textarea id="ab-why" rows="4">${esc(a.why)}</textarea></label>
-    <label class="f" style="margin-top:10px">Was wir von dir erwarten<textarea id="ab-exp" rows="4">${esc(a.expect)}</textarea></label>
-    <label class="f" style="margin-top:10px">Links (eine Zeile: Titel | Link)<textarea id="ab-links" rows="4">${esc(L(a.links))}</textarea></label>
-    <label class="f" style="margin-top:10px">Werbematerial (eine Zeile: Titel | Drive-Link)<textarea id="ab-mat" rows="4">${esc(L(a.material))}</textarea></label>
-    <div class="row" style="justify-content:flex-start;margin-top:12px"><button class="btn primary" data-act="ab-save">Speichern</button><button class="btn" data-act="ab-cancel">Abbrechen</button></div></div>`;
+    <label class="f">Wer wir sind<textarea id="ab-who" rows="4">${esc(d.who)}</textarea></label>
+    <label class="f" style="margin-top:10px">Wofür wir das machen<textarea id="ab-why" rows="4">${esc(d.why)}</textarea></label>
+    <label class="f" style="margin-top:10px">Was wir von dir erwarten<textarea id="ab-expect" rows="4">${esc(d.expect)}</textarea></label>
+    <h3 style="margin-top:16px">Links</h3><p class="small muted" style="margin:-4px 0 8px">Bezeichnung und Link getrennt eintragen. Bei Google Drive: Datei öffnen › Teilen › „Link kopieren“ und hier einfügen.</p>${rows('links')}
+    <h3 style="margin-top:16px">Werbematerial</h3>${rows('material')}
+    <div class="row" style="justify-content:flex-start;margin-top:16px"><button class="btn primary" data-act="ab-save">Speichern</button><button class="btn" data-act="ab-cancel">Abbrechen</button></div></div>`;
   }
-  const links=arr=>`<ul class="list">${arr.map(([l,u])=>`<li class="row"><span>${esc(l)}</span><a href="${esc(u)}" ${u==='#'?'data-act="noop"':'target="_blank" rel="noopener"'}>Öffnen</a></li>`).join('')}</ul>`;
-  return `<div class="row"><h1>Über LOS</h1>${ed?'<button class="btn" data-act="ab-edit">Texte bearbeiten</button>':''}</div>
+  const links=arr=>{const it=linkItems(arr); return it.length?`<ul class="list">${it.map(({label,url})=>`<li class="row"><span>${esc(label)}</span>${url?`<a class="btn" href="${esc(fixUrl(url))}" target="_blank" rel="noopener">Öffnen</a>`:'<span class="small muted">noch kein Link</span>'}</li>`).join('')}</ul>`:'<p class="small muted">Noch nichts hinterlegt.</p>';};
+  return `<div class="row"><h1>Über LOS</h1>${ed?'<button class="btn" data-act="ab-edit">Texte & Links bearbeiten</button>':''}</div>
   <p class="lede">Wer wir sind, wofür wir das machen und was wir von dir erwarten.</p>
   <div class="grid3 section prose">
     <section class="panel"><h2>Wer wir sind</h2><p>${esc(a.who)}</p></section>
@@ -1800,7 +2172,7 @@ function render(){
   if(LIVE&&auth.state!=='ready'){ document.getElementById('app').innerHTML=authScreen(); return; }
   if(!Y()){ document.getElementById('app').innerHTML=''; return; }
   if(!visibleViews().some(v=>v.id===ui.view)) ui.view='cockpit';
-  const map={cockpit:vCockpit,myday:vMyDay,today:vMyDay,plan:vPlan,tour:vTour,team:vTeam,tasks:vTasks,money:vMoney,meetings:vMeetings,feedback:vFeedback,compare:vCompare,access:vAccess,about:vAbout,years:vYears};
+  const map={cockpit:vCockpit,myday:vMyDay,today:vMyDay,plan:vPlan,tour:vTour,anm:vAnm,team:vTeam,tasks:vTasks,money:vMoney,meetings:vMeetings,fragen:vFragen,compare:vCompare,access:vAccess,about:vAbout,years:vYears};
   document.getElementById('app').innerHTML=shell(map[ui.view]());
 }
 const commit=msg=>{save();render();if(msg)toast(msg)};
@@ -1821,7 +2193,7 @@ document.addEventListener('click',e=>{
   if(e.target.closest('[data-stop]')&&!e.target.closest('[data-act]')) return;
   const el=e.target.closest('[data-act]'); if(!el) return;
   const a=el.dataset.act, y=Y();
-  if(['task','check','taskopen','onlymine','closed','evwho','groupstay'].includes(a)) return;
+  if(['task','check','taskopen','onlymine','closed','evwho','groupstay','ms-team'].includes(a)) return;
   const go=()=>{render()};
   switch(a){
     case 'cf-yes': {const fn=pendingFn; closeAsk(); if(fn) fn(); return;}
@@ -1837,6 +2209,53 @@ document.addEventListener('click',e=>{
       if(url&&!/^https:\/\/script\.google(usercontent)?\.com\//.test(url)){toast('Die Skript-Adresse beginnt mit https://script.google.com/');return}
       FB.fs.setDoc(FB.fs.doc(db,'config/private'),enc({url,token})).then(()=>{toast('Gespeichert.'); dirtyIds.delete('fs-url'); dirtyIds.delete('fs-token');}).catch(e=>toast('Nicht gespeichert: '+e.message)); return;}
     case 'fs-sync': syncForm(false); return;
+    case 'qfilter': ui.qFilter=el.dataset.f; go(); return;
+    case 'q-send': {const t=val('q-new'); if(!t){toast('Bitte zuerst deine Frage eintragen.');return} const cy=CUR(); cy.questions=cy.questions||[];
+      cy.questions.push({id:uid('q'),text:t,by:meId(),byName:pname(meId()),byEmail:qWho(),at:new Date().toISOString(),answer:'',public:false}); dirtyIds.delete('q-new');
+      commit('Deine Frage ist bei der Leitung angekommen.'); return;}
+    case 'q-answer': {const q=y.questions.find(x=>x.id===el.dataset.id); const a2=val('ans-'+q.id); if(!a2){toast('Bitte eine Antwort eintragen.');return}
+      q.answer=a2; q.public=!!document.getElementById('pub-'+q.id)?.checked; q.answeredAt=new Date().toISOString(); q.answeredBy=pname(meId())!=='—'?pname(meId()):'Leitung'; dirtyIds.delete('ans-'+q.id);
+      commit(q.public?'Antwort gespeichert – für alle sichtbar.':`Antwort gespeichert – ${q.byName||'die Person'} sieht sie in LOS Backstage.`); return;}
+    case 'q-withdraw': {const cy=CUR(); const q=(cy.questions||[]).find(x=>x.id===el.dataset.id); if(!q) return;
+      ask(q.answer?'Diese Frage samt Antwort löschen?':'Frage zurückziehen? Die Leitung sieht sie dann nicht mehr.',q.answer?'Löschen':'Zurückziehen',()=>{cy.questions=cy.questions.filter(x=>x!==q); commit(q.answer?'Frage gelöscht.':'Frage zurückgezogen.');}); return;}
+    case 'q-del': {const q=y.questions.find(x=>x.id===el.dataset.id); ask('Diese Frage löschen?','Löschen',()=>{y.questions=y.questions.filter(x=>x!==q); commit('Frage gelöscht.');}); return;}
+    case 'rg-sync': syncRegiondo(false); return;
+    case 'ms-open': ui.msEdit=true; go(); return;
+    case 'ms-close': ui.msEdit=false; go(); return;
+    case 'ms-del': {const m=y.milestones[+el.dataset.i]; ask(`Meilenstein „${m.label}“ löschen?`,'Löschen',()=>{y.milestones.splice(+el.dataset.i,1); commit('Meilenstein gelöscht.');}); return;}
+    case 'ms-add': {const d=val('ms-new-date'), l=val('ms-new-label'), t=val('ms-new-time');
+      if(!d||!l){toast('Bitte Datum und Bezeichnung eintragen.');return} if(t&&!/^\d{1,2}:\d{2}$/.test(t)){toast('Uhrzeit bitte als 18:30 eintragen – oder leer lassen.');return}
+      y.milestones.push({id:uid('ms'),date:d,time:t?t.padStart(5,'0'):'',label:l,team:!!document.getElementById('ms-new-team')?.checked}); commit(`„${l}“ angelegt.`); return;}
+    /* Team: Gewerke & Abmelden */
+    case 'overfilter': ui.overFilter=el.dataset.f; go(); return;
+    case 'crewtoggle': {const p=y.people.find(x=>x.id===el.dataset.p), g=el.dataset.g, c=y.crews.find(x=>x.g===g);
+      if(p.groups.includes(g)){p.groups=p.groups.filter(x=>x!==g); if(c&&c.lead===p.id) c.lead=''; commit(`${p.name} ist nicht mehr in ${c?c.label:g}.`);}
+      else {p.groups.push(g); commit(`${p.name} ist jetzt in ${c?c.label:g}.`);} return;}
+    case 'crew-out': {const p=y.people.find(x=>x.id===el.dataset.p), c=y.crews.find(x=>x.g===el.dataset.g); p.groups=p.groups.filter(x=>x!==c.g); if(c.lead===p.id) c.lead=''; commit(`${p.name} ist nicht mehr in ${c.label}.`); return;}
+    case 'crew-add': {const n=val('nc-crew'); if(!n){toast('Bitte einen Namen eintragen.');return} if(y.crews.some(c=>normName(c.label)===normName(n))){toast('Dieses Gewerk gibt es schon.');return}
+      y.crews.push({g:uid('c'),label:n,target:Math.max(0,+val('nc-target')||0),lead:''}); commit(`Gewerk „${n}“ angelegt.`); return;}
+    case 'crew-del': {const c=y.crews.find(x=>x.g===el.dataset.g); if(STD_KEYS.includes(c.g)) return; const n=y.people.filter(p=>p.groups.includes(c.g)).length;
+      ask(`Gewerk „${c.label}“ löschen?${n?` ${n} Person(en) sind dort eingeteilt und verlieren diese Zuordnung.`:''}`,'Löschen',()=>{y.crews=y.crews.filter(x=>x!==c); y.people.forEach(p=>p.groups=p.groups.filter(g=>g!==c.g)); y.events.forEach(ev=>{ if(isLeit()) ev.who=ev.who.filter(t=>t!=='g:'+c.g); }); commit('Gewerk gelöscht.');}); return;}
+    case 'p-leave': case 'p-wait': {const p=y.people.find(x=>x.id===el.dataset.p); const c=crewOf(p,y); const wait=a==='p-wait';
+      const roles=[...y.roles.filter(r=>r.person===p.id).map(r=>r.name),...y.roles.filter(r=>r.alt===p.id).map(r=>'Zweitbesetzung '+r.name)];
+      const reg=p.fromReg&&y.registrations.find(r=>r.id===p.fromReg); if(wait&&!reg) return;
+      ask(wait?`${p.name} von „Zugelassen“ auf die Warteliste setzen? Der Zugang ist bis zur erneuten Zusage pausiert.${roles.length?` Frei werden: ${roles.join(', ')}.`:''}`
+        :`${p.name} aus LOS ${y.year} entfernen? Der Zugang endet sofort.${roles.length?` Frei werden: ${roles.join(', ')}.`:''}${reg?' Die Anmeldung rutscht zu „Abgesagt“.':''}`,wait?'Auf die Warteliste':'Entfernen',()=>{
+        y.roles.forEach(r=>{ if(r.person===p.id){r.person=''; r.status='frei';} if(r.alt===p.id) r.alt=''; });
+        y.crews.forEach(x=>{ if(x.lead===p.id) x.lead=''; });
+        y.events.forEach(ev=>ev.who=ev.who.filter(x=>x!=='p:'+p.id));
+        y.trips.forEach(tr=>{ delete tr.assign[p.id]; Object.values(tr.veh||{}).forEach(v=>{ if(v.driver===p.id) v.driver=''; }); });
+        y.stays.forEach(st=>st.persons=st.persons.filter(x=>x!==p.id));
+        y.people=y.people.filter(x=>x!==p); y.gone=y.gone||[];
+        y.gone.push({...p,leftAt:todayIso(),wasIn:[...(c?[c.label]:[]),...roles]});
+        if(reg&&wait){ reg.status='Warteliste'; reg.waitDate=todayIso(); reg.backToWait=todayIso(); delete reg.removedAt; }
+        else if(reg){ reg.status='abgesagt'; reg.removedAt=todayIso(); }
+        if(ui.me===p.id) ui.me='';
+        commit(wait?`${p.name} steht jetzt auf der Warteliste.`:`${p.name} ist entfernt und hat keinen Zugang mehr.`);
+        if(reg){ pushStatus(reg); offerMail(reg,wait?'Die Warteliste-Info':'Die Bestätigung der Abmeldung'); } }); return;}
+    case 'p-back': {const g=(y.gone||[]).find(x=>x.id===el.dataset.p); const {leftAt,wasIn,...p}=g; y.gone=y.gone.filter(x=>x!==g); y.people.push(p);
+      const reg=p.fromReg&&y.registrations.find(r=>r.id===p.fromReg); if(reg){ reg.status='zugelassen'; delete reg.removedAt; }
+      commit(`${p.name} ist wieder im Team. Rollen, Fahrten und Unterkunft bitte neu zuteilen.`); return;}
     case 'backup': {const blob=new Blob([JSON.stringify({exportiert:new Date().toISOString(),...S},null,1)],{type:'application/json'});
       const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`LOS-Backstage-Sicherung-${todayIso()}.json`; document.body.appendChild(a); a.click(); a.remove(); toast('Sicherung wird heruntergeladen.'); return;}
     case 'yr-del': {const k=+el.dataset.y; ask(`LOS ${k} – ${S.years[k].play} mit allen Terminen, Personen, Finanzen und Anmeldungen endgültig löschen? Das kann niemand rückgängig machen.`,'Endgültig löschen',()=>{
@@ -1853,7 +2272,9 @@ document.addEventListener('click',e=>{
       const ok=save(); render(); toast(ok?`✓ LOS ${ny} – ${play} gespeichert.`:'Speichern fehlgeschlagen – bitte erneut versuchen.'); return;}
     case 'photo': showPhoto(el.dataset.tok); return;
     case 'pv-close': closePv(); return;
-    case 'cast-swap': {const r=y.roles.find(x=>x.id===el.dataset.id); [r.person,r.alt]=[r.alt||'',r.person||''];
+    case 'cast-swap': {const r=y.roles.find(x=>x.id===el.dataset.id);
+      if(isMain(r)&&r.alt){ const o=mainRoleOf(r.alt,y,r.id); if(o){toast(`${castLabel(r.alt,true)} spielt schon die Hauptrolle ${o.name}.`);return} }
+      [r.person,r.alt]=[r.alt||'',r.person||''];
       r.status=r.person?(ui.role==='regie'?'bestätigt':'vorgeschlagen'):'frei';
       commit(r.person?(ui.role==='regie'?`${castLabel(r.person,true)} ist jetzt ${r.name}.`:`${castLabel(r.person,true)} als ${r.name} vorgeschlagen – wartet auf die Regie.`):'Getauscht.'); return;}
     case 'yr-go': ui.year=+el.dataset.y; ui.view='cockpit'; go(); return;
@@ -1867,7 +2288,7 @@ document.addEventListener('click',e=>{
       const src=CUR(), on=id=>document.getElementById(id)?.checked, clone=x=>JSON.parse(JSON.stringify(x));
       const shift=d=>{const [a,b,c]=d.split('-');return (+a+(yr-src.year))+'-'+b+'-'+c};
       const tasks=on('ny-tasks')?src.tasks.filter(t=>t.rec).map(t=>({...clone(t),id:uid('t'),done:false,due:shift(t.due)})):[];
-      S.years[yr]={year:yr,archived:false,play,milestones:[],events:[],days:{},trips:[],registrations:[],roles:[],shows:[],stays:[],meetings:[],
+      S.years[yr]={year:yr,archived:false,play,milestones:(src.milestones||[]).map(m=>({...m,id:uid('ms'),date:shift(m.date)})),gone:[],events:[],days:{},trips:[],registrations:[],roles:[],shows:[],stays:[],meetings:[],
         people:on('ny-team')?clone(src.people.filter(p=>p.groups.includes('leitung')||p.groups.includes('regie'))):[],
         vehicles:on('ny-veh')?clone(src.vehicles):[], form:on('ny-forms')?clone(src.form):[], crews:clone(src.crews||[]).map(c=>({...c,lead:''})), tasks,
         costs:on('ny-costs')?src.costs.map(c=>({...clone(c),id:uid('c'),actual:0,closed:false,cat:catOf(c)})):[],
@@ -1876,16 +2297,19 @@ document.addEventListener('click',e=>{
       const prev=src.archived?'':` LOS ${src.year} bleibt offen, bis ihr es einfriert.`;
       ui.year=yr; ui.view='cockpit'; ui.me=S.years[yr].people[0]?.id||ui.me; commit(`LOS ${yr} – ${play} ist angelegt, ${tasks.length} Aufgaben übernommen.${prev}`); return;}
     case 'noop': e.preventDefault(); toast(LIVE?'Hier ist noch kein Link hinterlegt.':'In der echten App öffnet das den verknüpften Drive-Link.'); return;
-    case 'nav': ui.view=el.dataset.v; ui.sheet=false; ui.evForm=null; go(); try{window.scrollTo(0,0)}catch(_){ } return;
+    case 'nav': ui.view=el.dataset.v; ui.sheet=false; ui.evForm=null; go(); if(LIVE&&ui.view==='anm'&&isLeit()) syncForm(true); try{window.scrollTo(0,0)}catch(_){ } return;
     case 'sheet': ui.sheet=true; go(); return;
     case 'sheet-close': ui.sheet=false; go(); return;
     case 'role': if(LIVE&&auth.role!=='leitung') return; ui.role=el.dataset.r; ui.evForm=null; if(!isLeit()) ui.year=LATEST();
-      if(ui.role==='ensemble') ui.me=LIVE?((person(ui.me)&&ROLE_OF(person(ui.me).access)==='ensemble')?ui.me:(Y().people.find(p=>ROLE_OF(p.access)==='ensemble')||{}).id||ui.me):'p2'; ui.teamTab=isLeit()?'reg':'cast'; go(); return;
+      if(ui.role==='ensemble') ui.me=LIVE?((person(ui.me)&&ROLE_OF(person(ui.me).access)==='ensemble')?ui.me:(Y().people.find(p=>ROLE_OF(p.access)==='ensemble')||{}).id||ui.me):'p2'; ui.teamTab=isLeit()?'over':ui.role==='ensemble'?'play':'actors'; ui.actTab=''; go(); return;
     case 'reset': if(LIVE) return; S=seed(); save(); ui.fbDone=false; go(); toast('Beispieldaten wiederhergestellt.'); return;
     case 'mydate': ui.myDate=el.dataset.d||null; go(); return;
     case 'plandate': ui.planDate=el.dataset.d; ui.evForm=null; go(); return;
     case 'tourtab': ui.tourTab=el.dataset.t; ui.editStay=null; go(); return;
-    case 'teamtab': ui.teamTab=el.dataset.t; go(); if(LIVE&&ui.teamTab==='reg'&&isLeit()) syncForm(true); return;
+    case 'teamtab': ui.teamTab=el.dataset.t; go(); return;
+    case 'acttab': ui.actTab=el.dataset.t; go(); return;
+    case 'actfilter': ui.actFilter=el.dataset.f; go(); return;
+    case 'crew-edit': ui.crewEdit=ui.crewEdit===el.dataset.g?'':el.dataset.g; go(); return;
     case 'taskarea': ui.taskArea=el.dataset.a; go(); return;
     case 'openshow': ui.openShow=ui.openShow===el.dataset.s?'':el.dataset.s; ui.editShow=null; go(); return;
     /* Ablauf */
@@ -1904,7 +2328,7 @@ document.addEventListener('click',e=>{
     case 'show-new': {const s={id:uid('s'),date:`${y.year}-04-01`,time:'19:30',city:'Neue Stadt',venue:'',addr:'',cap:0,sold:0,boxCount:0,boxCash:0,price:17,contact:'',getIn:'',tech:'',parking:'',ovler:'',check:{}}; y.shows.push(s); ui.openShow=s.id; ui.editShow=s.id; commit(); return;}
     case 'show-edit': ui.editShow=el.dataset.s; go(); return;
     case 'show-cancel': ui.editShow=null; go(); return;
-    case 'show-save': {const s=y.shows.find(x=>x.id===el.dataset.s); ['date','time','city','venue','addr','contact','getIn','tech','parking','ovler'].forEach(k=>s[k]=val('sf-'+k)); s.cap=+val('sf-cap')||0; s.price=+val('sf-price')||0; y.shows.sort((p,q)=>p.date.localeCompare(q.date)); ui.editShow=null; commit('Spielort gespeichert.'); return;}
+    case 'show-save': {const s=y.shows.find(x=>x.id===el.dataset.s); ['date','time','city','venue','addr','contact','getIn','tech','parking','ovler','regiondoId'].forEach(k=>s[k]=val('sf-'+k)); s.cap=+val('sf-cap')||0; s.price=+val('sf-price')||0; y.shows.sort((p,q)=>p.date.localeCompare(q.date)); ui.editShow=null; commit('Spielort gespeichert.'); return;}
     case 'show-del': {const s=y.shows.find(x=>x.id===el.dataset.s); ask(`Spielort ${s.city} entfernen?`,'Entfernen',()=>{y.shows=y.shows.filter(x=>x!==s); commit('Spielort entfernt.');}); return;}
     /* Fahrten */
     case 'trip-add': {const d=val('nt-date'),l=val('nt-label'); if(!d||!l){toast('Bitte Datum und Strecke eintragen.');return} const t={id:uid('tr'),date:d,label:l,assign:{},veh:{}}; y.trips.push(t); y.trips.sort((p,q)=>p.date.localeCompare(q.date)); ui.trip=t.id; commit('Fahrt angelegt.'); return;}
@@ -1923,20 +2347,23 @@ document.addEventListener('click',e=>{
     case 'stay-edit': ui.editStay=el.dataset.id; go(); return;
     case 'stay-cancel': ui.editStay=null; go(); return;
     case 'stay-del': y.stays=y.stays.filter(s=>s.id!==el.dataset.id); ui.editStay=null; commit('Unterkunft entfernt.'); return;
-    case 'stay-save': {const host=val('st-host'); if(!host){toast('Bitte Gastgeber:in eintragen.');return}
+    case 'stay-save': {const host=val('st-host'); if(!host){toast('Bitte Gastgeber eintragen.');return}
       const persons=[...document.querySelectorAll('.st-p:checked')].map(i=>i.value);
       const data={host,addr:val('st-addr'),beds:val('st-beds'),hostTel:val('st-tel'),persons};
       const c=el.dataset.c; y.stays.forEach(s=>{if(s.city===c&&s.id!==el.dataset.id) s.persons=s.persons.filter(p=>!persons.includes(p))});
       if(el.dataset.id) Object.assign(y.stays.find(s=>s.id===el.dataset.id),data); else y.stays.push({id:uid('a'),city:c,...data});
       ui.editStay=null; commit('Unterkunft gespeichert.'); return;}
     /* Team */
-    case 'reg-ok': {const r=y.registrations.find(x=>x.id===el.dataset.id); r.status='zugelassen';
-      const groups=wishGroups(r.wishes);
-      const np={id:uid('p'),name:r.name,groups,lic:r.driver?'B':'',photo:r.photoUrl||driveThumb(r.photoLink),email:r.email||'',tel:r.phone||'',access:'team',fromReg:r.id}; y.people.push(np);
+    case 'reg-ok': {const r=y.registrations.find(x=>x.id===el.dataset.id); r.status='zugelassen'; delete r.removedAt; delete r.backToWait;
+      const back=(y.gone||[]).find(p=>p.fromReg===r.id);
+      if(back){ const {leftAt,wasIn,...p}=back; y.gone=y.gone.filter(x=>x!==back); y.people.push(p);
+        commit(`${p.name} ist wieder im Team (${crewOf(p,y)?.label||'ohne Gewerk'}). Rollen, Fahrten und Unterkunft bitte neu zuteilen.`); pushStatus(r); return; }
+      const g=(r.wishes||[]).map(w=>wishToCrew(w,y)).find(Boolean)||'';
+      const np={id:uid('p'),name:r.name,groups:g?[g]:[],lic:r.driver?'B':'',photo:r.photoUrl||driveThumb(r.photoLink),email:r.email||'',tel:r.phone||'',access:'team',fromReg:r.id,actWish:r.roleWish||''}; y.people.push(np);
       y.roles.forEach(ro=>{if(ro.person==='reg:'+r.id) ro.person=np.id; if(ro.alt==='reg:'+r.id) ro.alt=np.id;});
-      commit(`${r.firstName||r.name} ist zugelassen und im Team${groups.length?' ('+groups.map(g=>GROUPS[g]).join(', ')+')':''}.`); pushStatus(r); offerMail(r,'Die Zusage'); return;}
+      commit(`${r.firstName||r.name} ist zugelassen${g?` – Gewerk ${gLabel(g)} (aus der Anmeldung, in der Teamübersicht änderbar)`:' – bitte in der Teamübersicht einem Gewerk zuteilen'}.`); pushStatus(r); offerMail(r,'Die Zusage'); return;}
     case 'reg-no': {const r=y.registrations.find(x=>x.id===el.dataset.id); const was=r.status; r.status='abgesagt'; commit(was==='Warteliste'?`${r.firstName||r.name}: finale Absage vorgemerkt.`:'Absage vorgemerkt.'); pushStatus(r); offerMail(r,'Die Absage'); return;}
-    case 'reg-wait': {const r=y.registrations.find(x=>x.id===el.dataset.id); r.status='Warteliste'; r.waitDate=todayIso(); commit(`${r.firstName||r.name} steht jetzt auf der Warteliste.`); pushStatus(r); offerMail(r,'Die Warteliste-Info'); return;}
+    case 'reg-wait': {const r=y.registrations.find(x=>x.id===el.dataset.id); if(r.removedAt){ r.backToWait=todayIso(); delete r.removedAt; } r.status='Warteliste'; r.waitDate=todayIso(); commit(`${r.firstName||r.name} steht jetzt auf der Warteliste.`); pushStatus(r); offerMail(r,'Die Warteliste-Info'); return;}
     case 'sheet-sample': {const t=document.getElementById('sheet-paste'); if(t){t.value=sampleSheet(); t.focus();} toast('Zwei Beispielzeilen im Format eures Formulars eingefügt – jetzt „Abgleichen“.'); return;}
     case 'sheet-import': {const res=importSheet(y,val('sheet-paste')); if(res.error){toast(res.error);return}
       commit(`Abgleich fertig: ${res.added} neu, ${res.updated} aktualisiert.`); return;}
@@ -1946,41 +2373,52 @@ document.addEventListener('click',e=>{
     case 'pv-send': {const get=id=>{const i=document.querySelector(`.pv[data-q="${id}"]`);return i?(i.type==='file'?(i.files&&i.files.length?true:false):i.value.trim()):''};
       const name=get('q1'); if(!name){toast('Bitte mindestens den Namen ausfüllen.');return}
       const reg={id:uid('r'),name,wish:get('q4')||'Schauspiel',first:get('q5')==='Ja',lic:(get('q6')&&get('q6')!=='Keiner')?get('q6'):'',photo:!!get('q7'),licPhoto:!!get('q8'),note:get('q10')||'',status:'neu',date:todayIso()};
-      const done=url=>{if(url) reg.photoUrl=url; y.registrations.push(reg); ui.teamTab='reg'; ui.regFilter='neu'; commit('Test-Anmeldung eingegangen.');};
+      const done=url=>{if(url) reg.photoUrl=url; y.registrations.push(reg); ui.view='anm'; ui.regFilter='neu'; commit('Test-Anmeldung eingegangen.');};
       const f=document.querySelector('.pv[data-q="q7"]')?.files?.[0]; if(f) readPhoto(f,done); else done(null); return;}
-    case 'role-add': {const n=val('role-new'); if(!n){toast('Bitte einen Rollennamen eintragen.');return} y.roles.push({id:uid('ro'),name:n,person:'',status:'frei',comments:[]}); commit(`Rolle „${n}“ angelegt.`); return;}
+    case 'role-add': {const n=val('role-new'); if(!n){toast('Bitte einen Rollennamen eintragen.');return} y.roles.push({id:uid('ro'),name:n,kind:val('role-kind')||'haupt',person:'',status:'frei',comments:[]}); commit(`Rolle „${n}“ angelegt.`); return;}
     case 'role-del': {const r=y.roles.find(x=>x.id===el.dataset.id); ask(`Rolle „${r.name}“ entfernen?`,'Entfernen',()=>{y.roles=y.roles.filter(x=>x.id!==r.id); y.events.forEach(ev=>{ if(isLeit()||y.days[ev.date]?.kind==='probe') ev.who=ev.who.filter(t=>t!=='r:'+r.id); }); commit('Rolle entfernt.');}); return;}
     case 'cm-add': {const t=val('cm-'+el.dataset.id); if(!t) return; y.roles.find(x=>x.id===el.dataset.id).comments.push({by:roleName(),text:t}); commit(); return;}
+    case 'cm-toggle': ui.cmOpen=ui.cmOpen===el.dataset.id?null:el.dataset.id; go(); if(ui.cmOpen) setTimeout(()=>document.getElementById('cm-'+el.dataset.id)?.focus(),0); return;
+    case 'role-menu': ui.roleMenu=ui.roleMenu===el.dataset.id?null:el.dataset.id; go(); return;
     case 'cast-ok': if(ui.role!=='regie') return; y.roles.find(x=>x.id===el.dataset.id).status='bestätigt'; commit('Besetzung bestätigt.'); return;
     case 'cast-no': if(ui.role!=='regie') return; y.roles.find(x=>x.id===el.dataset.id).status='abgelehnt'; commit('Als „passt nicht“ markiert – schreib kurz einen Kommentar, warum.'); return;
     /* Aufgaben & Meetings */
     case 'task-add': {const t=readTask('nt'); if(!t){toast('Bitte Aufgabe und Datum eintragen.');return} y.tasks.push(t); commit('Aufgabe angelegt.'); return;}
-    case 'meet-add': {const t=val('nm-title'); if(!t){toast('Bitte einen Titel eintragen.');return}
-      const lines=id=>val(id).split('\n').map(s=>s.trim()).filter(Boolean);
-      const due=new Date(Date.now()+14*864e5).toISOString().slice(0,10);
-      const newTasks=lines('nm-tasks').map(title=>({id:uid('t'),title,area:'Interne Leitung',phase:'Planung',owner:'p-int',due,done:false,rec:false}));
+    case 'nm-toggle': readNm(); ui.nmOpen=!ui.nmOpen; return;
+    case 'nmt-add': readNm(); ui.nm.tasks.push({title:'',area:AREAS[1],due:in14()}); ui.nmOpen=true; go(); setTimeout(()=>document.getElementById('nmt-title-'+(ui.nm.tasks.length-1))?.focus(),0); return;
+    case 'nmt-del': readNm(); ui.nm.tasks.splice(+el.dataset.i,1); ui.nmOpen=true; go(); return;
+    case 'meet-add': {readNm(); const d=ui.nm; const t=d.title.trim(); if(!t){toast('Bitte einen Titel eintragen.');return}
+      const newTasks=d.tasks.filter(x=>x.title.trim()).map(x=>({id:uid('t'),title:x.title.trim(),area:x.area,phase:'Planung',owner:OWNER[x.area]||'',due:x.due||in14(),done:false,rec:false}));
       y.tasks.push(...newTasks);
-      y.meetings.push({id:uid('m'),date:val('nm-date')||todayIso(),title:t,doc:val('nm-doc'),decisions:lines('nm-dec'),tasks:newTasks.map(x=>x.id)});
+      y.meetings.push({id:uid('m'),date:d.date||todayIso(),title:t,doc:d.doc.trim(),decisions:d.dec.split('\n').map(x=>x.trim()).filter(Boolean),tasks:newTasks.map(x=>x.id)});
+      ui.nm=null; ui.nmOpen=false; ['nm-title','nm-doc','nm-dec'].forEach(i=>dirtyIds.delete(i));
       commit(newTasks.length?`Protokoll gespeichert, ${newTasks.length} Aufgabe(n) angelegt.`:'Protokoll gespeichert.'); return;}
-    case 'meet-task': {const t=readTask('mt-'+el.dataset.id); if(!t){toast('Bitte Aufgabe und Datum eintragen.');return} y.tasks.push(t); y.meetings.find(m=>m.id===el.dataset.id).tasks.push(t.id); commit('Aufgabe angelegt und mit dem Meeting verknüpft.'); return;}
+    case 'meet-edit': {const m=y.meetings.find(x=>x.id===el.dataset.id); ui.meetEdit=m.id; ui.meetDraft=JSON.parse(JSON.stringify(m)); go(); return;}
+    case 'meet-cancel': ui.meetEdit=null; go(); return;
+    case 'meet-save': {const m=y.meetings.find(x=>x.id===el.dataset.id); const t=val('me-title'); if(!t){toast('Der Titel darf nicht leer sein.');return}
+      Object.assign(m,{title:t,date:val('me-date')||m.date,doc:val('me-doc'),decisions:val('me-dec').split('\n').map(x=>x.trim()).filter(Boolean)}); ui.meetEdit=null; ['me-title','me-date','me-doc','me-dec'].forEach(i=>dirtyIds.delete(i)); commit('Protokoll gespeichert.'); return;}
+    case 'meet-del': {const m=y.meetings.find(x=>x.id===el.dataset.id); ask(`Protokoll „${m.title}“ löschen? Die Aufgaben daraus bleiben in der Aufgabenliste.`,'Löschen',()=>{y.meetings=y.meetings.filter(x=>x!==m); ui.meetEdit=null; commit('Protokoll gelöscht.');}); return;}
+    case 'meet-task': {const t=readTask('mt-'+el.dataset.id); if(!t){toast('Bitte Aufgabe und Datum eintragen.');return} y.tasks.push(t); ui.mtOpen=null; y.meetings.find(m=>m.id===el.dataset.id).tasks.push(t.id); commit('Aufgabe angelegt und mit dem Meeting verknüpft.'); return;}
     /* Feedback */
     case 'fb-toggle': y.feedback.open=!y.feedback.open; commit(y.feedback.open?'Fragebogen freigeschaltet – das Team sieht ihn jetzt.':'Fragebogen gesperrt.'); return;
     case 'fb-send': {const fb=CUR().feedback; const r={}; fb.questions.forEach(q=>{ if(q.type==='rating'){const c=document.querySelector(`input[name="fb-${q.id}"]:checked`); if(c) r[q.id]=+c.value;} else r[q.id]=val('fb-'+q.id); });
-      if(!Object.values(r).some(Boolean)){toast('Bitte mindestens eine Frage beantworten.');return} fb.responses.push({id:uid('fr'),...r}); ui.fbDone=true; try{localStorage.setItem('los-fb-'+(auth.email||'demo'),'1')}catch(_){ } commit(); return;}
+      if(!Object.values(r).some(Boolean)){toast('Bitte mindestens eine Frage beantworten.');return} fb.responses.push({id:uid('fr'),...r}); ui.fbDone=true; try{localStorage.setItem('los-fb-'+(auth.email||'demo')+'-'+meId(),'1')}catch(_){ } commit(); return;}
     case 'lr-add': {const t=val('lr-new'); if(!t) return; y.feedback.learnings.push({by:'Leitung',text:t}); commit(); return;}
     case 'fq-add': {const t=val('fq-new'); if(!t) return; y.feedback.questions.push({id:uid('f'),label:t,type:val('fq-type')}); commit(); return;}
     case 'fq-del': y.feedback.questions=y.feedback.questions.filter(q=>q.id!==el.dataset.id); commit(); return;
     /* Zugänge */
     case 'ac-add': {const n=val('ac-name'),m=mails(val('ac-mail')); if(!n||!m.length){toast('Bitte Name und gültige Google-Adresse eintragen.');return}
-      const cy=CUR(); if(cy.people.some(p=>mails(p.email).some(x=>m.includes(x)))){toast('Diese Adresse ist schon einer Person zugeordnet.');return}
-      const role=val('ac-role'); const groups=role.startsWith('leitung')?['leitung']:(role==='regie'||role==='ra')?['regie']:['ensemble'];
+      const cy=CUR(); const shared=cy.people.filter(p=>mails(p.email).some(x=>m.includes(x)));
+      const role=val('ac-role'); const groups=role.startsWith('leitung')?['leitung']:(role==='regie'||role==='ra')?['regie']:[];
       const pid=POS_ID[role]&&!cy.people.some(p=>p.id===POS_ID[role])?POS_ID[role]:uid('p');
       cy.people.push({id:pid,name:n,email:m.join(', '),access:role,groups,lic:'',pos:role.startsWith('leitung')?ACCESS[role].replace('Leitung – ',''):role==='regie'?'Regie':role==='ra'?'Regieassistenz':''}); commit(`${n} ist freigeschaltet.`); return;}
     /* Über LOS */
-    case 'ab-edit': ui.aboutEdit=true; go(); return;
+    case 'ab-edit': {const a=S.about; ui.abDraft={who:a.who||'',why:a.why||'',expect:a.expect||'',links:linkItems(a.links),material:linkItems(a.material)}; ui.aboutEdit=true; go(); return;}
+    case 'ab-ladd': readAbDraft(); ui.abDraft[el.dataset.k].push({label:'',url:''}); go(); setTimeout(()=>document.getElementById(`ab-${el.dataset.k}-l-${ui.abDraft[el.dataset.k].length-1}`)?.focus(),0); return;
+    case 'ab-ldel': readAbDraft(); ui.abDraft[el.dataset.k].splice(+el.dataset.i,1); go(); return;
     case 'ab-cancel': ui.aboutEdit=false; go(); return;
-    case 'ab-save': {const P=id=>val(id).split('\n').map(l=>l.split('|').map(x=>x.trim())).filter(x=>x[0]).map(([l,u])=>[l,u||'#']);
-      Object.assign(S.about,{who:val('ab-who'),why:val('ab-why'),expect:val('ab-exp'),links:P('ab-links'),material:P('ab-mat')}); ui.aboutEdit=false; commit('Gespeichert.'); return;}
+    case 'ab-save': {readAbDraft(); const d=ui.abDraft; const L=arr=>arr.map(x=>({label:x.label.trim(),url:fixUrl(x.url)})).filter(x=>x.label||x.url).map(x=>({label:x.label||x.url,url:x.url}));
+      Object.assign(S.about,{who:d.who.trim(),why:d.why.trim(),expect:d.expect.trim(),links:L(d.links),material:L(d.material)}); ui.aboutEdit=false; ui.abDraft=null; commit('Gespeichert.'); return;}
   }
 });
 document.addEventListener('change',e=>{
@@ -1991,6 +2429,7 @@ document.addEventListener('change',e=>{
     case 'year': if(v==='__new'){ui.view='years'; render(); try{document.getElementById('newyear')?.scrollIntoView({block:'start'})}catch(_){ } setTimeout(()=>document.getElementById('ny-play')?.focus(),0); return}
       ui.year=+v; ui.evForm=null; render(); return;
     case 'me': ui.me=v; render(); return;
+    case 'whoami': ui.me=v; lsSet('los-me-'+auth.email+'-'+auth.year,v); try{ui.fbDone=localStorage.getItem('los-fb-'+auth.email+'-'+v)==='1'}catch(_){ } render(); return;
     case 'onlymine': ui.onlyMine=el.checked; render(); return;
     case 'trip': ui.trip=v; render(); return;
     case 'staycity': ui.stayCity[ui.trip]=v; render(); return;
@@ -2018,24 +2457,50 @@ document.addEventListener('change',e=>{
     case 'vtime': {const t=trip(); t.veh[el.dataset.v]=t.veh[el.dataset.v]||{}; t.veh[el.dataset.v].time=v.trim(); commit(); return;}
     case 'vplace': {const t=trip(); t.veh[el.dataset.v]=t.veh[el.dataset.v]||{}; t.veh[el.dataset.v].place=v.trim(); commit(); return;}
     case 'bahninfo': {const t=trip(); const [time,...rest]=v.split('·'); t.veh.bahn={time:(time||'').trim(),place:rest.join('·').trim(),driver:''}; commit(); return;}
+    case 'crew-label': {const c=y.crews.find(x=>x.g===el.dataset.g); const n=v.trim(); if(!n){render();return} c.label=n; commit('Gewerk umbenannt.'); return;}
+    case 'crew-target': {const c=y.crews.find(x=>x.g===el.dataset.g); c.target=Math.max(0,+v||0); commit(); return;}
+    case 'crew-in': {if(!v) return; const p=y.people.find(x=>x.id===v), c=y.crews.find(x=>x.g===el.dataset.g); p.groups.push(c.g); commit(`${p.name} ist jetzt in ${c.label}.`); return;}
+    case 'rolekind': {const r=y.roles.find(x=>x.id===el.dataset.id);
+      if(v==='haupt'&&r.person){ const o=mainRoleOf(r.person,y,r.id); if(o){toast(`${castLabel(r.person,true)} spielt schon die Hauptrolle ${o.name} – erst umbesetzen.`);render();return} }
+      r.kind=v; commit(v==='haupt'?'Jetzt Hauptrolle.':'Jetzt Nebenrolle.'); return;}
+    case 'ms-date': case 'ms-time': case 'ms-label': case 'ms-team': {const m=y.milestones[+el.dataset.i]; if(!m) return;
+      if(a==='ms-date'){ if(!v){render();return} m.date=v; } else if(a==='ms-time'){ const t=v.trim(); if(t&&!/^\d{1,2}:\d{2}$/.test(t)){toast('Uhrzeit bitte als 18:30 eintragen – oder leer lassen.');render();return} m.time=t?t.padStart(5,'0'):''; }
+      else if(a==='ms-label'){ if(!v.trim()){render();return} m.label=v.trim(); } else m.team=el.checked;
+      commit(); return;}
     case 'crewlead': {const c=y.crews.find(x=>x.g===el.dataset.g); c.lead=v; commit(v?`${pname(v)} ist jetzt ${leadLabel(c)}.`:`${leadLabel(c)} entfernt.`); return;}
     case 'sheet-file': {const f=el.files?.[0]; if(!f) return; const rd=new FileReader(); rd.onload=()=>{const res=importSheet(y,rd.result); if(res.error){toast(res.error);return} commit(`Abgleich fertig: ${res.added} neu, ${res.updated} aktualisiert.`);}; rd.onerror=()=>toast('Die Datei konnte nicht gelesen werden.'); rd.readAsText(f,'utf-8'); return;}
     case 'castalt': {const r=y.roles.find(x=>x.id===el.dataset.id); if(v&&v===r.person){toast('Das ist schon die Hauptbesetzung.');render();return}
       r.alt=v; commit(v?`${castLabel(v,true)} als Zweitbesetzung für ${r.name} eingetragen.`:'Zweitbesetzung entfernt.'); return;}
     case 'photo-up': {const f=el.files?.[0]; if(!f) return; const tok=el.dataset.tok; readPhoto(f,url=>{if(!url){toast('Das Bild konnte nicht gelesen werden.');return}
       const i=tokInfo(tok); if(i.reg){i.reg.photoUrl=url; i.reg.photo=true;} else i.person.photo=url; save(); render(); showPhoto(tok); toast('Foto gespeichert.');}); return;}
-    case 'cast': {const r=y.roles.find(x=>x.id===el.dataset.id); r.person=v; if(v&&r.alt===v) r.alt=''; r.status=v?(ui.role==='regie'?'bestätigt':'vorgeschlagen'):'frei';
+    case 'cast': {const r=y.roles.find(x=>x.id===el.dataset.id);
+      if(v&&isDirector(person(v),y)){toast('Regisseure stehen nicht auf der Bühne.');render();return}
+      if(v&&isMain(r)){ const o=mainRoleOf(v,y,r.id); if(o){toast(`${castLabel(v,true)} spielt schon die Hauptrolle ${o.name} – höchstens als Zweitbesetzung oder in einer Nebenrolle.`);render();return} }
+      r.person=v; if(v&&r.alt===v) r.alt=''; r.status=v?(ui.role==='regie'?'bestätigt':'vorgeschlagen'):'frei';
       commit(v?(ui.role==='regie'?`${castLabel(v,true)} als ${r.name} besetzt.`:`${castLabel(v,true)} für ${r.name} vorgeschlagen – wartet auf die Regie.`):''); return;}
+    case 'role-name': {const r=y.roles.find(x=>x.id===el.dataset.id); const n=v.trim(); if(!n){render();return} r.name=n; commit('Rolle umbenannt.'); return;}
+    case 'setcrew': {const p=y.people.find(x=>x.id===el.dataset.p); if(!v){render();return} setCrew(p,v,y); if(v==='ensemble') p.acts=true;
+      commit(`${p.name} ist jetzt in ${gLabel(v)}.`); return;}
+    case 'setacts': {const p=y.people.find(x=>x.id===el.dataset.p); const on=v==='ja';
+      const rs=y.roles.filter(r=>r.person===p.id||r.alt===p.id);
+      const apply=()=>{ if(!on) y.roles.forEach(r=>{ if(r.person===p.id){r.person='';r.status='frei';} if(r.alt===p.id) r.alt=''; }); p.acts=on;
+        commit(on?`${p.name} steht jetzt in der Schauspieler-Übersicht und kann besetzt werden.`:`${p.name} spielt nicht mit.`); };
+      if(!on&&rs.length){ render(); ask(`${p.name} spielt noch: ${rs.map(r=>r.name).join(', ')}. Trotzdem aus dem Schauspiel nehmen? Die Rollen werden frei.`,'Ja, Rollen freigeben',apply); return; }
+      apply(); return;}
+    case 'pfn': {const p=y.people.find(x=>x.id===el.dataset.p); p.fn=v;
+      if(v==='Regisseur'&&y.roles.some(r=>r.person===p.id||r.alt===p.id)){ y.roles.forEach(r=>{ if(r.person===p.id){r.person='';r.status='frei';} if(r.alt===p.id) r.alt=''; }); commit(`${p.name} führt Regie – seine Rollen sind wieder frei.`); return; }
+      commit(); return;}
     case 'hist': {S.history[el.dataset.y][el.dataset.k]=v===''?'':+v; commit(); return;}
     case 'pmail': {const p=CUR().people.find(x=>x.id===el.dataset.p); const m=mails(v);
       if(v.trim()&&!m.length){toast('Das sieht nicht wie eine E-Mail-Adresse aus.');render();return}
-      const other=CUR().people.find(x=>x.id!==p.id&&mails(x.email).some(a=>m.includes(a))); if(other){toast(`Diese Adresse gehört schon zu ${other.name}.`);render();return}
+      const other=CUR().people.find(x=>x.id!==p.id&&mails(x.email).some(a=>m.includes(a)));
       if(LIVE&&mails(p.email).includes(auth.email)&&!m.includes(auth.email)&&!BOOT.includes(auth.email)){toast('Deine eigene Anmelde-Adresse kann nur jemand anderes aus der Leitung entfernen.');render();return}
-      p.email=m.join(', '); commit(m.length?`${p.name} kann sich jetzt mit ${m.join(' oder ')} anmelden.`:`${p.name} hat keinen Zugang mehr.`); return;}
+      p.email=m.join(', '); commit(m.length?`${p.name} kann sich jetzt mit ${m.join(' oder ')} anmelden.${other?` Die Adresse teilt sie sich mit ${other.name} – beim Anmelden wählt man, wer man ist.`:''}`:`${p.name} hat keinen Zugang mehr.`); return;}
+    case 'pname': {const p=CUR().people.find(x=>x.id===el.dataset.p); const n=v.trim(); if(!n){toast('Der Name darf nicht leer sein.');render();return} p.name=n; commit(`Name geändert: ${n}`); return;}
     case 'access': {const p=CUR().people.find(x=>x.id===el.dataset.p);
       if(LIVE&&mails(p.email).includes(auth.email)&&!v.startsWith('leitung')&&!BOOT.includes(auth.email)){toast('Deine eigene Rolle kann nur jemand anderes aus der Leitung ändern.');render();return}
       p.access=v;
-      const keep=p.groups.filter(g=>g!=='leitung'&&g!=='regie'); p.groups=v.startsWith('leitung')?['leitung',...keep]:(v==='regie'||v==='ra')?['regie',...keep]:(keep.length?keep:['ensemble']);
+      const c=crewOf(p,CUR()); if(v.startsWith('leitung')) setCrew(p,'leitung',CUR()); else if(v==='regie'||v==='ra'){ setCrew(p,'regie',CUR()); if(!p.fn) p.fn=v==='ra'?'Regie-Assistenz':'Regisseur'; } else if(c&&(c.g==='leitung'||c.g==='regie')) setCrew(p,'',CUR());
       commit(`${p.name}: ${ACCESS[v]}`); return;}
   }
 });
@@ -2046,6 +2511,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.target.id==='li-m
   if(e.key==='Enter'&&e.target.dataset&&e.target.dataset.enterSave){e.preventDefault();document.querySelector(`[data-act="yr-save"][data-y="${e.target.dataset.enterSave}"]`)?.click();return}
   if(e.key==='Enter'&&e.target.dataset&&e.target.dataset.enter){e.preventDefault();document.querySelector(`[data-act="cm-add"][data-id="${e.target.dataset.enter}"]`)?.click();return}
   if(e.key==='Escape'){if(document.getElementById('pv')){closePv();return} if(pendingFn){closeAsk();return} if(ui.sheet){ui.sheet=false;render()}}});
+if(!LIVE) Object.values(S.years).forEach(y=>ensureCrews(y));
 render();
 if(LIVE) liveInit();
 

@@ -1,4 +1,4 @@
-# LOS Leitstand
+# LOS Backstage
 
 Planung, Proben, Tour und Controlling für Libanon on Stage – eine Web-App für Handy und Laptop mit Google-Login und Rechten pro Rolle (Leitung, Regie, Regieassistenz, Ensemble).
 

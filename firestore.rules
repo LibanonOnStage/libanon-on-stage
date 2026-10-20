@@ -1,0 +1,112 @@
+rules_version = '2';
+
+// LOS Backstage – Sicherheitsregeln
+// Diese Regeln entscheiden auf dem Server, wer was lesen und ändern darf.
+// Die App zeigt nur, was erlaubt ist – aber erst diese Regeln machen es "undurchlässig".
+//
+// WICHTIG: In der Zeile mit ADMINS die gleichen Adressen eintragen wie in config.js (admins).
+// Diese Adressen sind immer Leitung, auch wenn sie in keinem Jahr eingetragen sind (Notzugang).
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------- Wer bin ich? ----------
+    function ADMINS() { return ['interne.leitung.los@gmail.com', 'info@libanon-on-stage.de', 'marketing.fundraising.los@gmail.com']; }
+
+    function signedIn() { return request.auth != null && request.auth.token.email_verified == true; }
+    function email() { return request.auth.token.email.lower(); }
+    function userPath() { return /databases/$(database)/documents/users/$(email()); }
+    function isAdmin() { return signedIn() && email() in ADMINS(); }
+    function hasUser() { return signedIn() && exists(userPath()); }
+    function access() { return get(userPath()).data.access; }
+
+    function isLeit() { return isAdmin() || (hasUser() && access().matches('leitung.*')); }
+    function isRegie() { return hasUser() && access() in ['regie', 'ra']; }   // Regie und Regieassistenz
+    function isRA() { return hasUser() && access() == 'ra'; }
+    function isMember() { return isLeit() || hasUser(); }
+
+    // ---------- Projektjahre ----------
+    function yearPath(y) { return /databases/$(database)/documents/years/$(y); }
+    function yearOpen(y) { return exists(yearPath(y)) && get(yearPath(y)).data.archived == false; }
+    // Zustand NACH dem Speichervorgang (wichtig, wenn mehrere Dokumente zusammen gespeichert werden)
+    function openAfter(y) { return !existsAfter(yearPath(y)) || getAfter(yearPath(y)).data.archived == false; }
+    function probeDay(y, d) {
+      return existsAfter(yearPath(y))
+        && getAfter(yearPath(y)).data.archived == false
+        && getAfter(yearPath(y)).data.days.get(d, {}).get('kind', '') == 'probe';
+    }
+    // Regieassistenz: darf vorschlagen, aber nichts auf "bestätigt" setzen
+    function raAllowed() {
+      return request.resource.data.get('status', '') != 'bestätigt'
+        || (resource != null
+            && resource.data.get('status', '') == 'bestätigt'
+            && request.resource.data.get('person', '') == resource.data.get('person', '')
+            && request.resource.data.get('alt', '') == resource.data.get('alt', ''));
+    }
+
+    // ---------- Zugänge ----------
+    match /users/{em} {
+      allow read: if signedIn() && (em == email() || isLeit());
+      allow write: if isLeit();
+    }
+
+    // ---------- Allgemeines ----------
+    match /app/{doc} {
+      allow read: if isLeit() || (doc == 'about' && isMember());   // "Über LOS" für alle, Jahresvergleich nur Leitung
+      allow write: if isLeit();
+    }
+    match /config/{doc} {                                          // Zugang zum Google-Skript: nur Leitung
+      allow read, write: if isLeit();
+    }
+
+    match /years/{y} {
+      // Vorjahre (eingefroren) sieht nur die Leitung
+      allow read: if isLeit() || (isMember() && resource.data.archived == false);
+      allow create: if isLeit();
+      // Eingefrorene Jahre: nur wieder öffnen ist erlaubt, sonst nichts
+      allow update: if isLeit() && (resource.data.archived == false
+                     || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['archived', 'frozenAt']));
+      allow delete: if isLeit() && resource.data.archived == false;
+
+      // Alles innerhalb eines Jahres
+      match /{coll}/{id} {
+        allow read: if isLeit()
+          || (isMember() && yearOpen(y) && coll in ['people', 'events', 'roles', 'shows', 'trips', 'vehicles', 'stays', 'pub'])
+          || (isRegie() && yearOpen(y) && coll in ['meetings', 'cands']);
+        allow write: if isLeit() && openAfter(y);
+      }
+
+      // Regie & Regieassistenz: nur Termine an Probentagen
+      match /events/{id} {
+        allow create: if isRegie() && probeDay(y, request.resource.data.date);
+        allow update: if isRegie() && probeDay(y, resource.data.date) && probeDay(y, request.resource.data.date);
+        allow delete: if isRegie() && probeDay(y, resource.data.date);
+      }
+
+      // Regie & Regieassistenz: Besetzung (bestätigen nur die Regie)
+      match /roles/{id} {
+        allow create, update: if isRegie() && openAfter(y) && (!isRA() || raAllowed());
+        allow delete: if isRegie() && openAfter(y);
+      }
+
+      // Fragen an die Leitung: jeder sieht die eigenen und die für alle freigegebenen; antworten nur die Leitung
+      match /questions/{id} {
+        allow read: if isMember() && yearOpen(y)
+          && (resource.data.get('byEmail', '') == email() || resource.data.get('public', false) == true);
+        allow create: if isMember() && yearOpen(y)
+          && request.resource.data.get('byEmail', '') == email()
+          && request.resource.data.get('answer', '') == ''
+          && request.resource.data.get('public', false) == false;
+        // eigene Frage zurückziehen (solange sie nicht für alle freigegeben ist)
+        allow delete: if isMember() && yearOpen(y)
+          && resource.data.get('byEmail', '') == email()
+          && resource.data.get('public', false) == false;
+      }
+
+      // Feedback: alle im Team dürfen anonym abgeben, solange der Bogen offen ist; lesen nur die Leitung
+      match /responses/{id} {
+        allow create: if isMember() && yearOpen(y) && get(yearPath(y)).data.get('fbOpen', false) == true;
+      }
+    }
+  }
+}
