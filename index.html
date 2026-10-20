@@ -968,7 +968,10 @@ function subDoc(path){ if(unsubs.has(path)) return; waiting.add(path);
 const owned=new Map();
 function subColl(path,q,key){ key=key||path; if(unsubs.has(key)) return; waiting.add(key);
   unsubs.set(key,FB.fs.onSnapshot(q||FB.fs.collection(db,path),s=>{ const pre=path+'/';
-    if(path==='years'&&auth.state==='loading'&&s.metadata&&s.metadata.fromCache&&!s.size) return; /* neues Gerät: auf den Server warten */
+    if(path==='years'&&auth.state==='loading'&&s.metadata&&s.metadata.fromCache&&!s.size){ /* nur der Zwischenspeicher meldet „leer“: beim Server nachfragen */
+      FB.fs.getDocsFromServer(q||FB.fs.collection(db,path)).then(r=>{ if(r.empty&&auth.state==='loading'&&waiting.has(key)){ owned.set(key,new Set()); arrived(key); } })
+        .catch(e=>{ console.error('Server nicht erreichbar:',e); if(auth.state==='loading'&&waiting.has(key)){ auth.state='error'; auth.error='Keine Verbindung zur Datenbank. Bitte Internet prüfen und die Seite neu laden.'; render(); } });
+      return; }
     const now=new Set(); s.forEach(d=>{ now.add(pre+d.id); srv.set(pre+d.id,dec(d.data())); });
     const others=new Set([...owned].filter(([k])=>k!==key&&k.startsWith(path)).flatMap(([,v])=>[...v]));
     if(key===path) for(const k of [...srv.keys()]){ if(k.startsWith(pre)&&!k.slice(pre.length).includes('/')&&!now.has(k)&&!others.has(k)) srv.delete(k); }
