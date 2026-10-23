@@ -369,6 +369,19 @@ table.t.cost-t td{padding:3px 6px}
 .whoplays .list>li{padding:8px 0}
 .trow{display:grid;grid-template-columns:minmax(0,1.4fr) 190px minmax(0,1.2fr) 170px 36px;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
 .trow.playrow{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) minmax(0,1fr)}.trow.playrow.mine{background:var(--gold-soft);margin:0 -16px;padding-left:16px;padding-right:16px}
+.daynav{display:flex;gap:8px;align-items:center;margin:0 0 16px;max-width:560px}
+.daynav select{flex:1;min-width:0;font-size:15px;padding:9px 10px}
+.daynav .navb{all:unset;cursor:pointer;border:1px solid var(--line);background:var(--surface);border-radius:var(--radius-s);padding:6px 14px;font-size:20px;line-height:1.2;font-weight:600}
+.daynav .navb[disabled]{opacity:.35;cursor:default}
+.daymgr{padding:14px 16px;margin-bottom:16px}
+.dm-new{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;margin-bottom:12px}.dm-new .dm-title{flex:1;min-width:180px}.dm-new .dm-title input{width:100%}
+.dm-group{margin-top:8px}.dm-gl{margin:6px 0 2px;font-weight:600}
+.dm-row{display:grid;grid-template-columns:90px minmax(0,1fr) 150px 80px 34px;gap:8px;align-items:center;padding:4px 0;border-top:1px solid var(--line)}
+.dm-d{font-weight:600;font-size:14.5px}
+.calbtns{display:inline-flex;gap:6px;flex-wrap:wrap}.calb{padding:5px 10px;font-size:13.5px;text-decoration:none}
+.mailbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius-s);background:var(--surface)}
+.mailbar .small{flex-basis:100%}
+.sheet-acc{display:flex;flex-direction:column;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
 .trow.overrow{grid-template-columns:minmax(0,1.4fr) 190px 150px minmax(0,1fr)}.trow.actrow{grid-template-columns:minmax(0,1.3fr) 120px 150px minmax(0,1.6fr)}
 select.onsel{border-color:var(--green,#2e7d32)}
 .crewlead{background:var(--gold-soft);border-radius:8px;padding:6px 10px;margin:10px 0 4px;display:flex;gap:6px;align-items:baseline;flex-wrap:wrap}
@@ -384,7 +397,8 @@ select.warnsel{border-color:var(--red)}
   .rrow,.trow{grid-template-columns:1fr 1fr;gap:6px 10px}
   .rrow.rhead,.trow.thead{display:none}
   .rname,.tname{grid-column:1/-1}
-  .trow.playrow,.trow.overrow,.trow.actrow{grid-template-columns:1fr 1fr}.playrow .pname{grid-column:1/-1}.playrow .tname{grid-column:auto}
+  .trow.playrow,.trow.overrow,.trow.actrow{grid-template-columns:1fr 1fr}
+  .dm-row{grid-template-columns:70px minmax(0,1fr) 34px}.dm-row select{grid-column:2}.dm-row .dm-n{grid-column:2}.playrow .pname{grid-column:1/-1}.playrow .tname{grid-column:auto}
   .rcell[data-label]::before,.trow>[data-label]::before{content:attr(data-label);display:block;font-size:12px;color:var(--muted);width:100%}
   .rcell{flex-wrap:wrap}
   .rcell .ph{display:none}
@@ -524,6 +538,28 @@ eure LOS-Leitung`],
     entfernt:[`Libanon on Stage ${y.year}: Deine Abmeldung`,`Hallo ${v},\n\nschade, dass du dieses Jahr doch nicht dabei sein kannst. Wir haben dich bei Libanon on Stage ${y.year} ausgetragen – dein Zugang zu LOS Backstage ist damit beendet.\n\nWenn sich doch noch etwas ändert, melde dich einfach bei uns. Zu den Vorstellungen bist du natürlich herzlich eingeladen.\n\nViele Grüße,\neure LOS-Leitung`],
     abgesagt:[`Libanon on Stage ${y.year}: Deine Anmeldung`,`Hallo ${v},\n\nvielen Dank für deine Anmeldung und dein Interesse an Libanon on Stage. Leider können wir dir dieses Jahr keinen Platz anbieten. Wir freuen uns, wenn du es nächstes Jahr wieder versuchst – und zu unseren Vorstellungen bist du natürlich herzlich eingeladen.\n\nViele Grüße,\neure LOS-Leitung`]}[r.status==='abgesagt'&&r.removedAt?'entfernt':r.status==='Warteliste'&&r.backToWait?'zurWarteliste':r.status];
   return T&&r.email?`mailto:${encodeURIComponent(r.email)}?subject=${encodeURIComponent(T[0])}&body=${encodeURIComponent(T[1])}`:'';}
+/* Mail ans Team: Leitung ins CC, alle anderen ins BCC (eine Person: direkt an sie) */
+function mailList(ps){ const isL=p=>/^leitung/.test(p.access||'')||crewOf(p)?.g==='leitung';
+  const cc=[...new Set(ps.filter(isL).flatMap(p=>mails(p.email)))], bcc=[...new Set(ps.filter(p=>!isL(p)).flatMap(p=>mails(p.email)))].filter(m=>!cc.includes(m));
+  return {cc,bcc,all:[...cc,...bcc],none:ps.filter(p=>!mails(p.email).length).map(p=>p.name)}; }
+function copyAddrs(list){ if(!list.length){toast('Keine Adressen vorhanden.');return}
+  const txt=list.join('; ');
+  const done=()=>toast(`${list.length} Adressen kopiert – im Mailprogramm ins BCC einfügen.`);
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done,()=>window.prompt('Adressen kopieren (Strg + C):',txt)); else window.prompt('Adressen kopieren (Strg + C):',txt); }
+const MAIL_HINT='⚠️‼️ MAIL VERFASSEN NICHT VERGESSEN!! ‼️⚠️';
+function teamMail(ps){ if(!ps.length){toast('Bitte erst Personen auswählen.');return}
+  const {cc,bcc,none}=mailList(ps), y=Y();
+  if(!cc.length&&!bcc.length){toast('Keine der ausgewählten Personen hat eine E-Mail-Adresse.');return}
+  const single=cc.length+bcc.length===1;
+  const to=single?[...cc,...bcc]:[]; const q=[];
+  if(!single&&cc.length) q.push('cc='+encodeURIComponent(cc.join(',')));
+  const sub='subject='+encodeURIComponent(`Libanon on Stage ${y.year}: `), body='body='+encodeURIComponent(`${MAIL_HINT}\n\n\n\nViele Grüße\neure LOS-Leitung`);
+  const withBcc=`mailto:${to.map(encodeURIComponent).join(',')}?${[...q,...(!single&&bcc.length?['bcc='+encodeURIComponent(bcc.join(','))]:[]),sub,body].join('&')}`;
+  const open=h=>{const a=document.createElement('a'); a.href=h; a.target='_blank'; a.rel='noopener'; document.body.appendChild(a); a.click(); a.remove();};
+  const warn=none.length?` Ohne Adresse: ${none.join(', ')}.`:'';
+  if(withBcc.length<=1900){ open(withBcc); if(warn) toast(warn.trim()); return; }
+  ask(`Das sind ${bcc.length} Adressen – zu viele für einen Mail-Link, manche Mailprogramme schneiden sie ab. Die BCC-Adressen werden kopiert; füge sie im Mailprogramm mit Strg + V ins BCC ein.${warn}`,'Kopieren & Mail öffnen',()=>{
+    copyAddrs(bcc); open(`mailto:?${[...q,sub,body].join('&')}`); }); }
 function openMail(r){const h=mailHref(r); if(!h) return; const a=document.createElement('a'); a.href=h; a.target='_blank'; a.rel='noopener'; document.body.appendChild(a); a.click(); a.remove();}
 function offerMail(r,label){ if(!r.email) return; ask(`${label} an ${r.name} jetzt als Mail öffnen? (Vorlage, du kannst sie vor dem Senden anpassen)`,'Mail öffnen',()=>openMail(r)); }
 
@@ -749,7 +785,7 @@ const auth={state:LIVE?'init':'demo',email:'',name:'',role:'',acc:null,year:null
 let FB=null, db=null, fauth=null;
 const srv=new Map();            // Stand der Datenbank (Pfad → Dokument)
 let base=new Map();             // Stand, aus dem S zuletzt gebaut wurde (Pfad → JSON)
-let remoteDirty=false, saving=0, pointerDown=false;
+let remoteDirty=false, saving=0, pointerDown=false, awaitEcho=false, echoT=null;
 const unsubs=new Map(), waiting=new Set();
 const COLL_TEAM=['people','events','roles','shows','trips','vehicles','stays'];
 const COLL_LEAD=['meetings','tasks','costs','other','registrations','gone'];
@@ -843,6 +879,7 @@ async function persist(){
     for(const p of srv.keys()) if(isDerived(p)&&!(p in want)&&canWrite(p)&&(fresh||gone(p))&&(hasUsers||!p.startsWith('users/'))) ops.push({p,del:true}); }
   base=new Map(Object.entries(want).filter(([p])=>!isDerived(p)).map(([p,d])=>[p,stable(d)]));
   if(!ops.length) return true;
+  awaitEcho=true; clearTimeout(echoT); echoT=setTimeout(()=>{ awaitEcho=false; if(remoteDirty) scheduleApply(); },1500); /* auf die Rückmeldung der eigenen Änderung warten */
   const yr=p=>/^years\/\d+$/.test(p), rank=o=>o.del?(yr(o.p)?3:2):(yr(o.p)?0:1);
   ops.sort((a,b)=>rank(a)-rank(b));
   saving++; updSave();
@@ -886,6 +923,7 @@ function renderKeep(){
 function applyRemote(force){
   if(!LIVE||!remoteDirty||auth.seeding) return; if(!force&&busy()) return;
   if(!['ready','setup','noyear'].includes(auth.state)) return;
+  if(!force&&awaitEcho) return; /* eigene Änderung ist unterwegs: erst ihre Rückmeldung abwarten, sonst würde ein älterer Stand sie überschreiben */
   remoteDirty=false;
   const hasYears=[...srv.keys()].some(k=>/^years\/\d+$/.test(k));
   if(!hasYears&&auth.state==='ready'&&Date.now()-(auth.setupAt||0)<15000){ remoteDirty=true; return; } /* gerade eingerichtet: Daten sind unterwegs */
@@ -908,13 +946,13 @@ function fixUi(){
   else { if(!S.years[ui.year]) ui.year=ks.find(k=>!S.years[k].archived)||ks[0];
     if(!auth.meSet&&pids[ui.year]){ ui.me=pids[ui.year]; auth.meSet=true; } }
   const y=Y(); if(!y) return;
-  const pd=planDates(); if(!pd.includes(ui.planDate)) ui.planDate=pd.find(d=>d>=todayIso())||pd[0]||todayIso();
+  const pd=planDates(); if(!ui.planDate) ui.planDate=pd.find(d=>d>=todayIso())||pd[0]||todayIso();
   if(!y.trips.some(t=>t.id===ui.trip)) ui.trip=y.trips[0]?.id;
   if(ui.openShow&&!y.shows.some(s=>s.id===ui.openShow)) ui.openShow=y.shows[0]?.id||'';
   if(!person(ui.me)) ui.me=(y.people.find(p=>ROLE_OF(p.access)==='ensemble')||y.people[0]||{}).id||'';
 }
 
-const APP_VERSION='2026-10-20c';
+const APP_VERSION='2026-10-23';
 /* Verbindung, Login, Abos */
 async function liveInit(){
   try{
@@ -959,7 +997,7 @@ function startData(){
   subDoc('app/about');
 }
 function arrived(key){
-  waiting.delete(key); remoteDirty=true;
+  waiting.delete(key); remoteDirty=true; awaitEcho=false;
   if(auth.state==='loading'){ if(!waiting.size){ auth.state='ready'; applyRemote(true); afterReady(); } }
   else scheduleApply();
 }
@@ -1011,13 +1049,14 @@ function sendLink(){
     .catch(e=>{ auth.error=loginErr(e); })
     .finally(()=>{ auth.linkBusy=false; render(); });
 }
-function finishLink(m){
+function finishLink(m,href){
   auth.linking=true; auth.linkAsk=false; auth.state='checking'; render();
-  FB.au.signInWithEmailLink(fauth,m.trim().toLowerCase(),location.href)
+  FB.au.signInWithEmailLink(fauth,m.trim().toLowerCase(),href||location.href)
     .then(()=>{ lsSet('los-login-email',''); cleanUrl(); })
     .catch(e=>{ cleanUrl(); auth.error=loginErr(e); auth.state='login'; render(); })
     .finally(()=>{ auth.linking=false; });
 }
+const isStandalone=()=>{try{return navigator.standalone===true||matchMedia('(display-mode: standalone)').matches}catch(_){return false}};
 function logout(){ FB.au.signOut(fauth).then(()=>location.reload()); }
 
 /* Erste Einrichtung (leere Datenbank) */
@@ -1113,6 +1152,8 @@ function authScreen(){
       <button class="btn primary" data-act="login" style="width:100%;padding:12px">Mit Google anmelden</button>
       <div class="ordiv"><span>oder ohne Google-Konto</span></div>
       ${auth.linkSent?`<div class="youbox" style="margin:0"><b>Mail ist unterwegs.</b><p class="small" style="margin:6px 0 0">Wir haben einen Anmelde-Link an <b>${esc(auth.linkSent)}</b> geschickt. Öffne ihn am besten auf diesem Gerät. Nichts angekommen? Schau im Spam-Ordner nach.</p>
+        ${isStandalone()?`<p class="small" style="margin:10px 0 4px"><b>Du nutzt LOS Backstage als App?</b> Dann öffnet sich der Link im Browser statt hier. So geht's: In der Mail den Link <b>lange drücken → „Link kopieren“</b> und hier einfügen:</p>
+        <input type="url" id="li-paste" placeholder="Link aus der Mail einfügen" aria-label="Anmelde-Link einfügen" style="width:100%"><button class="btn primary" data-act="link-paste" style="width:100%;padding:10px;margin-top:6px">Mit diesem Link anmelden</button>`:''}
         <button class="btn ghost" data-act="link-again" style="margin-top:8px;padding:4px 10px">Andere Adresse / neuer Link</button></div>`
       :`<label class="f">Deine E-Mail-Adresse<input type="email" id="li-mail" autocomplete="email" inputmode="email" placeholder="name@beispiel.de" value="${esc(lsGet('los-login-email'))}"></label>
       <button class="btn" data-act="link-send" style="width:100%;padding:10px;margin-top:8px" ${auth.linkBusy?'disabled':''}>${auth.linkBusy?'Wird verschickt …':'Anmelde-Link per Mail schicken'}</button>
@@ -1197,6 +1238,39 @@ function clusters(evs){
   return out;
 }
 const planDates=()=>Object.keys(Y().days).concat(Y().events.map(e=>e.date)).filter((v,i,a)=>a.indexOf(v)===i).sort();
+/* Tagesauswahl: ‹ Liste › – Gruppen: Probewoche, Tour-Wochenenden, weitere Tage */
+const DAY_KINDS=[['probe','Probewoche'],['tour','Tour'],['sonst','Sonstiger Tag']];
+function dayGroups(dates,y){ const out=[]; let cur=null, prev=null, tn=0;
+  dates.forEach(d=>{ const k=y.days[d]?.kind==='probe'?'probe':y.days[d]?.kind==='tour'?'tour':'sonst';
+    const gap=prev&&(d0(d)-d0(prev))/864e5>2;
+    if(!cur||cur.k!==k||(k!=='sonst'&&gap)){ cur={k,label:k==='probe'?'Probewoche':k==='tour'?'Tour-Wochenende '+(++tn):'Weitere Tage',dates:[]}; out.push(cur); }
+    cur.dates.push(d); prev=d; });
+  out.forEach(g=>{ if(g.k!=='sonst'&&g.dates.length>1) g.label+=` · ${fDate(g.dates[0],{day:'numeric',month:'numeric'})}–${fDate(g.dates[g.dates.length-1],{day:'numeric',month:'numeric'})}`; });
+  return out; }
+function dayNav(cur,ctx){
+  const y=Y(), t=todayIso(), dates=planDates();
+  const seq=[...new Set([...dates,cur])].sort(), i=seq.indexOf(cur), prev=seq[i-1], next=seq[i+1];
+  const lab=d=>`${fDate(d)}${y.days[d]?.title?' · '+y.days[d].title:''}`;
+  return `<div class="daynav" role="group" aria-label="Tag wählen">
+    <button class="navb" data-act="daystep" data-ctx="${ctx}" data-d="${prev||''}" ${prev?'':'disabled'} aria-label="Einen Tag zurück">‹</button>
+    <select data-act="daypick" data-ctx="${ctx}" aria-label="Tag auswählen"><option value="${t}" ${cur===t?'selected':''}>Heute · ${fDate(t)}</option>
+      ${dayGroups(dates,y).map(g=>`<optgroup label="${esc(g.label)}">${g.dates.map(d=>`<option value="${d}" ${d===cur&&cur!==t?'selected':''}>${esc(lab(d))}</option>`).join('')}</optgroup>`).join('')}
+      ${!dates.includes(cur)&&cur!==t?`<option value="${cur}" selected>${esc(fDate(cur))}</option>`:''}</select>
+    <button class="navb" data-act="daystep" data-ctx="${ctx}" data-d="${next||''}" ${next?'':'disabled'} aria-label="Einen Tag vor">›</button></div>`;
+}
+const setDay=(ctx,d)=>{ if(!d) return; if(ctx==='my') ui.myDate=d===todayIso()?null:d; else { ui.planDate=d; ui.evForm=null; } };
+function dayManager(y){
+  const dates=Object.keys(y.days).sort();
+  const kindSel=(attrs,cur)=>`<select ${attrs}>${DAY_KINDS.map(([k,l])=>`<option value="${k}" ${cur===k?'selected':''}>${l}</option>`).join('')}</select>`;
+  return `<section class="panel daymgr"><div class="row"><h3 style="margin:0">Tage verwalten</h3><button class="iconbtn" data-act="daymgr" aria-label="Schließen">✕</button></div>
+    <p class="small muted" style="margin:4px 0 10px">Diese Tage sieht das ganze Team im Ablaufplan und unter „Mein Tag“. Probentage kann auch die Regie planen. Löschen entfernt auch die Termine dieses Tages.</p>
+    <div class="dm-new"><label class="f">Von<input type="date" id="nd-from" value="${esc(ui.planDate||'')}"></label><label class="f">Bis (optional)<input type="date" id="nd-to"></label>
+      <label class="f dm-title">Bezeichnung<input type="text" id="nd-title" placeholder="z. B. Tour-Wochenende 2"></label><label class="f">Art${kindSel('id="nd-kind"','tour')}</label><button class="btn primary" data-act="day-add">Hinzufügen</button></div>
+    <p class="small muted" style="margin:-6px 0 10px">Mehrere Tage am Stück: „Von“ und „Bis“ wählen – alle bekommen dieselbe Bezeichnung und Art. Für einen einzelnen Tag „Bis“ leer lassen. Tage, die es schon gibt, bleiben unverändert.</p>
+    ${dayGroups(dates,y).map(g=>`<div class="dm-group"><div class="small muted dm-gl">${esc(g.label)}</div>${g.dates.map(d=>{const n=y.events.filter(e=>e.date===d).length;
+      return `<div class="dm-row"><span class="dm-d">${fDate(d)}</span><input type="text" value="${esc(y.days[d].title||'')}" data-act="day-title" data-d="${d}" aria-label="Bezeichnung ${fDate(d)}">${kindSel(`data-act="day-kind" data-d="${d}" aria-label="Art ${fDate(d)}"`,y.days[d].kind||'sonst')}<span class="small muted dm-n">${n?n+' Termin'+(n>1?'e':''):''}</span><button class="iconbtn" data-act="day-del" data-d="${d}" title="Tag löschen" aria-label="${fDate(d)} löschen">✕</button></div>`;}).join('')}</div>`).join('')||'<p class="small muted">Noch keine Tage angelegt.</p>'}
+  </section>`;
+}
 const canEditDay=date=>{const k=Y().days[date]?.kind; return canEdit()||(isRegie()&&k==='probe');};
 
 function evCard(e,pid,editable){
@@ -1264,7 +1338,8 @@ function bottomNav(){
   return `<nav class="bottomnav" aria-label="Hauptnavigation">${main.map(id=>{const v=VIEWS.find(x=>x.id===id);
     return `<button data-act="nav" data-v="${id}" ${ui.view===id?'aria-current="page"':''}><svg viewBox="0 0 24 24" aria-hidden="true">${ICON[id]}</svg>${v.label}</button>`}).join('')}
     <button data-act="sheet" ${!main.includes(ui.view)?'aria-current="page"':''}><svg viewBox="0 0 24 24" aria-hidden="true">${ICON.more}</svg>Mehr</button></nav>
-  <div class="sheet ${ui.sheet?'open':''}" data-act="sheet-close"><div class="inner" data-stop>${visibleViews().filter(v=>!main.includes(v.id)).map(v=>`<button data-act="nav" data-v="${v.id}">${v.label}</button>`).join('')}</div></div>`;
+  <div class="sheet ${ui.sheet?'open':''}" data-act="sheet-close"><div class="inner" data-stop>${visibleViews().filter(v=>!main.includes(v.id)).map(v=>`<button data-act="nav" data-v="${v.id}">${v.label}</button>`).join('')}
+    ${LIVE?`<div class="sheet-acc"><span class="small muted">Angemeldet als ${esc(auth.email)}</span><button data-act="logout" class="sheet-logout">Abmelden</button></div>`:''}</div></div>`;
 }
 function badge(id){
   const y=Y();
@@ -1390,7 +1465,7 @@ function vMyDay(){
   const nextD=dates.find(d=>d>todayIso());
   const head=`<h1>${regie?'Heute':'Mein Tag'}</h1><p class="lede">${regie?'Der Tagesablauf für alle. Den Probenplan legt ihr unter „Ablaufplan“ fest.':'Der heutige Tag auf einen Blick. Was dich betrifft, ist rot markiert.'}</p>
   ${isLeit()?`<div class="row" style="justify-content:flex-start;margin-bottom:12px"><label class="f">So sieht es aus für<select data-act="me">${y.people.map(x=>`<option value="${x.id}" ${x.id===ui.me?'selected':''}>${esc(x.name)}</option>`).join('')}</select></label></div>`:''}
-  <div class="daypills" role="group" aria-label="Tag wählen"><button data-act="mydate" data-d="" aria-pressed="${!ui.myDate}">Heute</button>${dates.map(d=>`<button data-act="mydate" data-d="${d}" aria-pressed="${ui.myDate===d}">${fDate(d)}</button>`).join('')}</div>`;
+  ${dayNav(date,'my')}`;
   if(!has) return head+`<div class="empty"><p style="margin:0 0 6px;font-weight:600;color:var(--ink)">${date===todayIso()?'Heute steht nichts an.':'An diesem Tag steht nichts an.'}</p>${nextD?`Nächster Termin: ${esc(y.days[nextD]?.title||'')} am ${fLong(nextD)}.<br><button class="btn" data-act="mydate" data-d="${nextD}" style="margin-top:10px">Zum ${fDate(nextD,{day:'numeric',month:'numeric'})}</button>`:''}</div>`;
   const info=y.days[date]||{};
   let personal='';
@@ -1410,23 +1485,52 @@ function vMyDay(){
 
 /* ===================== Ablaufplan ===================== */
 function vPlan(){
-  const y=Y(); const dates=planDates();
-  if(!dates.length) return `<h1>Ablaufplan</h1>${empty('Für dieses Jahr ist kein Ablauf hinterlegt.')}`;
-  if(!dates.includes(ui.planDate)) ui.planDate=dates[0];
+  const y=Y(); const dates=planDates(), L=canEdit();
+  if(!dates.length&&!L) return `<h1>Ablaufplan</h1>${empty('Für dieses Jahr ist kein Ablauf hinterlegt.')}`;
+  if(!ui.planDate) ui.planDate=dates.find(d=>d>=todayIso())||dates[0]||todayIso();
   const date=ui.planDate, info=y.days[date]||{};
   const ed=canEditDay(date);
   const pid=ui.role==='ensemble'?ui.me:null;
-  const grp=k=>dates.filter(d=>(y.days[d]?.kind||'tour')===k);
-  const pills=(arr)=>arr.map(d=>`<button data-act="plandate" data-d="${d}" aria-pressed="${d===date}">${fDate(d)}</button>`).join('');
+  const evs=y.events.filter(e=>e.date===date&&(!pid||needs(e,pid)));
   const who=isLeit()?'Die Leitung plant alle Tage; die Regie und Regieassistenz planen die Probentage mit.':isRegie()?'Ihr könnt die Probentage selbst planen. Mehrere Termine zur gleichen Zeit sind möglich.':'Der ganze Tag für alle – deine Termine sind rot markiert.';
   return `<h1>Ablaufplan</h1><p class="lede">${who}</p>
-  <div class="small muted" style="margin-bottom:4px">Probewoche</div><div class="daypills">${pills(grp('probe'))}</div>
-  <div class="small muted" style="margin-bottom:4px">Tour</div><div class="daypills">${pills(grp('tour'))}</div>
-  <div class="row" style="margin-bottom:12px"><div><h2 style="margin:0">${fLong(date)}</h2><div class="muted">${esc(info.title||'')}</div></div>
-    ${ed&&!ui.evForm?`<button class="btn primary" data-act="ev-new">Termin hinzufügen</button>`:''}</div>
+  ${dayNav(date,'plan')}
+  ${L&&ui.dayMgr?dayManager(y):''}
+  <div class="row" style="margin-bottom:12px"><div><h2 style="margin:0">${fLong(date)}</h2><div class="muted">${esc(info.title||(dates.includes(date)?'':'Kein Probe- oder Tourtag'))}</div></div>
+    <div class="row" style="gap:8px">${evs.length?calBtns('day',date):''}${L&&!ui.dayMgr?`<button class="btn" data-act="daymgr">Tage verwalten</button>`:''}${ed&&!ui.evForm?`<button class="btn primary" data-act="ev-new">Termin hinzufügen</button>`:''}</div></div>
   ${ed?evForm():''}
   ${dayPlan(date,pid,{editable:ed})}`;
 }
+
+/* ===================== Kalender (.ics / Google) ===================== */
+const isTime=t=>/^\d{1,2}:\d{2}$/.test(String(t||'').trim());
+const pad2=n=>String(n).padStart(2,'0');
+function calSpan(date,from,to,defMin){ if(!isTime(from)) return {allDay:true,s:date.replace(/-/g,''),e:(()=>{const x=d0(date); x.setDate(x.getDate()+1); return `${x.getFullYear()}${pad2(x.getMonth()+1)}${pad2(x.getDate())}`;})()};
+  const [h,m]=from.trim().split(':').map(Number); let st=new Date(+date.slice(0,4),+date.slice(5,7)-1,+date.slice(8,10),h,m), en;
+  if(isTime(to)){ const [h2,m2]=to.trim().split(':').map(Number); en=new Date(st); en.setHours(h2,m2); if(en<=st) en.setDate(en.getDate()+1); } else en=new Date(st.getTime()+defMin*60000);
+  const f=x=>`${x.getFullYear()}${pad2(x.getMonth()+1)}${pad2(x.getDate())}T${pad2(x.getHours())}${pad2(x.getMinutes())}00`; return {allDay:false,s:f(st),e:f(en)}; }
+function calItems(kind,key){ const y=Y();
+  if(kind==='show'||kind==='shows'){ const list=kind==='show'?y.shows.filter(x=>x.id===key):[...y.shows].sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+    return list.map(x=>({uid:`los-${y.year}-show-${x.id}`,...calSpan(x.date,x.time,'',180),title:`Libanon on Stage: ${y.play} – ${x.city}`,loc:[x.venue,x.addr].filter(Boolean).join(', '),desc:[`Vorstellung ${y.play}`,x.venue,x.getIn&&x.getIn!=='—'?'Get-in: '+x.getIn:''].filter(Boolean).join(' · ')})); }
+  const pid=ui.role==='ensemble'?meId():null;
+  return y.events.filter(e=>e.date===key&&(!pid||needs(e,pid))).map(e=>({uid:`los-${y.year}-ev-${e.id}`,...calSpan(e.date,e.from,e.to,60),title:`LOS: ${e.title}`,loc:e.place||'',desc:[y.days[e.date]?.title,e.note].filter(Boolean).join(' · ')})); }
+const icsEsc=t=>String(t||'').replace(/\\/g,'\\\\').replace(/[;,]/g,m=>'\\'+m).replace(/\r?\n/g,'\\n');
+function icsText(items){ const now=new Date(), st=`${now.getUTCFullYear()}${pad2(now.getUTCMonth()+1)}${pad2(now.getUTCDate())}T${pad2(now.getUTCHours())}${pad2(now.getUTCMinutes())}00Z`;
+  const L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Libanon on Stage//LOS Backstage//DE','CALSCALE:GREGORIAN','METHOD:PUBLISH',
+    'BEGIN:VTIMEZONE','TZID:Europe/Berlin','BEGIN:DAYLIGHT','TZOFFSETFROM:+0100','TZOFFSETTO:+0200','TZNAME:CEST','DTSTART:19700329T020000','RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU','END:DAYLIGHT',
+    'BEGIN:STANDARD','TZOFFSETFROM:+0200','TZOFFSETTO:+0100','TZNAME:CET','DTSTART:19701025T030000','RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU','END:STANDARD','END:VTIMEZONE'];
+  items.forEach(i=>{ L.push('BEGIN:VEVENT','UID:'+i.uid+'@libanon-on-stage','DTSTAMP:'+st,
+    i.allDay?'DTSTART;VALUE=DATE:'+i.s:'DTSTART;TZID=Europe/Berlin:'+i.s, i.allDay?'DTEND;VALUE=DATE:'+i.e:'DTEND;TZID=Europe/Berlin:'+i.e,
+    'SUMMARY:'+icsEsc(i.title)); if(i.loc) L.push('LOCATION:'+icsEsc(i.loc)); if(i.desc) L.push('DESCRIPTION:'+icsEsc(i.desc)); L.push('END:VEVENT'); });
+  L.push('END:VCALENDAR'); return L.join('\r\n')+'\r\n'; }
+function gcalUrl(i){return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(i.title)}&dates=${i.s}/${i.e}&ctz=Europe/Berlin${i.loc?'&location='+encodeURIComponent(i.loc):''}${i.desc?'&details='+encodeURIComponent(i.desc):''}`;}
+function calDownload(kind,key){ const items=calItems(kind,key); if(!items.length){toast('Nichts zum Eintragen.');return}
+  const txt=icsText(items), name=kind==='shows'?`LOS-${Y().year}-Vorstellungen.ics`:kind==='show'?`LOS-Vorstellung.ics`:`LOS-${key}.ics`;
+  if(/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)){ location.href='data:text/calendar;charset=utf-8,'+encodeURIComponent(txt); return; }
+  try{ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([txt],{type:'text/calendar;charset=utf-8'})); a.download=name; document.body.appendChild(a); a.click(); a.remove(); toast(items.length>1?`${items.length} Termine – Datei öffnen, um sie in den Kalender zu übernehmen.`:'Datei öffnen, um den Termin in den Kalender zu übernehmen.'); }catch(e){ toast('Kalenderdatei konnte nicht erstellt werden.'); } }
+function calBtns(kind,key){ const items=calItems(kind,key); if(!items.length) return '';
+  const g=items.length===1?`<a class="btn ghost calb" href="${esc(gcalUrl(items[0]))}" target="_blank" rel="noopener" title="In Google Kalender eintragen (Android)">Google</a>`:'';
+  return `<span class="calbtns"><button class="btn calb" data-act="cal" data-k="${kind}" data-key="${esc(key||'')}" title="Als Kalendertermin speichern (iPhone, Outlook, Samsung)">📅 ${kind==='shows'?'Alle Vorstellungen in den Kalender':kind==='day'?'In den Kalender':'Kalender'}</button>${g}</span>`; }
 
 /* ===================== Tour ===================== */
 const CHECK=[['vertrag','Vertrag'],['technik','Technik & Zeiten abgestimmt'],['getin','Get-in-Zeit fix'],['parken','Parken LKW & Bullis'],['unterkunft','Unterkünfte über OVler'],['verpflegung','Verpflegung organisiert']];
@@ -1440,17 +1544,19 @@ function vTour(){
 }
 function tourShows(y){
   const ed=canEdit();
-  if(!isLeit()) return `<ul class="list panel" style="padding:4px 18px">${y.shows.map(s=>`<li class="row"><div><b>${fDate(s.date)} · ${esc(s.city)}</b><div class="small muted">${esc(s.venue)}${s.addr?' · '+esc(s.addr):''}</div></div><span class="num" style="font-size:20px">${s.time} Uhr</span></li>`).join('')}</ul>`;
+  if(!isLeit()) return `${y.shows.length?`<div class="row" style="justify-content:flex-start;margin-bottom:10px">${calBtns('shows')}<span class="small muted">Google Kalender (Android): bei der einzelnen Vorstellung auf „Google“.</span></div>`:''}
+    <ul class="list panel" style="padding:4px 18px">${y.shows.map(s=>`<li class="row"><div><b>${fDate(s.date)} · ${esc(s.city)}</b><div class="small muted">${esc(s.venue)}${s.addr?' · '+esc(s.addr):''}</div></div><div class="row" style="gap:8px"><span class="num" style="font-size:20px">${s.time} Uhr</span>${calBtns('show',s.id)}</div></li>`).join('')||'<li class="muted">Noch keine Spielorte eingetragen.</li>'}</ul>`;
   const venues=[...new Map(Object.values(S.years).flatMap(yy=>yy.shows).filter(s=>s.venue&&s.venue!=='Beispielwert').map(s=>[s.venue,s])).values()];
   return `${ed&&LIVE?`<div class="srcbar"><span>Tickets online: <b>Regiondo</b> · ${y.regiondo?`zuletzt abgeglichen ${new Date(y.regiondo.at).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})} (${y.regiondo.matched} Vorstellungen gefunden)`:'noch nicht abgeglichen'}</span><button class="btn" data-act="rg-sync">Jetzt abgleichen</button></div>`:''}
   ${ed?`<div class="row" style="justify-content:flex-start;margin-bottom:14px"><button class="btn primary" data-act="show-new">Spielort hinzufügen</button>
     <label class="f">… oder aus der Kartei übernehmen<select data-act="show-from"><option value="">Spielort wählen</option>${venues.map(v=>`<option value="${esc(v.venue)}">${esc(v.city)} – ${esc(v.venue)}</option>`).join('')}</select></label></div>`:''}
+  ${y.shows.length?`<div style="margin:-4px 0 10px">${calBtns('shows')}</div>`:''}
   <ul class="list panel" style="padding:4px 18px">${y.shows.map(s=>{const done=CHECK.filter(([k])=>s.check[k]).length;const open=ui.openShow===s.id;const editing=ui.editShow===s.id;
     return `<li><div class="row"><button class="btn ghost" data-act="openshow" data-s="${s.id}" aria-expanded="${open}" style="border:0;padding:0;text-align:left;font-weight:500">
       <span class="num" style="font-size:20px">${fDate(s.date)} · ${esc(s.city)}</span><br><span class="small muted">${esc(s.venue)} · ${s.time} Uhr</span></button>
       ${y.archived?'':`<span class="tag ${done===CHECK.length?'green':done>=3?'gold':'red'}">${done}/${CHECK.length} geklärt</span>`}</div>
     ${open&&!y.archived?(editing?showForm(s):`<div class="grid2" style="margin-top:14px">
-      <div><h3>Checkliste</h3>${CHECK.map(([k,l])=>`<label style="display:flex;gap:8px;padding:5px 0;align-items:center"><input type="checkbox" data-act="check" data-s="${s.id}" data-k="${k}" ${s.check[k]?'checked':''} ${ed?'':'disabled'}> ${l}</label>`).join('')}</div>
+      <div><div style="margin-bottom:10px">${calBtns('show',s.id)}</div><h3>Checkliste</h3>${CHECK.map(([k,l])=>`<label style="display:flex;gap:8px;padding:5px 0;align-items:center"><input type="checkbox" data-act="check" data-s="${s.id}" data-k="${k}" ${s.check[k]?'checked':''} ${ed?'':'disabled'}> ${l}</label>`).join('')}</div>
       <div class="stack">
         ${[['Adresse',s.addr],['Kontakt Spielort',s.contact],['Get-in',s.getIn],['Technik',s.tech],['Parken',s.parking],['OVler vor Ort',s.ovler],['Plätze / Ticketpreis',s.cap+' Plätze · '+eur(s.price)]].map(([k,v])=>`<div class="fact"><div class="k">${k}</div><div>${esc(v||'— noch offen')}</div></div>`).join('')}
         ${ed?`<div class="fact"><div class="k">Abendkasse nach der Vorstellung</div><div class="row" style="justify-content:flex-start">
@@ -1911,11 +2017,19 @@ function teamOver(y){
   const actCell=p=>{ if(isDirector(p,y)) return '<span class="small muted">— (Regisseur)</span>'; const on=acts(p,y), w=wishLabel(p,y);
     const sub=w?`<div class="small muted">${esc(w)}</div>`:'';
     return ed?`<select data-act="setacts" data-p="${p.id}" aria-label="Schauspiel ${esc(p.name)}" class="${on?'onsel':''}"><option value="ja" ${on?'selected':''}>Ja</option><option value="nein" ${on?'':'selected'}>Nein</option></select>${sub}`:`${on?'Ja':'Nein'}${sub}`; };
-  return `<div class="chips" style="margin:-4px 0 10px"><button class="crewchip" data-act="overfilter" data-f="alle" aria-pressed="${f==='alle'}">Alle ${y.people.length}</button>${none.length||f==='ohne'?`<button class="crewchip" data-act="overfilter" data-f="ohne" aria-pressed="${f==='ohne'}">Ohne Gewerk <span class="warnline">${none.length}</span></button>`:''}<button class="crewchip" data-act="overfilter" data-f="acts" aria-pressed="${f==='acts'}">Schauspiel: Ja <span class="muted">${actN}</span></button>${chips}</div>
+  ui.mailSel=ui.mailSel||{}; Object.keys(ui.mailSel).forEach(id=>{ if(!y.people.some(p=>p.id===id)) delete ui.mailSel[id]; });
+  const nSel=Object.keys(ui.mailSel).length, allIn=list.length&&list.every(p=>ui.mailSel[p.id]);
+  const mailbar=ed?`<div class="mailbar"><span>✉ <b>${nSel?nSel+' ausgewählt':'Mail ans Team'}</b></span>
+    <button class="btn ${nSel?'primary':''}" data-act="mail-sel" ${nSel?'':'disabled'}>Mail an Ausgewählte</button>
+    <button class="btn" data-act="mail-all">Mail an alle (${y.people.length})</button>
+    <button class="btn ghost" data-act="mail-copy" title="Adressen in die Zwischenablage – z. B. für sehr viele Empfänger">Adressen kopieren</button>
+    ${nSel?'<button class="btn ghost" data-act="msel-none">Auswahl aufheben</button>':''}
+    <span class="small muted">Häkchen links setzen · über die Filter oben z. B. ein ganzes Gewerk auswählen · Leitung kommt ins CC, alle anderen ins BCC</span></div>`:'';
+  return `${mailbar}<div class="chips" style="margin:-4px 0 10px"><button class="crewchip" data-act="overfilter" data-f="alle" aria-pressed="${f==='alle'}">Alle ${y.people.length}</button>${none.length||f==='ohne'?`<button class="crewchip" data-act="overfilter" data-f="ohne" aria-pressed="${f==='ohne'}">Ohne Gewerk <span class="warnline">${none.length}</span></button>`:''}<button class="crewchip" data-act="overfilter" data-f="acts" aria-pressed="${f==='acts'}">Schauspiel: Ja <span class="muted">${actN}</span></button>${chips}</div>
   <p class="small muted" style="margin:0 0 10px">Jede Person ist in genau einem Gewerk – beim Zulassen übernommen aus der Anmeldung, hier jederzeit änderbar. „Schauspiel“ kommt aus dem Formular (Haupt- oder Nebenrolle angekreuzt); wer trotzdem auf die Bühne soll, bekommt hier ein Ja und lässt sich dann besetzen. Entfernen geht unter „Anmeldungen → Zugelassen“.</p>
-  ${list.length?`<section class="panel" style="padding:4px 16px"><div class="trow thead overrow"><div>Name</div><div>Gewerk</div><div>Schauspiel</div><div>Hinweis</div></div>
+  ${list.length?`<section class="panel" style="padding:4px 16px"><div class="trow thead overrow"><div>${ed?`<input type="checkbox" data-act="msel-all" ${allIn?'checked':''} aria-label="Alle in dieser Ansicht auswählen" style="margin-right:8px">`:''}Name</div><div>Gewerk</div><div>Schauspiel</div><div>Hinweis</div></div>
   ${list.map(p=>{const r=regOf(p), c=crewOf(p,y); const wish=r?(r.wishes||[]).join(', '):'';
-    return `<div class="trow overrow"><div class="tname">${ava(p.id,30)}<div><b>${esc(p.name)}</b>${wish?`<div class="small muted">Wunsch: ${esc(wish)}</div>`:''}</div></div>
+    return `<div class="trow overrow"><div class="tname">${ed?`<input type="checkbox" data-act="msel" data-p="${p.id}" ${ui.mailSel[p.id]?'checked':''} aria-label="${esc(p.name)} auswählen">`:''}${ava(p.id,30)}<div><b>${esc(p.name)}</b>${wish?`<div class="small muted">Wunsch: ${esc(wish)}</div>`:''}</div></div>
     <div data-label="Gewerk">${ed?`<select data-act="setcrew" data-p="${p.id}" aria-label="Gewerk ${esc(p.name)}" class="${c?'':'warnsel'}">${c?'':'<option value="" selected disabled>— bitte wählen —</option>'}${y.crews.map(x=>`<option value="${x.g}" ${c&&c.g===x.g?'selected':''}>${esc(x.label)}</option>`).join('')}</select>`:esc(c?c.label:'—')}</div>
     <div data-label="Schauspiel">${actCell(p)}</div>
     <div ${hint(p)?'data-label="Hinweis"':''}>${hint(p)}</div></div>`;}).join('')}</section>`:empty(f==='ohne'?'Alle haben ein Gewerk.':'Niemand in dieser Auswahl.')}`;
@@ -1985,6 +2099,7 @@ function vMoney(){
     <li class="row"><span>Abendkasse <span class="small muted">· Spielorte</span></span><b>${eur(m.box)}</b></li>
     <li class="row"><span>Spenden bar</span>${inp('doncash',y.donCash)}</li>
     <li class="row"><span>Spenden online</span>${inp('donon',y.donOnline)}</li>
+    <li class="row"><span>Spendenziel <span class="small muted">· im Dashboard</span></span>${inp('goal',y.goal||0,110)}</li>
     ${y.other.map(o=>`<li class="row"><span>${esc(o.name)}</span>${ed?`<input type="number" min="0" value="${o.amount}" data-act="other" data-id="${o.id}" style="width:96px;text-align:right">`:eur(o.amount)}</li>`).join('')}
     <li class="row"><b>Gesamt</b><b class="num" style="font-size:22px">${eur(m.income)}</b></li></ul>
     </section></div>`;
@@ -2208,11 +2323,12 @@ document.addEventListener('click',e=>{
     case 'cf-yes': {const fn=pendingFn; closeAsk(); if(fn) fn(); return;}
     case 'cf-no': closeAsk(); return;
     case 'login': login(); return;
+    case 'link-paste': {const l=val('li-paste'); if(!l||!FB.au.isSignInWithEmailLink(fauth,l)){ auth.error='Das ist kein gültiger Anmelde-Link. Bitte den ganzen Link aus der Mail kopieren.'; render(); return; } finishLink(auth.linkSent||lsGet('los-login-email'),l); return;}
     case 'link-send': sendLink(); return;
     case 'link-again': auth.linkSent=''; auth.error=''; render(); return;
     case 'link-finish': {const m=mails(val('lm-mail'))[0]; if(!m){auth.error='Bitte die E-Mail-Adresse eingeben.'; render(); return;} auth.error=''; finishLink(m); return;}
     case 'link-cancel': cleanUrl(); auth.linkAsk=false; auth.error=''; auth.state='login'; render(); return;
-    case 'logout': ask('Abmelden?','Abmelden',logout); return;
+    case 'logout': ui.sheet=false; ask('Abmelden? Du bleibst im Team und kannst dich jederzeit wieder anmelden.','Abmelden',logout); return;
     case 'setup-go': runSetup(el.dataset.mode); return;
     case 'fs-save': {const url=val('fs-url'), token=val('fs-token');
       if(url&&!/^https:\/\/script\.google(usercontent)?\.com\//.test(url)){toast('Die Skript-Adresse beginnt mit https://script.google.com/');return}
@@ -2313,6 +2429,24 @@ document.addEventListener('click',e=>{
       if(ui.role==='ensemble') ui.me=LIVE?((person(ui.me)&&ROLE_OF(person(ui.me).access)==='ensemble')?ui.me:(Y().people.find(p=>ROLE_OF(p.access)==='ensemble')||{}).id||ui.me):'p2'; ui.teamTab=isLeit()?'over':ui.role==='ensemble'?'play':'actors'; ui.actTab=''; go(); return;
     case 'reset': if(LIVE) return; S=seed(); save(); ui.fbDone=false; go(); toast('Beispieldaten wiederhergestellt.'); return;
     case 'mydate': ui.myDate=el.dataset.d||null; go(); return;
+    case 'mail-sel': case 'mail-all': teamMail(a==='mail-all'?y.people:y.people.filter(p=>ui.mailSel&&ui.mailSel[p.id])); return;
+    case 'mail-copy': {const ps=Object.keys(ui.mailSel||{}).length?y.people.filter(p=>ui.mailSel[p.id]):y.people; copyAddrs(mailList(ps).all); return;}
+    case 'msel-none': ui.mailSel={}; go(); return;
+    case 'cal': calDownload(el.dataset.k,el.dataset.key); return;
+    case 'daystep': setDay(el.dataset.ctx,el.dataset.d); go(); return;
+    case 'daymgr': ui.dayMgr=!ui.dayMgr; go(); return;
+    case 'day-add': {const iso=/^\d{4}-\d{2}-\d{2}$/, from=val('nd-from'), to=val('nd-to')||from, t=val('nd-title'), k=val('nd-kind')||'tour';
+      if(!iso.test(from)){toast('Bitte ein Datum bei „Von“ wählen.');return}
+      if(!iso.test(to)||to<from){toast('„Bis“ muss am oder nach dem „Von“-Datum liegen.');return}
+      const list=[]; for(let d=new Date(from+'T12:00:00Z'); d.toISOString().slice(0,10)<=to; d.setUTCDate(d.getUTCDate()+1)) list.push(d.toISOString().slice(0,10));
+      if(list.length>60){toast('Höchstens 60 Tage auf einmal.');return}
+      const neu=list.filter(d=>!y.days[d]), alt=list.filter(d=>y.days[d]);
+      if(!neu.length){toast(list.length>1?'Diese Tage gibt es schon – Bezeichnung und Art kannst du in der Liste ändern.':`Den ${fDate(from)} gibt es schon – Bezeichnung und Art kannst du in der Liste ändern.`);return}
+      neu.forEach(d=>{ y.days[d]={title:t||(k==='probe'?'Probewoche':k==='tour'?'Tour':''),kind:k,city:''}; }); ui.planDate=neu[0];
+      commit(neu.length>1?`${neu.length} Tage angelegt (${fDate(neu[0],{day:'numeric',month:'numeric'})}–${fDate(neu[neu.length-1],{day:'numeric',month:'numeric'})}).${alt.length?` ${alt.length} gab es schon – unverändert.`:''}`:`${fLong(neu[0])} ist angelegt.${alt.length?` ${alt.length} gab es schon – unverändert.`:''}`); return;}
+    case 'day-del': {const d=el.dataset.d; const n=y.events.filter(e=>e.date===d).length; const sh=y.shows.filter(x=>x.date===d), tr=y.trips.filter(x=>x.date===d);
+      ask(`${fLong(d)}${y.days[d]?.title?' („'+y.days[d].title+'“)':''} löschen?${n?` ${n} Termin${n>1?'e':''} im Ablaufplan ${n>1?'werden':'wird'} mit gelöscht.`:''}${sh.length||tr.length?` Achtung: An diesem Tag ${sh.length?'ist eine Vorstellung ('+sh.map(x=>x.city).join(', ')+')':''}${sh.length&&tr.length?' und ':''}${tr.length?'eine Fahrt':''} eingetragen – das bleibt unter „Tour“ stehen und muss dort gelöscht werden.`:''}`,'Tag löschen',()=>{
+        delete y.days[d]; y.events=y.events.filter(e=>e.date!==d); if(ui.planDate===d) ui.planDate=''; if(ui.myDate===d) ui.myDate=null; commit('Tag gelöscht.'); }); return;}
     case 'plandate': ui.planDate=el.dataset.d; ui.evForm=null; go(); return;
     case 'tourtab': ui.tourTab=el.dataset.t; ui.editStay=null; go(); return;
     case 'teamtab': ui.teamTab=el.dataset.t; go(); return;
@@ -2457,6 +2591,12 @@ document.addEventListener('change',e=>{
     case 'costplan': y.costs.find(c=>c.id===el.dataset.id).plan=Math.max(0,+v||0); commit('Plan gespeichert – Dashboard aktualisiert.'); return;
     case 'costname': {const n=v.trim(); if(!n){render();return} y.costs.find(c=>c.id===el.dataset.id).name=n; commit('Gespeichert.'); return;}
     case 'doncash': y.donCash=Math.max(0,+v||0); commit('Gespeichert.'); return;
+    case 'msel': ui.mailSel=ui.mailSel||{}; if(el.checked) ui.mailSel[el.dataset.p]=true; else delete ui.mailSel[el.dataset.p]; renderKeep(); return;
+    case 'msel-all': {ui.mailSel=ui.mailSel||{}; const ids=[...document.querySelectorAll('[data-act="msel"]')].map(x=>x.dataset.p); ids.forEach(id=>{ if(el.checked) ui.mailSel[id]=true; else delete ui.mailSel[id]; }); renderKeep(); return;}
+    case 'daypick': setDay(el.dataset.ctx,v); render(); return;
+    case 'day-title': if(y.days[el.dataset.d]){ y.days[el.dataset.d].title=v.trim(); commit(); } return;
+    case 'day-kind': if(y.days[el.dataset.d]){ y.days[el.dataset.d].kind=v; commit(); } return;
+    case 'goal': if(!isLeit()) return; y.goal=Math.max(0,Math.round(+v||0)); commit(`Spendenziel: ${eur(y.goal)}.`); return;
     case 'donon': y.donOnline=Math.max(0,+v||0); commit('Gespeichert.'); return;
     case 'other': y.other.find(o=>o.id===el.dataset.id).amount=Math.max(0,+v||0); commit('Gespeichert.'); return;
     case 'assign': {const t=trip(); if(v) t.assign[el.dataset.p]=v; else delete t.assign[el.dataset.p];
