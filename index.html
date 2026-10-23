@@ -799,6 +799,9 @@ const safeId=id=>String(id).replace(/\//g,'_');
 /* Firestore kennt keine Listen in Listen – die werden beim Speichern verpackt und beim Laden wieder ausgepackt */
 const enc=v=>Array.isArray(v)?v.map(x=>Array.isArray(x)?{_a:enc(x)}:enc(x)):v&&typeof v==='object'?Object.fromEntries(Object.entries(v).map(([k,x])=>[k,enc(x)])):v;
 const dec=v=>Array.isArray(v)?v.map(dec):v&&typeof v==='object'?(Object.keys(v).length===1&&Array.isArray(v._a)?v._a.map(dec):Object.fromEntries(Object.entries(v).map(([k,x])=>[k,dec(x)]))):v;
+/* Admin-Konten (config.js „admins“): alle Rechte, aber keine Person im Projekt */
+const isAdminMail=m=>LIVE&&BOOT.includes(String(m||'').toLowerCase());
+const isAdminPerson=p=>{const ms=mails(p&&p.email); return LIVE&&ms.length>0&&ms.every(m=>BOOT.includes(m));};
 const mails=s=>[...new Set(String(s||'').toLowerCase().split(/[\s,;]+/).filter(x=>/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(x)))];
 const fnv=s=>{let h=0x811c9dc5;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,0x01000193)>>>0;}return h.toString(36);};
 const isDerived=p=>/^users\/|\/cands\/|\/pub\//.test(p);
@@ -952,7 +955,7 @@ function fixUi(){
   if(!person(ui.me)) ui.me=(y.people.find(p=>ROLE_OF(p.access)==='ensemble')||y.people[0]||{}).id||'';
 }
 
-const APP_VERSION='2026-10-23';
+const APP_VERSION='2026-10-23b';
 /* Verbindung, Login, Abos */
 async function liveInit(){
   try{
@@ -1067,7 +1070,7 @@ function freshState(name,acc){
   [['2027-04-01',4,1],['2027-04-08',4,2],['2027-05-01',3,3]].forEach(([d,n,w])=>{for(let i=0;i<n;i++) days[add(d,i)]={title:'Tour-Wochenende '+w,kind:'tour',city:''};});
   const y={year:2027,archived:false,play:'Les Misérables',
     milestones:[{id:'ms1',date:'2026-11-01',label:'Anmeldung öffnet',team:false},{id:'ms2',date:'2027-03-12',label:'Probewoche',team:false},{id:'ms3',date:'2027-04-01',label:'Tour-Wochenende 1',team:false},{id:'ms4',date:'2027-04-08',label:'Tour-Wochenende 2',team:false},{id:'ms5',date:'2027-05-01',label:'Tour-Wochenende 3',team:false}],
-    days,people:[{id:POS_ID[acc]||uid('p'),name,groups:['leitung'],pos:(ACCESS[acc]||'').replace('Leitung – ',''),tel:'',lic:'',email:auth.email,access:acc}],
+    days,people:[],
     events:[],roles:[],shows:[],trips:[],vehicles:[],stays:[],meetings:[],registrations:[],form:src.form,
     crews:src.crews.map(c=>({...c,lead:''})),tasks:src.tasks.map(({link,...t})=>({...t,done:false})),
     costs:src.costs.map(c=>({...c,plan:0,actual:0,closed:false,cat:catOf(c)})),other:[{id:'o1',name:'Merch-Verkauf',amount:0}],
@@ -1080,7 +1083,7 @@ async function runSetup(mode){
   catch(e){ toast('Keine Verbindung zum Server – bitte mit Internet erneut versuchen.'); return; }
   const name=val('su-name')||auth.name, acc=val('su-pos')||'leitung-int';
   let st;
-  if(mode==='demo'){ st=seed(); const y=st.years[2027]; const p=y.people.find(x=>x.access===acc); if(p){p.name=name; p.email=auth.email;} }
+  if(mode==='demo'){ st=seed(); }
   else st=freshState(name,acc);
   const arch=Object.values(st.years).filter(y=>y.archived).map(y=>y.year); arch.forEach(k=>st.years[k].archived=false);
   S=st; base=new Map(); remoteDirty=false; auth.seeding=true; auth.setupAt=Date.now(); auth.state='ready'; ui.year=2027; fixUi(); render(); toast('Wird eingerichtet …');
@@ -1166,9 +1169,8 @@ function authScreen(){
     case 'noaccess': return box(`<h2>Noch nicht freigeschaltet</h2><p>Du bist angemeldet als <b>${esc(auth.email)}</b>. Diese Adresse ist in LOS Backstage noch nicht freigeschaltet.</p>
       <p class="small muted">Schick der LOS-Leitung genau diese Adresse. Sobald sie dich unter „Zugänge & Rechte“ eingetragen hat, geht es hier automatisch weiter. Oder: abmelden und mit der Adresse aus deiner LOS-Anmeldung wieder anmelden – per Google oder per Anmelde-Link.</p>${out}`);
     case 'noyear': return box(`<h2>Gerade ist kein LOS-Jahr offen</h2><p class="muted">Sobald die Leitung das nächste Jahr angelegt hat, siehst du es hier.</p>${out}`);
-    case 'setup': return box(`<h2>Willkommen bei LOS Backstage</h2><p class="small">Die Datenbank ist noch leer. Wer bist du?</p>
-      <label class="f">Dein Name<input type="text" id="su-name" value="${esc(auth.name)}"></label>
-      <label class="f" style="margin-top:8px">Deine Position<select id="su-pos">${Object.entries(ACCESS).filter(([k])=>k.startsWith('leitung')).map(([k,l])=>`<option value="${k}">${esc(l.replace('Leitung – ',''))}</option>`).join('')}</select></label>
+    case 'setup': return box(`<h2>Willkommen bei LOS Backstage</h2><p class="small">Die Datenbank ist noch leer. Du richtest sie als <b>Admin</b> ein (${esc(auth.email)}).</p>
+      <p class="small muted">Admin-Konten haben alle Rechte, tauchen aber nicht als Person im Team, bei Fahrten, Unterkünften oder in der Besetzung auf. Die Leitung meldet sich danach mit ihren eigenen Adressen an; die Rechte vergibst du unter „Zugänge & Rechte“.</p>
       <div class="stack" style="gap:8px;margin-top:14px">
         <button class="btn primary" data-act="setup-go" data-mode="real">Echt starten: LOS 2027 – Les Misérables</button>
         ${window.LOS_SHOW_DEMO||/[?&]beispieldaten/.test(location.search)?'<button class="btn" data-act="setup-go" data-mode="demo">Erst ausprobieren: mit Beispieldaten</button>':''}</div>
@@ -1863,6 +1865,13 @@ function ensureCrews(y){
   const sorted=[...y.crews].sort((a,b)=>order(a)-order(b)); if(sorted.some((c,i)=>c!==y.crews[i])){ y.crews=sorted; changed=true; }
   const keys=crewKeys(y);
   y.people.forEach(p=>{ if(p.fn&&fnFix(p.fn)!==p.fn){ p.fn=fnFix(p.fn); changed=true; } });
+  y.people.filter(isAdminPerson).forEach(p=>{ /* Admin-Konten tauchen nicht in Team, Fahrten, Unterkünften oder Besetzung auf */
+    y.roles.forEach(r=>{ if(r.person===p.id){r.person=''; r.status='frei';} if(r.alt===p.id) r.alt=''; });
+    y.crews.forEach(c=>{ if(c.lead===p.id) c.lead=''; });
+    y.events.forEach(ev=>ev.who=ev.who.filter(x=>x!=='p:'+p.id));
+    y.trips.forEach(tr=>{ delete tr.assign[p.id]; Object.values(tr.veh||{}).forEach(v=>{ if(v.driver===p.id) v.driver=''; }); });
+    y.stays.forEach(st=>st.persons=st.persons.filter(x=>x!==p.id));
+    y.people=y.people.filter(x=>x!==p); changed=true; });
   y.people.forEach(p=>{ if(p.actWish===undefined&&p.fromReg){ const r=(y.registrations||[]).find(x=>x.id===p.fromReg); if(r){ p.actWish=r.roleWish||''; changed=true; } } });
   y.people.forEach(p=>{ const mine=(p.groups||[]).filter(g=>keys.includes(g)); if(mine.length>1){ const keep=mine.sort((a,b)=>keys.indexOf(a)-keys.indexOf(b))[0]; setCrew(p,keep,y); changed=true; } });
   return changed;
@@ -2249,6 +2258,7 @@ function vAccess(){
   const y=CUR();
   return `<h1>Zugänge & Rechte</h1><p class="lede">Wer sich mit welcher Google-Adresse anmeldet und was diese Person darf. Namen und Adressen könnt ihr direkt in der Tabelle ändern. Mehrere Adressen pro Person mit Komma trennen (z. B. private Adresse und LOS-Konto). Teilen sich zwei Personen eine Adresse (z. B. Vater und Tochter), ist das erlaubt: Beim Anmelden wählt man, wer man ist. Wer zugelassen wird, bekommt automatisch Zugang mit der Adresse aus dem Formular.</p>
   ${LIVE?`<p class="small muted" style="margin-top:-10px">Zugang hat, wer in einem offenen LOS-Jahr mit Google-Adresse eingetragen ist. Wird ein Jahr eingefroren, endet der Zugang für alle, die nicht auch im neuen Jahr dabei sind.</p>`:''}
+  ${LIVE&&BOOT.length?`<div class="panel" style="margin:0 0 14px;padding:10px 14px"><b>Admin-Konten</b> <span class="small muted">(aus config.js – immer alle Rechte, aber keine Person im Projekt: tauchen nicht im Team, bei Fahrten, Unterkünften oder in der Besetzung auf)</span><div class="small" style="margin-top:4px">${BOOT.map(esc).join(' · ')}</div></div>`:''}
   <details class="form"><summary style="cursor:pointer;font-weight:600">Person freischalten</summary><div class="grid" style="margin-top:10px">
     <label class="f">Name<input type="text" id="ac-name"></label><label class="f" style="grid-column:span 2">Google-E-Mail<input type="text" id="ac-mail"></label>
     <label class="f">Rolle<select id="ac-role">${Object.entries(ACCESS).map(([k,l])=>`<option value="${k}">${l}</option>`).join('')}</select></label></div><button class="btn primary" data-act="ac-add">Freischalten</button></details>
@@ -2497,7 +2507,8 @@ document.addEventListener('click',e=>{
       if(el.dataset.id) Object.assign(y.stays.find(s=>s.id===el.dataset.id),data); else y.stays.push({id:uid('a'),city:c,...data});
       ui.editStay=null; commit('Unterkunft gespeichert.'); return;}
     /* Team */
-    case 'reg-ok': {const r=y.registrations.find(x=>x.id===el.dataset.id); r.status='zugelassen'; delete r.removedAt; delete r.backToWait;
+    case 'reg-ok': {const r=y.registrations.find(x=>x.id===el.dataset.id); if(isAdminMail(r.email)){toast('Diese Anmeldung nutzt ein Admin-Konto – bitte mit der persönlichen Adresse neu anmelden lassen.');return}
+      r.status='zugelassen'; delete r.removedAt; delete r.backToWait;
       const back=(y.gone||[]).find(p=>p.fromReg===r.id);
       if(back){ const {leftAt,wasIn,...p}=back; y.gone=y.gone.filter(x=>x!==back); y.people.push(p);
         commit(`${p.name} ist wieder im Team (${crewOf(p,y)?.label||'ohne Gewerk'}). Rollen, Fahrten und Unterkunft bitte neu zuteilen.`); pushStatus(r); return; }
@@ -2551,6 +2562,7 @@ document.addEventListener('click',e=>{
     case 'fq-del': y.feedback.questions=y.feedback.questions.filter(q=>q.id!==el.dataset.id); commit(); return;
     /* Zugänge */
     case 'ac-add': {const n=val('ac-name'),m=mails(val('ac-mail')); if(!n||!m.length){toast('Bitte Name und gültige Google-Adresse eintragen.');return}
+      if(m.some(isAdminMail)){toast('Das ist ein Admin-Konto – es hat schon alle Rechte und wird nicht als Person eingetragen. Bitte die persönliche Adresse verwenden.');return}
       const cy=CUR(); const shared=cy.people.filter(p=>mails(p.email).some(x=>m.includes(x)));
       const role=val('ac-role'); const groups=role.startsWith('leitung')?['leitung']:(role==='regie'||role==='ra')?['regie']:[];
       const pid=POS_ID[role]&&!cy.people.some(p=>p.id===POS_ID[role])?POS_ID[role]:uid('p');
@@ -2642,15 +2654,17 @@ document.addEventListener('change',e=>{
     case 'hist': {S.history[el.dataset.y][el.dataset.k]=v===''?'':+v; commit(); return;}
     case 'pmail': {const p=CUR().people.find(x=>x.id===el.dataset.p); const m=mails(v);
       if(v.trim()&&!m.length){toast('Das sieht nicht wie eine E-Mail-Adresse aus.');render();return}
+      if(m.some(isAdminMail)){toast('Das ist ein Admin-Konto – bitte die persönliche Adresse eintragen.');render();return}
       const other=CUR().people.find(x=>x.id!==p.id&&mails(x.email).some(a=>m.includes(a)));
       if(LIVE&&mails(p.email).includes(auth.email)&&!m.includes(auth.email)&&!BOOT.includes(auth.email)){toast('Deine eigene Anmelde-Adresse kann nur jemand anderes aus der Leitung entfernen.');render();return}
       p.email=m.join(', '); commit(m.length?`${p.name} kann sich jetzt mit ${m.join(' oder ')} anmelden.${other?` Die Adresse teilt sie sich mit ${other.name} – beim Anmelden wählt man, wer man ist.`:''}`:`${p.name} hat keinen Zugang mehr.`); return;}
     case 'pname': {const p=CUR().people.find(x=>x.id===el.dataset.p); const n=v.trim(); if(!n){toast('Der Name darf nicht leer sein.');render();return} p.name=n; commit(`Name geändert: ${n}`); return;}
     case 'access': {const p=CUR().people.find(x=>x.id===el.dataset.p);
       if(LIVE&&mails(p.email).includes(auth.email)&&!v.startsWith('leitung')&&!BOOT.includes(auth.email)){toast('Deine eigene Rolle kann nur jemand anderes aus der Leitung ändern.');render();return}
-      p.access=v;
-      const c=crewOf(p,CUR()); if(v.startsWith('leitung')) setCrew(p,'leitung',CUR()); else if(v==='regie'||v==='ra'){ setCrew(p,'regie',CUR()); if(!p.fn) p.fn=v==='ra'?'Regie-Assistenz':'Regisseur'; } else if(c&&(c.g==='leitung'||c.g==='regie')) setCrew(p,'',CUR());
-      commit(`${p.name}: ${ACCESS[v]}`); return;}
+      p.access=v; let note='';
+      const c=crewOf(p,CUR()); if(v.startsWith('leitung')){ setCrew(p,'leitung',CUR()); p.pos=ACCESS[v].replace('Leitung – ','');
+        const pid=POS_ID[v], cy=CUR(); if(pid&&pid!==p.id&&!cy.people.some(x=>x.id===pid)){ const n=cy.tasks.filter(t=>t.owner===pid).length; cy.tasks.forEach(t=>{ if(t.owner===pid) t.owner=p.id; }); if(n) note=` · übernimmt ${n} Aufgaben der Position`; } } else if(v==='regie'||v==='ra'){ setCrew(p,'regie',CUR()); if(!p.fn) p.fn=v==='ra'?'Regie-Assistenz':'Regisseur'; } else if(c&&(c.g==='leitung'||c.g==='regie')) setCrew(p,'',CUR());
+      commit(`${p.name}: ${ACCESS[v]}${note}`); return;}
   }
 });
 document.addEventListener('input',e=>{const r=e.target.closest&&e.target.closest('[data-yrrow]'); if(!r) return;
