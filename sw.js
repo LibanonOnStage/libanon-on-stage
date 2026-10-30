@@ -1,12 +1,16 @@
 /* LOS Backstage – Service Worker
    Nur dafür da, dass Android (Chrome, Samsung Internet) die Seite als App installiert
-   und ohne Adressleiste öffnet. Er speichert absichtlich NICHTS zwischen:
+   und ohne Adressleiste öffnet – und dass beim Öffnen immer die neueste Version geladen wird.
+   Er speichert absichtlich NICHTS zwischen:
    jede neue Version auf GitHub ist sofort da. Daten laufen wie bisher direkt über Firebase. */
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
 self.addEventListener('fetch', e => {
   if (e.request.mode !== 'navigate') return;            // nur das Öffnen der Seite selbst
-  e.respondWith(fetch(e.request).catch(() => new Response(
+  // immer beim Server nachfragen, ob es eine neue Version gibt (kein veralteter Stand aus dem Browser-Zwischenspeicher)
+  e.respondWith(fetch(e.request.url, { cache: 'no-cache', credentials: 'same-origin' })
+    .then(r => (r.redirected ? Response.redirect(r.url, 302) : r))
+    .catch(() => new Response(
     '<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
     '<title>LOS Backstage</title><body style="font-family:system-ui;padding:32px;text-align:center">' +
     '<h1 style="font-size:22px">Keine Verbindung</h1><p>LOS Backstage braucht Internet. Bitte gleich noch einmal öffnen.</p></body>',
